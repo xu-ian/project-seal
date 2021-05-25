@@ -15,7 +15,7 @@ The goal of the project is to fulfill the raising needs of the challenge in crea
 ## Installation
 This project will follow closely to the MERN stack model. MERN stands for MongoDB, Express(.js), React(.js), and Node(.js). \
 The following explains the relationship of MERN (extract from MongoDB)\
-<img src="images/MERN.jpg" width="100"> \
+<img src="images/MERN.jpg" width="800"> \
 For installation, click [here](https://www.mongodb.com/languages/mern-stack-tutorial) for reading or follow the steps below: 
 
 ### Basic Environment Setup
@@ -32,11 +32,11 @@ You can use any editor your like or I like [VS code](https://code.visualstudio.c
 2. Notify through the discord server so you can be invited to access the database
 3. Once you have been invited to the project, click on the "Database Access" tab. 
 4. Add your self as user by clicking on the "ADD NEW DATABASE USER" on the right top corner. Fill in the username and password you prefer.  
-<img src="images/db1.png" width="100"> \
+<img src="images/db1.png" width="500"> 
 5. Click on "Cluster" tab and click on "connect"
-6. Choose "Connect your application" as the connection method. A link like the following should appear: \
-<img src="images/db2.png" width="100"> \
-- Remember to replace the <password> with your own password. Note that "<>" should be deleted.
+6. Choose "Connect your application" as the connection method. A link like the following should appear:
+<img src="images/db2.png" width="500"> 
+* Remember to replace the <password> with your own password. Note that "<>" should be deleted.
 
 
 ## Contribution
@@ -65,7 +65,7 @@ git commit -m “msg”
 git push
 ```
 3. Pull Request\
-A "Compare & pull request" button will appear and you will be able to create a new pull request. \
+A "Compare & pull request" button will appear and you will be able to create a new pull request.
 - If you are solving for specific issue, include ```Resolves #issue_number``` in the description so that git close the issue automatically. 
 
 4. Merge\
