@@ -1,7 +1,9 @@
 Done
 
-1.All Conditions of Satisfaction are satisfied
-	a. The platform is easily accessible to all potential users (investors, startups, mentors)
+1.All Conditions of Satisfaction are satisfied  
+
+	a. The platform is easily accessible to all potential users (investors, startups, mentors)  
+        
 		- All users can register and login to an account 
 		- Accounts have roles (Startup, Investor, Teacher)
 		- Users can access community resources after logging in
