@@ -23,7 +23,7 @@ There are some common differences between the competitors and our project. Namel
 
 **What would it take for them to do so?**
 
-For our competitors to focus on these users and scenarios would require a paradigm shift in business plan. Firstly, a massive capital investment is necessary to overhaul their platform to include the missing infrastructure, whether that is e-learning or community/business and discovery. Next, they must be willing to lose many of its current users as the platform shifts their focus away from them. If they are willing to accept all of the previously mentioned issues, they must next convince their shareholders and boards to change their business model.
+For our competitors to focus on these users and scenarios would require a paradigm shift in their business model. Firstly, a massive capital investment is necessary to overhaul their platform to include the missing infrastructure, whether that is e-learning or community/business and discovery. Next, they must be willing to lose many of its current users as the platform shifts their focus away from them. If they are willing to accept all of the previously mentioned issues, they must next convince their shareholders and boards to change their business model.
 
 In summary, for our competitors to focus on these new users and scenarios, they must solve these issues:
 
