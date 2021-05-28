@@ -8,7 +8,7 @@ This project hopes to create a communication and e-learning platform for aspirin
 
 Hagan Furaha is a 30 year old, male, software engineer who started a startup company half a year ago with two other partners. He lacks the proper knowledge and a source of funding for his startup company. He is looking for a platform that gathers entrepreneurs and investors alike so that he may communicate with others and find solutions to problems that may occur during the early stages of his company’s life. He would be pleased if this platform provides a learning environment to give him advice on how to build his company, but his main goal is finding investors that will invest in his company.
 
-Full profile located in [Personas.pdf](/Personas.pdf)
+Full profile located in [Personas.pdf](doc/sprint0/Personas.pdf)
 
 ## Investor
 
