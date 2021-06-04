@@ -1,4 +1,6 @@
 import React from "react";
+import { Route } from "react-router-dom";
+
 import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
@@ -28,6 +30,5 @@ const App = () => {
       </Route> */}
     </div>
   );
-};
-
+}
 export default App;
