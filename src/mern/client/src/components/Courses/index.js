@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
+import Sidebar from '../SideBar';
 
 class Courses extends Component {
     render() {
         return (
-            <div>
+            <Sidebar>
                 <h1>Courses</h1>
-                <p>test</p>
-                <button>create course</button>
-            </div>
+                test
+            </Sidebar>
         );
     }
 }
