@@ -41,6 +41,7 @@ router.post("/register", (req, res) => {
         });
     });
 
+    user.role = "student";
 
     // if all the previous pass, attempt to register
     if (!errors.isEmpty()) {
