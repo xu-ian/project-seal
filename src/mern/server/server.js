@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 require("dotenv").config({ path: "./config.env" });
 const port = 8080;
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://Ian:mongodb@cscc01-seal.pawl3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = process.env.ATLAS_URI;
+//const uri = "mongodb+srv://Ian:mongodb@cscc01-seal.pawl3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
@@ -21,13 +22,12 @@ const postsRouter = require('./routes/posts');
 app.use('/posts', postsRouter);
 
 const commentsRouter = require('./routes/comments');
-app.use('/comments', commentsRouter);
+app.use('/posts/:postId/comments', commentsRouter);
 // get driver connection
 const dbo = require("./db/conn");
 const postsRoutes = require("./routes/posts");
 const commentsRoutes = require("./routes/comments");
 
-const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
 const connection = mongoose.connection;

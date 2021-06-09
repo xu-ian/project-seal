@@ -9,6 +9,7 @@ const postsRoutes = express.Router();
 // Get a list of all the posts.
 postsRoutes.route('/').get((req, res) => {
     Post.find()
+        .populate('comments', 'author content')
         .then(posts => {
             res.json(posts);
         })
@@ -20,6 +21,7 @@ postsRoutes.route('/').get((req, res) => {
 // Get a specific post by ID.
 postsRoutes.route('/:id').get((req, res) => {
     Post.findById(req.params.id)
+        .populate('comments', 'author content')
         .then(post => {
             res.json(post);
         })
@@ -48,7 +50,7 @@ postsRoutes.route("/add").post((req, res) => {
 
 // Update a specific post by ID.
 postsRoutes.route("/update/:id").patch((req, res) => {
-    Post.updateOne({ _id: ObjectID(req.params.id) }, {
+    Post.updateOne({ _id: ObjectID(req.params.id)}, {
         $set: {
             content: req.body.content,
             tags: req.body.tags
