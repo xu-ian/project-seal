@@ -37,6 +37,12 @@ app.use(cors());
 app.use(express.json());
 app.get('/', (req, res)=> res.send('Hello World!'));
 app.use('/users', usersRouter);
+// app.use(require("./routes/record")); //the example one
+
+//import postRoutes from './routes/posts.js';
+//app.use('/posts', postRoutes);
+app.use(require('./routes/company'));
+
 // get driver connection
 //const dbo = require("./db/conn");
 
