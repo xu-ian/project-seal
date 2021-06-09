@@ -12,8 +12,8 @@ const Login = () =>  {
   // this function is called when login button is clicked
   function getUserData(e) {
     e.preventDefault();
-    const userName = e.target.elements.un.value;  // get username and password from user input
-    const passw = e.target.elements.pw.value;
+    const userName = e.target.elements.username.value;  // get username and password from user input
+    const passw = e.target.elements.password.value;
 
     axios.post(url + route, { // post information to database
       username: userName,
@@ -59,13 +59,13 @@ const Login = () =>  {
         <div className="input">
           <label>
           <p>Username:</p>
-          <input name="un" type="text" placeholder="User Name" />
+          <input name="username" type="text" placeholder="User Name" />
           </label>
         </div>
         <div className="input">
           <label>
             <p>Password:</p>
-            <input name="pw" type="password" placeholder="Password"/>
+            <input name="password" type="password" placeholder="Password"/>
           </label>
         </div>
         <div className="loginButton">
