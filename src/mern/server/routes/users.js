@@ -5,8 +5,8 @@ const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");// Load input validation
 
 
-
-const User = require("../models/User");
+const mongoose = require("mongoose");
+const User = require('../models/user');
 
 
 // POST for register
@@ -74,5 +74,48 @@ router.post("register", (req, res) => {
 
 
 });
+
+//Post for login 
+router.post("/login", (req, res) => {
+
+    const password = req.body.password;// Find user by email
+    User.findOne({ email }).then(user => {
+      // Check if user exists
+      if (!user) {
+        return res.status(404).json({ emailnotfound: "Incorrect info" });
+      }
+      
+      
+      
+      // Check password
+      bcrypt.compare(password, user.password).then(isMatch => {
+        if (isMatch) {
+          // User matched
+          // Create JWT Payload
+          const payload = {
+            id: user.id,
+            name: user.name
+          };// Sign token
+          jwt.sign(payload,keys.secret,
+            {
+              expiresIn: 31556926/2 // half a year in seconds
+            },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            }
+          );
+        } else {
+          return res
+            .status(400)
+            .json({ passwordincorrect: "Incorrect info" });
+        }
+      });
+    });
+  });
+
+
 
 module.exports = router;

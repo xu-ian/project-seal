@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const bodyParser = require("body-parser");
 require("dotenv").config({ path: "./config/config.env" });
 const port = process.env.PORT || 5000;
+const passport = require("passport");
 
 // mongoose setup
 var mongoose = require('mongoose');
@@ -12,7 +12,16 @@ var mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-console.log(mongoose.connection.readyState);
+mongoose.connection.on('connected', () => {
+  console.log('connected to mongodb, status ' + mongoose.connection.readyState);
+});
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./config/passport")(passport);
+
 
 app.use(cors());
 app.use(express.json());
