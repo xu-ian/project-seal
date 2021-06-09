@@ -17,8 +17,7 @@ router.post("/register", (req, res) => {
     //sanitize and conform data with express-validator functions
     body('username', 'Username required').trim().isLength({ min: 4}).escape(),
     body('email', 'Email required').trim().isLength({ min: 4}).normalizeEmail().isEmail().escape(),
-    body('password', 'Password required').trim().isLength({ min: 8}).escape(),
-    body('passwordagain', 'Password required').trim().isLength({ min: 8}).equals('password').escape()
+    body('password', 'Password required').trim().isLength({ min: 8}).escape()
 
     const errors = validationResult(req);
 
@@ -36,7 +35,7 @@ router.post("/register", (req, res) => {
     bcrypt.genSalt(10, function(err, salt){
         bcrypt.hash(pw, salt, function(err, hash){
             if(err){
-                console.log("black men");
+                console.log();
             }
             user.password = hash;
         });
@@ -45,7 +44,7 @@ router.post("/register", (req, res) => {
 
     // if all the previous pass, attempt to register
     if (!errors.isEmpty()) {
-      return res.status(400).json({ email: "Failed to register1" });
+      return res.status(400).json({ email: "Failed to register, a field is empty" });
     }else {
         //If user exists, add to database, else...
         User.findOne({$or: [{email: req.body.email}, {username: req.body.username}] })
@@ -59,8 +58,8 @@ router.post("/register", (req, res) => {
               else {
                   // User does not exist, save to database
                 user.save(function (err) {
-                  if (err) { return res.status(400).json({username: "failed to register2"}); }
-                  res.redirect("/login");
+                  if (err) { return res.status(400).json({username: "failed to register"}); }
+                  console.log("successfully registered");
                 });
   
               }
@@ -76,9 +75,9 @@ router.post("/register", (req, res) => {
 
 //Post for login 
 router.post("/login", (req, res) => {
-  var email = req.body.email;
+  var username = req.body.username;
   const password = req.body.password;// Find user by email
-  User.findOne({ email }).then(user => {
+  User.findOne({$or: [{username: req.body.email}, {username: req.body.username}] }).then(user => {
     // Check if user exists
     if (!user) {
       return res.status(404).json({ emailnotfound: "Incorrect info" });
