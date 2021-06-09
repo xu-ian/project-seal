@@ -7,7 +7,7 @@ const url = "http://localhost:5000";
 const route = "/users/register";
 
 const Registration = () => {
-  let history = useHistory();
+  // let history = useHistory();
 
   function register(e) {
     e.preventDefault();
