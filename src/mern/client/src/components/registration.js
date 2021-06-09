@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
-import './styling.css'
+import React from 'react';
+import './styling.css';
 import axios from 'axios';
 // import { Route } from "react-router-dom";
 
 const url = "http://localhost:5000";
-const route = "/register";
+const route = "/users/register";
 
 const Registration = () => {
+  let history = useHistory();
 
   function register(e) {
     e.preventDefault();
     const userName = e.target.elements.un.value;  // get user information from user input
-    const passw = e.target.elements.pw.value;
     const email = e.target.elements.email.value;
-    
-    axios.post(url + route, { // post information to database
+    const passw = e.target.elements.pw.value;
+
+    var info = {
       username: userName,
       email: email,
       password: passw
-    }).then((response) => {
+    }
+
+    // history.push(`/roleselect/${info}`);
+    
+    axios.post(url + route, info).then((response) => {
       console.log(response);
     }, (error) => {
       console.log(error);
@@ -26,7 +31,7 @@ const Registration = () => {
   }
 
   return(
-    <div className="signIn">
+    <div className="title">
       <h1>Create Account</h1>
       <form onSubmit={register}> {/* pass event to the function when Login button is clicked*/}
         <div className="input">

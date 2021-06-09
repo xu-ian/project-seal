@@ -1,22 +1,31 @@
 import React from "react";
 import Registration from "./components/registration"
 import Login from "./components/Login"
+import Select from "./components/select"
+// import RoleSelection from "./components/roleSelection"
+
+// import Navbar from "./components/navbar"
 
 // We use Route in order to define the different routes of our application
 import { Route } from "react-router-dom";
 
-// We import all the components we need in our app
-import Navbar from "./components/navbar";
-import RecordList from "./components/recordList";
 
 const App = () => {
   return (
     <div>
-      {/* <Navbar />
+      {/* <Navbar /> */}
       <Route exact path="/">
-        <RecordList />
+        <Select />
+      </Route>
+      <Route exact path="/signin">
+        <Login />
+      </Route>
+      <Route exact path="/signup">
+        <Registration />
+      </Route>
+      {/* <Route exact path="/roleselect/:info">
+        <RoleSelection />
       </Route> */}
-      <Registration />
     </div>
   );
 };

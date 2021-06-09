@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import './styling.css'
+import React from 'react';
+import './styling.css';
 import axios from 'axios';
-// import { Route } from "react-router-dom";
 
 const url = "http://localhost:5000";
-const route = "/login";
+const route = "/users/login";
 
 
 // Sign in component
@@ -16,36 +15,45 @@ const Login = () =>  {
     const userName = e.target.elements.un.value;  // get username and password from user input
     const passw = e.target.elements.pw.value;
 
-    axios.get(url + route) // get user data from database
-      .then((response) => {
-        const dat = response.data
-        var i;
-        var authenticated = false;
+    axios.post(url + route, { // post information to database
+      username: userName,
+      password: passw
+    }).then((response) => {
+      console.log(response.status);
+    }, (error) => {
+      console.log(error);
+    });
 
-        // loop though all user data and see if user input matches
-        for (i = 0; i < dat.length; i++) {
-          // user input is match
-          if (userName === dat[i].username && passw === dat[i].password) {
-            authenticated = true;
-            break;
-          }
-        }
+    // axios.get(url + route) // get user data from database
+    //   .then((response) => {
+    //     const dat = response.data
+    //     var i;
+    //     var authenticated = false;
+
+    //     // loop though all user data and see if user input matches
+    //     for (i = 0; i < dat.length; i++) {
+    //       // user input is match
+    //       if (userName === dat[i].username && passw === dat[i].password) {
+    //         authenticated = true;
+    //         break;
+    //       }
+    //     }
         
-        if (authenticated) {
-          console.log("Log in success!");
-        } else {
-          console.log("invalid username or password");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    //     if (authenticated) {
+    //       console.log("Log in success!");
+    //     } else {
+    //       console.log("invalid username or password");
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
 
   }
 
   return(
 
-    <div className="signIn">
+    <div className="title">
       <h1>Sign in</h1>
       <form onSubmit={getUserData}>  {/* pass event to the function when Login button is clicked*/}
         <div className="input">
