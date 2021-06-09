@@ -11,9 +11,9 @@ const Registration = () => {
 
   function register(e) {
     e.preventDefault();
-    const userName = e.target.elements.un.value;  // get user information from user input
+    const userName = e.target.elements.username.value;  // get user information from user input
     const email = e.target.elements.email.value;
-    const passw = e.target.elements.pw.value;
+    const passw = e.target.elements.password.value;
 
     var info = {
       username: userName,
@@ -37,7 +37,7 @@ const Registration = () => {
         <div className="input">
           <label>
           <p>Username:</p>
-          <input name="un" type="text" placeholder="User Name" />
+          <input name="username" type="text" placeholder="User Name" />
           </label>
         </div>
         <div className="input">
@@ -49,7 +49,7 @@ const Registration = () => {
         <div className="input">
           <label>
             <p>Password:</p>
-            <input name="pw" type="password" placeholder="Password"/>
+            <input name="password" type="password" placeholder="Password"/>
           </label>
         </div>
         <div className="loginButton">
