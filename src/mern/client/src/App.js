@@ -1,4 +1,6 @@
 import React from "react";
+import Registration from "./components/registration"
+import Login from "./components/Login"
 
 // We use Route in order to define the different routes of our application
 import { Route } from "react-router-dom";
@@ -10,10 +12,11 @@ import RecordList from "./components/recordList";
 const App = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar />
       <Route exact path="/">
         <RecordList />
-      </Route>
+      </Route> */}
+      <Registration />
     </div>
   );
 };

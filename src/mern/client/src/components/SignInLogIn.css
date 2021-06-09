@@ -1,0 +1,33 @@
+.signIn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.input {
+  /* text-align: center; */
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.button1{
+  width: 100%;
+  padding: 12px 28px;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.button1:hover {
+  width: 100%;
+  background-color: black; /* Green */
+  color: white;
+}
+
+.loginButton {
+  padding: 32px 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
