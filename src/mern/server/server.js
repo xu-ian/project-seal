@@ -22,7 +22,7 @@ const postsRouter = require('./routes/posts');
 app.use('/posts', postsRouter);
 
 const commentsRouter = require('./routes/comments');
-app.use('/posts/:postId/comments', commentsRouter);
+app.use('/', commentsRouter);
 // get driver connection
 const dbo = require("./db/conn");
 const postsRoutes = require("./routes/posts");
