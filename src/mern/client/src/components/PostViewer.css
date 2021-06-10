@@ -17,6 +17,10 @@ div.Pageselector {
     margin: 0 auto;
 }
 
+.post {
+    margin: 5px;
+}
+
 .pagenum{
     display:inline-block;
     margin: 5 auto;

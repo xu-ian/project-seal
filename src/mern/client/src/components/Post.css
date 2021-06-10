@@ -9,7 +9,7 @@ div.Post {
     border-radius: 5px;
     margin: auto;
     display: block;
-    overflow:auto;
+    overflow:hidden;
     text-decoration: none
 }
 div.User {
@@ -34,6 +34,7 @@ div.Body p {
     width: 95%;
     resize:none;
     height:auto;
+    word-wrap:break-word;
 }
 
 div.Tags {
