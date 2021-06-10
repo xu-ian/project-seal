@@ -21,7 +21,7 @@ const Login = () =>  {
     }).then((response) => {
       console.log(response.status);
     }, (error) => {
-      console.log(error);
+      alert("Invalid username or password");
     });
 
     // axios.get(url + route) // get user data from database

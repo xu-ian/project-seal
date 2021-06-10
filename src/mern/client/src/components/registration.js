@@ -1,7 +1,6 @@
 import React from 'react';
 import './styling.css';
 import axios from 'axios';
-// import { Route } from "react-router-dom";
 
 const url = "http://localhost:5000";
 const route = "/users/register";
@@ -12,11 +11,11 @@ const Registration = () => {
 
   function register(e) {
     e.preventDefault();
-    const userName = e.target.elements.username.value;  // get user information from user input
+    // get user information from user input
+    const userName = e.target.elements.username.value;  
     const email = e.target.elements.email.value;
     const passw = e.target.elements.password.value;
 
-    console.log(roles);
     // check if user select at least one role
     if (roles.startupfounder || roles.investor || roles.insturctor) {
       var info = {
@@ -26,10 +25,11 @@ const Registration = () => {
         role: roles
       }
       
-      axios.post(url + route, info).then((response) => {
+      // send info to enpoint
+      axios.post(url + route, info).then((response) => {  
         alert("Registered");
       }, (error) => {
-        console.log(error);
+        console.log("Failed:"+ error);
       });
 
     } else {
@@ -43,7 +43,8 @@ const Registration = () => {
   return(
     <div className="title">
       <h1>Create Account</h1>
-      <form onSubmit={register}> {/* pass event to the function when Login button is clicked*/}
+      {/* register() is called and pass event to the function when Login button is clicked*/}
+      <form onSubmit={register}> 
         <div className="input">
           <label>
           <p>Username:</p>
@@ -64,18 +65,21 @@ const Registration = () => {
         </div>
         <div>
           <label>
+            {/* set roles.startupfounder to true if the box is checked */}
             <input type="checkbox" id="founder"
                 onClick={() => 
                   roles.startupfounder = document.getElementById("founder").checked}/>
             Startup founder
           </label><br/>
           <label>
+            {/* set roles.investor to true if the box is checked */}
             <input type="checkbox" id="investor"
                 onClick={() => 
                   roles.investor = document.getElementById("investor").checked}/>
             Investor
           </label><br/>
           <label>
+            {/* set roles.instructor to true if the box is checked */}
             <input type="checkbox" id="instructor"
                 onClick={() => 
                   roles.insturctor = document.getElementById("instructor").checked}/>
