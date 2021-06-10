@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import './PostWrite.css';
+import './CommentWrite.css';
 
 class CommentWrite extends React.Component {
     constructor(props) {
