@@ -1,0 +1,23 @@
+Link {
+    color: white; 
+    text-decoration: none;
+}
+
+div.Pageselector {
+    position:relative;
+    display:inline;
+    left:45%;
+    overflow:hidden;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.button {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.pagenum{
+    display:inline-block;
+    margin: 5 auto;
+}

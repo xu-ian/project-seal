@@ -36,7 +36,7 @@ postsRoutes.route("/add").post((req, res) => {
         content: req.body.content,
         tags: req.body.tags
     });
-
+    console.log("Adds a post");
     newPost.save()
         .then(post => {
             res.status(201).json(post);
