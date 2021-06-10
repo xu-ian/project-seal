@@ -12,12 +12,13 @@ const User = require('../models/user');
 // POST for register
 // Register User
 // Todo: add selection of different user types
-router.post("/register", (req, res) => {
+router.post("/register", [
+  body('username', 'Username required').trim().isLength({ min: 4}).not().isEmpty().withMessage("The username field is mandatory"),
+  body('email', 'Email required').trim().isLength({ min: 4}).normalizeEmail().isEmail().not().isEmpty().withMessage("The email field is mandatory"),
+  body('password', 'Password required').trim().isLength({ min: 8}).not().isEmpty().withMessage("The password field is mandatory")
+  ], (req, res) => {
 
     //sanitize and conform data with express-validator functions
-    body('username', 'Username required').trim().isLength({ min: 4}).not().isEmpty().escape(),
-    body('email', 'Email required').trim().isLength({ min: 4}).normalizeEmail().isEmail().not().isEmpty().escape(),
-    body('password', 'Password required').trim().isLength({ min: 8}).not().isEmpty().escape()
 
     const errors = validationResult(req);
 
@@ -45,7 +46,8 @@ router.post("/register", (req, res) => {
 
     // if all the previous pass, attempt to register
     if (!errors.isEmpty()) {
-      return res.status(400).json({ email: "Failed to register, a field is empty" });
+      console.log(errors.array());
+      return res.status(422).json({ errors: errors.array() });
     }else {
         //If user exists, add to database, else...
         User.findOne({$or: [{email: req.body.email}, {username: req.body.username}] })
