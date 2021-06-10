@@ -7,7 +7,7 @@ const route = "/users/register";
 
 const Registration = () => {
 
-  var roles = {startupfounder:false, investor:false, insturctor:false};
+  var roles = {startupfounder:false, investor:false, instructor:false};
 
   function register(e) {
     e.preventDefault();
@@ -17,7 +17,7 @@ const Registration = () => {
     const passw = e.target.elements.password.value;
 
     // check if user select at least one role
-    if (roles.startupfounder || roles.investor || roles.insturctor) {
+    if (roles.startupfounder || roles.investor || roles.instructor) {
       var info = {
         username: userName,
         email: email,
@@ -82,7 +82,7 @@ const Registration = () => {
             {/* set roles.instructor to true if the box is checked */}
             <input type="checkbox" id="instructor"
                 onClick={() => 
-                  roles.insturctor = document.getElementById("instructor").checked}/>
+                  roles.instructor = document.getElementById("instructor").checked}/>
             Instructor
           </label>
 
