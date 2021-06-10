@@ -2,6 +2,41 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
+import { Container ,TextField, Button, Grid, makeStyles, Typography, Avatar, CssBaseline } from '@material-ui/core';
+import FileBase from 'react-file-base64';
+import BusinessIcon from '@material-ui/icons/Business';
+import './company-profile-style.css'
+
+
+const useStyles = makeStyles((theme) => ({
+    root:{
+    marginTop: '100px',
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: '20%',
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 /* This class update an existing company profile through id */
 class EditCompanyProfile extends Component {
@@ -13,19 +48,19 @@ class EditCompanyProfile extends Component {
     this.onChangeTagline = this.onChangeTagline.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeEmailAddress = this.onChangeEmailAddress.bind(this);
-    this.onChangeLogo = this.onChangeLogo.bind(this);
+    this.onDoneLogo = this.onDoneLogo.bind(this);
     this.onChangeLinks = this.onChangeLinks.bind(this);
     this.onChangeMembers = this.onChangeMembers.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      company_title: '',
-      tagline: '', 
-      description: '', 
-      emailAddress: '',   
-      logo: '',           //image to be uploaded
-      links: '',          //to be developed (detacting the link)
-      members: '',         //to (search feature needed)
+      company_title: "",
+      tagline: "", 
+      description: "", 
+      emailAddress: "",   
+      logo: "",           //image to be uploaded
+      links: "",          //to be developed (detacting the link)
+      members: "",         //to (search feature needed)
       companyProfile: [],
     };
   }
@@ -47,6 +82,7 @@ class EditCompanyProfile extends Component {
       .catch(function (error) {
         console.log(error);
       });
+    console.log("the title is" + this.state.company_title)
   }
 
   // These methods will update the state properties.
@@ -70,9 +106,9 @@ class EditCompanyProfile extends Component {
       emailAddress: e.target.value,
     });
   }
-  onChangeLogo(e) {
+  onDoneLogo(base64) {
     this.setState({
-      logo: e.target.value,
+      logo: base64,
     });
   }
   onChangeLinks(e) {
@@ -88,7 +124,7 @@ class EditCompanyProfile extends Component {
 
 
   // This function will handle the submission.
-  onSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
     const newEditedCompanyProfile = {
       company_title: this.state.company_title,
@@ -104,86 +140,101 @@ class EditCompanyProfile extends Component {
     // This will send a post request to update the data in the database.
     axios
       .post(
-        "http://localhost:3000/update/" + this.props.match.params.id,
+        "http://localhost:3000/update/:id" + this.props.match.params.id,
         newEditedCompanyProfile
       )
       .then((res) => console.log(res.data));
 
-    this.props.history.push("/");
+    this.props.history.push("/company-profile/");
   }
 
   // This following section will display the update-form that takes the input from the user to update the data.
   render() {
     return (
-        <div>
-            <h3 align="center">Update Company Profile</h3>
-            <form id="company-form" onSubmit={this.onSubmit}>
+      <div className={useStyles.root} style={{backgroundColor: "white"}}>    
+        <Container component="main" maxWidth="md"> 
+          <CssBaseline />
+          <div className={useStyles.paper}>
+            <Avatar className={useStyles.avatar}>
+              <BusinessIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Update Company Profile
+            </Typography>
+
+            <form id="company-form" onSubmit={this.handleSubmit}>
+              <TextField fullWidth 
+                label="Company Title" 
+                className="company-form-group"
+                value={this.state.company_title}
+                onChange={this.onChangeCompanyTitle}
+              >
+              </TextField>
+              <TextField fullWidth 
+                label="Tagline" 
+                placeholder="A brief line that describes the company" 
+                className="company-form-group"
+                value={this.state.tagline}
+                onChange={this.onChangeTagline}
+              >
+              </TextField>
+              <br /> <br /> <br /> 
+              <TextField fullWidth 
+                label="Description" 
+                id="company-form-description" 
+                className="company-form-group" 
+                variant="outlined" 
+                InputLabelProps={{shrink: true,}}
+                value={this.state.description}
+                onChange={this.onChangeDescription}
+                >
+              </TextField>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}> 
+                  <TextField fullWidth 
+                    label="Email Address" 
+                    margin= "normal" 
+                    className="company-form-group"
+                    value={this.state.emailAddress}
+                    onChange={this.onChangeEmailAddress}
+                  >
+                  </TextField>
+                </Grid>
+                <Grid item xs={12} sm={6}> 
+                  <TextField fullWidth 
+                    label="External Links" 
+                    margin= "normal" 
+                    helperText="Company Website or social media" 
+                    className="company-form-group"
+                    value={this.state.links}
+                    onChange={this.onChangeLinks}
+                  >
+                  </TextField>
+                </Grid>
+              </Grid>
+              <TextField fullWidth 
+                label="Search members" 
+                className="company-form-group"
+                value={this.state.members}
+                onChange={this.onChangeMembers}
+              >
+              </TextField>
+              <br /> <br />
               <div className="company-form-group">
-                  <label>Company Title: </label>
-                  <input
-                  type="text"
+                <body1>Browse File to upload Logo: </body1>
+                <FileBase
+                  type="file" 
                   className="form-control"
-                  value={this.state.company_title}
-                  onChange={this.onChangeCompanyTitle}
-                  />
+                  multiple={false} 
+                  /*{ (e) => setPostData({ ...postData, message: e.target.value })
+                  ({ base64 }) => setPostData({ ...postData, selectedFile: base64 }) }*/
+                  onDone={this.onDoneLogo} />
               </div>
-              <div className="company-form-group">
-                  <label>Tagline: </label>
-                  <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.tagline}
-                  onChange={this.onChangeTagline}
-                  />
-              </div>
-              <div className="company-form-group">
-                  <label>Description: </label>
-                  <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.description}
-                  onChange={this.onChangeDescription}
-                  />
-              </div>
-              <div className="company-form-group">
-                  <label>Email Address: </label>
-                  <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.emailAddress}
-                  onChange={this.onChangeEmailAddress}
-                  />
-              </div>
-              <div className="company-form-group">
-                  <label>Logo: </label>
-                  <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.logo}
-                  onChange={this.onChangeLogo}
-                  />
-              </div>
-              <div className="company-form-group">
-                  <label>Links: </label>
-                  <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.links}
-                  onChange={this.onChangeLinks}
-                  />
-              </div>
-              <div className="company-form-group">
-                  <label>Members: </label>
-                  <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.members}
-                  onChange={this.onChangeMembers}
-                  />
-              </div>
-              <button type="submit" className="btn btn-default">Submit</button>
-              {/* btn <- css */}
+              <br />
+              <Button variant="contained" color="primary" type="submit" align="center" classname={useStyles.submit}>Update Company Profile</Button>
             </form>
+          </div>
+        </Container>
       </div>
     );
   }

@@ -6,7 +6,9 @@ import { Route } from "react-router-dom";
 import CompanyProfileList from "./components/companyProfile/companyProfile";
 import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
- 
+import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
+
+
 import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
@@ -34,16 +36,17 @@ const App = () => {
       {/* <Route exact path="/roleselect/:info">
         <RoleSelection />
       </Route> */}
-      <Route path="/company-profile/"> 
+      <Route path="/company-profile/list"> 
         <CompanyProfileList />
       </Route>
       <Route path="/company-profile/create">
         <CreateCompanyProfile />
       </Route>
+      <Route path= "/view/:id" component={MyCompanyProfile} />
       <Route path="/edit/:id" component={EditCompanyProfile} />
 
     </div>
   );
-}
+
 export default App;
 
