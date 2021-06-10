@@ -14,18 +14,19 @@ class PostViewerSpecific extends React.Component {
         loaded:false,
         loaded2:false
       }
-
       
-      var page = window.localStorage.getItem('pagenum') || 0;
-      this.state.pagenum = parseInt(page);
+      
 
       this.decreasePage = this.decreasePage.bind(this);
       this.increasePage = this.increasePage.bind(this);
       this.displayComments = this.displayComments.bind(this);
-      this.setInitialState = this.setInitialState.bind(this);
+      this.displayButton = this.displayButton.bind(this);
+      this.changePage = this.changePage.bind(this);
     }
 
     componentDidMount() {
+      var page = window.localStorage.getItem('pagenum') || 0;
+      this.setState({pagenum:parseInt(page)});
       axios.get("http://localhost:5000/posts/" + window.localStorage.getItem('id')).then(res => {
         this.setState({author:res.data.author, content:res.data.content, tags:[res.data.tags], id:res.data._id});
         this.setState({loaded:true});
@@ -39,24 +40,14 @@ class PostViewerSpecific extends React.Component {
     }
 
     decreasePage(){
-      if(this.state.pagenum > 0){
         window.localStorage.setItem('pagenum', parseInt(this.state.pagenum)-1); 
         window.location.reload();
-      }
     }
     increasePage(){
-      if(this.state.pagenum < this.state.comments.length / 5){
+      var temp_num = prompt("Enter a page number:","");
         window.localStorage.setItem('pagenum', parseInt(this.state.pagenum)+1);
         window.location.reload();
-      }
-    }
-
-    setInitialState(){
-      window.localStorage.setItem('pagenum', this.state.pagenum);
-      window.localStorage.setItem('author', this.state.author);
-      window.localStorage.setItem('content', this.state.content);
-      window.localStorage.setItem('comments', JSON.stringify(this.state.comments));
-      window.localStorage.setItem('tags', JSON.stringify(this.state.tags));
+        
     }
 
     displayComments(){
@@ -73,6 +64,34 @@ class PostViewerSpecific extends React.Component {
       return CommentsList;
     }
 
+    changePage(event){
+      var temp_num = prompt("Enter a page number from 1 to "+Math.floor(this.state.comments.length / 5 + 1).toString()+":","");
+      if(temp_num !== null && !isNaN(parseInt(temp_num))){
+        if(parseInt(temp_num) > this.state.comments.length / 5){
+          temp_num = Math.floor(this.state.comments.length / 5);
+        }
+        if(parseInt(temp_num) < 0){
+          temp_num = 0;
+        }
+        window.localStorage.setItem('pagenum', parseInt(temp_num));
+        window.location.reload();
+      }
+    }
+
+    displayButton(){
+      var buttons = [];
+      if(this.state.pagenum > 0){
+        buttons.push(<button class="button" type="button" onClick={this.decreasePage}>Prev</button>);
+      }
+      buttons.push(<div role="button" class="pagenum">{parseInt(this.state.pagenum) + 1}</div>);
+      buttons.push(<button class="button" type="button" onClick={this.changePage}>Choose Page</button>)
+      if(this.state.pagenum + 1 < this.state.comments.length / 5){
+        buttons.push(<button class="button" type="button" onClick={this.increasePage}>Next</button>);
+      }
+      
+      return buttons;
+    }
+
     render () {
       if(this.state.loaded === false || this.state.loaded2 === false){
         return <p>Loading...</p>
@@ -85,14 +104,11 @@ class PostViewerSpecific extends React.Component {
               <ul><Post author = {this.state.author} content={this.state.content} tags={this.state.tags}/>
                   <CommentWrite id={this.state.id}/>
                   {this.displayComments()}
-                  {this.setInitialState()}
               </ul>
             </nav>
           </div>
           <div class="Pageselector">
-            <button class="button" type="button" onClick={this.decreasePage}>Prev</button>
-            <div class="pagenum">{this.state.pagenum}</div>
-            <button class="button" type="button" onClick={this.increasePage}>Next</button>
+            {this.displayButton()}
           </div>
         </div>
       );

@@ -8,11 +8,14 @@ export default class Post extends React.Component {
         this.state = {
             author:this.props.author,
             content:this.props.content,
-            tags:this.props.tags,
+            tags:[],
             comment:[this.props.comment]
         }
-
         this.renderTags = this.renderTags.bind(this);
+        if(this.props.tags){
+            this.state.tags=this.props.tags.toString().split(",");
+        }
+        
     }
 
     renderTags(){
@@ -25,7 +28,7 @@ export default class Post extends React.Component {
 
     render () {
         return (
-            <div class="Post">
+            <div class="Post clickable">
                 <div className="User">
                     <h1 dangerouslySetInnerHTML={{__html:this.state["author"]}}/>
                 </div>

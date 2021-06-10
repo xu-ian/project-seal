@@ -19,7 +19,6 @@ class PostWrite extends React.Component {
     }
 
     handleTags(event){
-        Notification.requestPermission();
         let newArray = [];
         let inArray = false;
         for(let i = 0; i < this.state.tags.length; i++){
@@ -41,15 +40,11 @@ class PostWrite extends React.Component {
     }
 
     handleSubmit(event) {
-        
-        Notification.requestPermission();
         axios.post("http://localhost:5000/posts/add/", this.state).then(
             res => {
                 console.log(res);
-                new Notification(res);
             }
-        ).catch(event => (new Notification(event)));
-        new Notification(this.state.author + " " + this.state.content +" "+this.state.tags);
+        ).catch(event => ({}));
         event.preventDefault();
     }
 

@@ -3,15 +3,25 @@ div.Post {
     display: inline-block;
     max-width:100%;
     height:auto;
-    border: 3px solid darkgray;
+    border: 1px solid darkgray;
     font-weight: bold;
     line-height: 16px;
-    border-radius: 5px;
+    border-radius: 7px;
     margin: auto;
     display: block;
     overflow:hidden;
-    text-decoration: none
+    text-decoration: none;
+    transition: box-shadow .3s;
 }
+
+div.clickable:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+hr {
+    color:darkgray;
+}
+
 div.User {
     position:relative;
     background-color: white;
@@ -49,4 +59,9 @@ div.Tags {
     background:lightgrey;
     display:block;
     border:1px solid lightgrey;
+    transition: box-shadow .3s;
+}
+
+div.Tags:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }

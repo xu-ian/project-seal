@@ -14,6 +14,8 @@ import {Link, Switch,
     this.decreasePage = this.decreasePage.bind(this);
     this.increasePage = this.increasePage.bind(this);
     this.displayPosts = this.displayPosts.bind(this);
+    this.displayButton = this.displayButton.bind(this);
+    this.changePage = this.changePage.bind(this);
     this.state = {
       loaded:false,
       posts:[],
@@ -26,6 +28,9 @@ import {Link, Switch,
   }
 
   componentDidMount() {
+      if(window.location.pathname === "/posts/1"){
+    window.localStorage.setItem('pagenum', 0);
+  }
     axios.get("http://localhost:5000/posts/").then(res => {
       this.setState({posts:res.data});
       this.setState({loaded:true});
@@ -33,18 +38,40 @@ import {Link, Switch,
   }
 
   decreasePage(){
-    if(this.state.pg > 0){
-      this.setState({pagenum:this.state.pg-1});
-      window.localStorage.setItem('pg', this.state.pg-1); 
-    }
+    window.localStorage.setItem('pg', this.state.pg-1); 
     window.location.reload();
   }
   increasePage(){
-    if(this.state.pg + 1 < this.state.posts.length / 5){
-      this.setState({pg:parseInt(this.state.pg)+1});
-      window.localStorage.setItem('pg', parseInt(this.state.pg)+1);
-    }
+    window.localStorage.setItem('pg', parseInt(this.state.pg)+1);
     window.location.reload();
+  }
+
+  displayButton(){
+    var buttons = [];
+    if(this.state.pg > 0){
+      buttons.push(<button class="button" type="button" onClick={this.decreasePage}>Prev</button>);
+    }
+    buttons.push(<div class="pagenum">{parseInt(this.state.pg) + 1}</div>);
+    buttons.push(<button class="button" type="button" onClick={this.changePage}>Choose Page</button>)
+    if(this.state.pg + 1 < this.state.posts.length / 5){
+      buttons.push(<button class="button" type="button" onClick={this.increasePage}>Next</button>);
+    }
+    
+    return buttons;
+  }
+
+  changePage(event){
+    var temp_num = prompt("Enter a page number from 1 to "+Math.floor(this.state.posts.length / 5 + 1).toString()+":","");
+    if(temp_num !== null && !isNaN(parseInt(temp_num))){
+      if(parseInt(temp_num) > this.state.posts.length / 5){
+        temp_num = Math.floor(this.state.posts.length / 5);
+      }
+      if(parseInt(temp_num) < 0){
+        temp_num = 0;
+      }
+      window.localStorage.setItem('pg', parseInt(temp_num));
+      window.location.reload();
+    }
   }
 
   displayPosts(){
@@ -52,8 +79,8 @@ import {Link, Switch,
     for(let i = 0; i < 5; i++){
       if(this.state.posts.length >= this.state.pg*5 + i +1 && this.state.posts.length !== 0){
         postsList.push(<Link to={{pathname:"post"}} onClick={() => {this.setState({postnum:this.state.pg*5+i}); window.localStorage.setItem("id", this.state.posts[this.state.pg*5+i]._id)}}>
-          <Post author = {this.state.posts[i+this.state.pg*5].author} content={this.state.posts[i+this.state.pg*5].content} 
-                  tags={[this.state.posts[i+this.state.pg*5].tags]} id={this.state.posts[i+this.state.pg*5]._id}/>
+          <div class="post"><Post author = {this.state.posts[i+this.state.pg*5].author} content={this.state.posts[i+this.state.pg*5].content} 
+                  tags={this.state.posts[i+this.state.pg*5].tags} id={this.state.posts[i+this.state.pg*5]._id}/></div>
         </Link>);
       }
     }
@@ -74,6 +101,7 @@ import {Link, Switch,
               <div class="PostWrite">
                 <PostWrite />
               </div>
+              <hr/>
               <div className="Posts">
                 <nav>
                   <ul>
@@ -83,9 +111,7 @@ import {Link, Switch,
               </div>
             </div>
             <div class = "Pageselector">
-              <button class="button" type="button" onClick={this.decreasePage}>Prev</button>
-              <div class="pagenum">{this.state.pg}</div>
-              <button class="button" type="button" onClick={this.increasePage}>Next</button>
+              {this.displayButton()}
             </div>
           </Route>
           <Route path="/posts/post">
