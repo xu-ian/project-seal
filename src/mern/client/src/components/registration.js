@@ -7,7 +7,8 @@ const url = "http://localhost:5000";
 const route = "/users/register";
 
 const Registration = () => {
-  // let history = useHistory();
+
+  var roles = {startupfounder:false, investor:false, insturctor:false};
 
   function register(e) {
     e.preventDefault();
@@ -15,20 +16,29 @@ const Registration = () => {
     const email = e.target.elements.email.value;
     const passw = e.target.elements.password.value;
 
-    var info = {
-      username: userName,
-      email: email,
-      password: passw
+    console.log(roles);
+    // check if user select at least one role
+    if (roles.startupfounder || roles.investor || roles.insturctor) {
+      var info = {
+        username: userName,
+        email: email,
+        password: passw,
+        role: roles
+      }
+      
+      axios.post(url + route, info).then((response) => {
+        alert("Registered");
+      }, (error) => {
+        console.log(error);
+      });
+
+    } else {
+      alert("Please select at least one role");
     }
 
-    // history.push(`/roleselect/${info}`);
-    
-    axios.post(url + route, info).then((response) => {
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
   }
+
+
 
   return(
     <div className="title">
@@ -51,6 +61,27 @@ const Registration = () => {
             <p>Password:</p>
             <input name="password" type="password" placeholder="Password"/>
           </label>
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" id="founder"
+                onClick={() => 
+                  roles.startupfounder = document.getElementById("founder").checked}/>
+            Startup founder
+          </label><br/>
+          <label>
+            <input type="checkbox" id="investor"
+                onClick={() => 
+                  roles.investor = document.getElementById("investor").checked}/>
+            Investor
+          </label><br/>
+          <label>
+            <input type="checkbox" id="instructor"
+                onClick={() => 
+                  roles.insturctor = document.getElementById("instructor").checked}/>
+            Instructor
+          </label>
+
         </div>
         <div className="loginButton">
           <button className="button1" type="submit">Sign up</button>
