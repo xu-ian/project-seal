@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 5000;
 const MongoClient = require('mongodb').MongoClient;
-
 app.use(cors());
 app.use(express.json());
 app.use(require("./routes/record"));
@@ -15,13 +14,12 @@ const postsRouter = require('./routes/posts');
 app.use('/posts', postsRouter);
 
 const commentsRouter = require('./routes/comments');
-app.use('/comments', commentsRouter);
+app.use('/', commentsRouter);
 // get driver connection
 const dbo = require("./db/conn");
 const postsRoutes = require("./routes/posts");
 const commentsRoutes = require("./routes/comments");
 
-const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
 const connection = mongoose.connection;
