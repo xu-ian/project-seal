@@ -1,33 +1,34 @@
-.title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+.container {
+  text-align: center;
+  /* position: relative; */
+}
+
+.heading {
+  font-size: 70px;
+  padding-top: 150px;
+  padding-bottom: 80px;
+}
+
+.selectButton {
+  height: 100;
+  width: 300;
+  font-size: 30;
+
 }
 
 .input {
-  /* text-align: center; */
   padding-bottom: 15px;
   padding-top: 15px;
 }
 
-.button1{
-  width: 100%;
-  padding: 12px 28px;
-  border-radius: 4px;
-  transition-duration: 0.4s;
+.button {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  width: 50;
 }
 
-.button1:hover {
-  width: 100%;
-  background-color: black; /* Green */
-  color: white;
-}
-
-.loginButton {
-  padding: 32px 16px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.signUpHeading {
+  font-size: 70px;
+  padding-top: 70px;
+  padding-bottom: 50px;
 }

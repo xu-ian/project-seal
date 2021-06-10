@@ -2,6 +2,11 @@ import React from 'react';
 import './styling.css';
 import axios from 'axios';
 
+import Button from '@material-ui/core/Button';
+import 'fontsource-roboto';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+
 const url = "http://localhost:5000";
 const route = "/users/login";
 
@@ -24,55 +29,37 @@ const Login = () =>  {
       alert("Invalid username or password");
     });
 
-    // axios.get(url + route) // get user data from database
-    //   .then((response) => {
-    //     const dat = response.data
-    //     var i;
-    //     var authenticated = false;
-
-    //     // loop though all user data and see if user input matches
-    //     for (i = 0; i < dat.length; i++) {
-    //       // user input is match
-    //       if (userName === dat[i].username && passw === dat[i].password) {
-    //         authenticated = true;
-    //         break;
-    //       }
-    //     }
-        
-    //     if (authenticated) {
-    //       console.log("Log in success!");
-    //     } else {
-    //       console.log("invalid username or password");
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-
   }
 
   return(
 
-    <div className="title">
-      <h1>Sign in</h1>
-      <form onSubmit={getUserData}>  {/* pass event to the function when Login button is clicked*/}
+    <div className="container">
+
+      {/* Heading */}
+      <Typography className="heading" variant="h3">
+        Sign In
+      </Typography>
+
+      {/* getUserData() is called and pass event to the function when Login button is clicked*/}
+      <form onSubmit={getUserData}> 
+        
+        {/* User inputs */}
         <div className="input">
-          <label>
-          <p>Username:</p>
-          <input name="username" type="text" placeholder="User Name" />
-          </label>
+          <TextField name="username" variant="outlined" color="primary" label="User name:"/>
         </div>
         <div className="input">
-          <label>
-            <p>Password:</p>
-            <input name="password" type="password" placeholder="Password"/>
-          </label>
+          <TextField name="password" type="password" variant="outlined" color="primary" label="Password:"/>
         </div>
-        <div className="loginButton">
-          <button className="button1" type="submit">Login</button>
+
+        {/* Login Button */}
+        <div className="button">
+          <Button type="submit" variant="contained" size="large" color="primary">
+            Login
+          </Button>
         </div>
       </form>
     </div>
+
   );
 };
 

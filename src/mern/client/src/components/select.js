@@ -1,31 +1,60 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import './styling.css';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+
+import { withStyles } from '@material-ui/core/styles';
+import 'fontsource-roboto';
+import Typography from '@material-ui/core/Typography';
+ 
 
 
 const Select = () => {
+
+  // button styling
+  const ButtonStyle = withStyles({
+    root: {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      borderRadius: 5,
+      border: 0,
+      color: 'white',
+      height: 100,
+      fontSize: 30,
+      width: 300,
+      padding: '0px 30px',
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    },
+    label: {
+      textTransform: 'capitalize',
+    },
+  })(Button);
+
   let history = useHistory();
 
   function toLogin() {
-    history.push("/signin");
+    history.push("/signin");  // go to sign in page
   }
 
   function toSignup() {
-    history.push("/signup");
+    history.push("/signup");  // go to sign up page
   }
 
   return (
-    <div className="title">
-      <h1>African Impact Challenge</h1>
-      <div className="loginButton">
-        <button className="button1" onClick={toLogin}>Login</button>
-      </div>
-      <div className="loginButton">
-        <button className="button1" onClick={toSignup}>Sign up</button>
-      </div>
 
+    <div className="container">
+      {/* Heading */}
+      <Typography className="heading" variant="h2">
+        African Impact Challenge
+      </Typography>
+
+      {/* Two buttons */}
+      <ButtonGroup>
+        <ButtonStyle onClick={toLogin}>Login</ButtonStyle>
+        <ButtonStyle onClick={toSignup}>Sign up</ButtonStyle>
+      </ButtonGroup>
     </div>
-  )
-}
+  );
+};
 
 export default Select;

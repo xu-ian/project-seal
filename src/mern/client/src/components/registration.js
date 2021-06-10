@@ -2,6 +2,11 @@ import React from 'react';
 import './styling.css';
 import axios from 'axios';
 
+import Button from '@material-ui/core/Button';
+import 'fontsource-roboto';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+
 const url = "http://localhost:5000";
 const route = "/users/register";
 
@@ -41,54 +46,61 @@ const Registration = () => {
 
 
   return(
-    <div className="title">
-      <h1>Create Account</h1>
+    <div className="container">
+      {/* Heading */}
+      <Typography className="signUpHeading" variant="h3">
+        Create Account
+      </Typography>    
+
       {/* register() is called and pass event to the function when Login button is clicked*/}
       <form onSubmit={register}> 
+
+        {/* User inputs */}
         <div className="input">
-          <label>
-          <p>Username:</p>
-          <input name="username" type="text" placeholder="User Name" />
-          </label>
+          <TextField name="username" variant="outlined" color="primary" label="User name:"/>
         </div>
         <div className="input">
-          <label>
-          <p>Email:</p>
-          <input name="email" type="text" placeholder="Email" />
-          </label>
+          <TextField name="email" type="text" variant="outlined" color="primary" label="Email:"/>
         </div>
         <div className="input">
-          <label>
-            <p>Password:</p>
-            <input name="password" type="password" placeholder="Password"/>
-          </label>
+          <TextField name="password" type="password" variant="outlined" color="primary" label="Password:"/>
         </div>
+
+        {/* Role selection */}
         <div>
+          <Typography  variant="h6">
+            Please select roles:
+          </Typography> 
+        </div>
+        <div className="input">
           <label>
             {/* set roles.startupfounder to true if the box is checked */}
             <input type="checkbox" id="founder"
                 onClick={() => 
                   roles.startupfounder = document.getElementById("founder").checked}/>
-            Startup founder
+            I am a Startup Founder 
           </label><br/>
           <label>
             {/* set roles.investor to true if the box is checked */}
             <input type="checkbox" id="investor"
                 onClick={() => 
                   roles.investor = document.getElementById("investor").checked}/>
-            Investor
+            I am an Investor 
           </label><br/>
           <label>
             {/* set roles.instructor to true if the box is checked */}
             <input type="checkbox" id="instructor"
                 onClick={() => 
                   roles.instructor = document.getElementById("instructor").checked}/>
-            Instructor
+            I am an Instructor 
           </label>
-
         </div>
-        <div className="loginButton">
-          <button className="button1" type="submit">Sign up</button>
+
+        {/* Sign up button */}
+        <div className="button">
+          <Button type="submit" variant="contained" size="large" color="primary">
+            Sign up
+          </Button>
         </div>
       </form>
     </div>
