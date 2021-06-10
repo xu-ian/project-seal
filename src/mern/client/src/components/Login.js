@@ -36,7 +36,7 @@ const Login = () =>  {
     <div className="container">
 
       {/* Heading */}
-      <Typography className="heading" variant="h3">
+      <Typography className="loginHeading" variant="h3">
         Sign In
       </Typography>
 
