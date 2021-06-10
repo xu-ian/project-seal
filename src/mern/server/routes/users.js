@@ -42,7 +42,15 @@ router.post("/register", [
         });
     });
 
-    user.role = "student";
+    if(req.body.role.startupfounder){
+      user.role.push("startupfounder");
+    }
+    if(req.body.role.investor){
+      user.role.push("investor");
+    }
+    if(req.body.role.instructor){
+      user.role.push("instructor");
+    }
 
     // if all the previous pass, attempt to register
     if (!errors.isEmpty()) {
