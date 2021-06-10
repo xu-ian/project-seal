@@ -1,0 +1,33 @@
+textarea {
+    font-family: Arial;
+    width: 99%;
+    height: 80px;
+    resize: none;
+    font-size: 16px;
+    border: 3px solid darkgray;
+    border-radius: 5px;
+}
+
+input {
+    display: block;
+    width: 10%;
+    margin: auto;
+    background-color: blue;
+    border: 2px solid blue;
+    transition: 1s;
+    font-size: 16px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+input:hover {
+    background-color: darkblue;
+    border-color: darkblue;
+    cursor: pointer;
+}
+
+form {
+    margin: 10px auto;
+    
+    border-radius: 5px;
+}
