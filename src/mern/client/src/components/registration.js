@@ -29,7 +29,7 @@ const Registration = () => {
       axios.post(url + route, info).then((response) => {  
         alert("Registered");
       }, (error) => {
-        console.log("Failed:"+ error);
+        alert("Failed:"+ error);
       });
 
     } else {

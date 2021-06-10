@@ -19,7 +19,7 @@ const Login = () =>  {
       username: userName,
       password: passw
     }).then((response) => {
-      console.log(response.status);
+      alert("Login success!");
     }, (error) => {
       alert("Invalid username or password");
     });
