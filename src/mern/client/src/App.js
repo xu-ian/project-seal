@@ -6,7 +6,7 @@ import { Route } from "react-router-dom";
 import CompanyProfileList from "./components/companyProfile/companyProfile";
 import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
- 
+import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 
 const App = () => {
     return (
@@ -15,12 +15,14 @@ const App = () => {
             <Route exact path="/">
                 Main Page
             </Route>
-            <Route path="/company-profile/"> 
+            
+            <Route path="/company-profile/list"> 
                 <CompanyProfileList />
             </Route>
             <Route path="/company-profile/create">
                 <CreateCompanyProfile />
             </Route>
+            <Route path= "/view/:id" component={MyCompanyProfile} />
             <Route path="/edit/:id" component={EditCompanyProfile} />
         </div>
     )

@@ -1,0 +1,53 @@
+body{
+    background-color: white;
+    font-family: "Raleway", sans-serif;
+}
+
+.container{
+    margin: 50px 10% 0px 10%;
+}
+.profile-wrapper{
+    margin-top: 10px;
+}
+
+/*––––Title–––*/
+.title-wrapper{
+    text-align: center;
+    font-size: 2.5rem;
+}
+.title-line{
+    padding-bottom: 0px;
+    margin-top: 5px;
+    margin-right: 10%;
+    border-bottom: 2px solid #0A1612;
+}
+
+.block-group{
+    margin: 20px 0px 0px 0px;
+    font-size: 1.5rem;
+    border: 1px solid #0B345C;
+    margin: 5%;
+    padding: 3%;
+    border-radius: 15px;
+
+}
+.grid-wrapper{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+#logo-grid{
+    display: grid;
+    grid-template-areas: 'logo title title title title title';
+
+}
+.company-title{
+    justify-content: center;
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color:#1A2930;
+}
+.description-wrapper{
+    height: 100px;
+}

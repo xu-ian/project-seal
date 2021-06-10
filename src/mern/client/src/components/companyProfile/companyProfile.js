@@ -9,11 +9,12 @@ const CompanyProfile = (props) => (
         <td>{props.record.tagline}</td>
         <td>{props.record.description}</td>
         <td>{props.record.emailAddress}</td>
-        <td>{props.record.logo}</td>
         <td>{props.record.links}</td>
+        <td>{props.record.logo}</td>
         <td>{props.record.members}</td>
         <td>
             <Link to={"/edit/" + props.record._id}>Edit</Link>
+            <Link to={"/view/" + props.record._id}>View Profile</Link>
         </td>
     </tr>
 );
@@ -25,6 +26,7 @@ export default class CompanyProfileList extends Component {
         super(props);
         this.state = { companyProfile: [] };
     }
+    
     
     // This method will get the data from the database.
     componentDidMount() {
@@ -49,11 +51,11 @@ export default class CompanyProfileList extends Component {
             );
         });
     }
+
   // This following section will display the table with the records of individuals.
     render() {
         return (
             <div>
-                <h3>Company Profile</h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
@@ -68,6 +70,8 @@ export default class CompanyProfileList extends Component {
                     </thead>
                     <tbody>{this.companyProfileList()}</tbody>
                 </table>
+                
+                {this.companyProfileList().company_title}
             </div>
         );
   }

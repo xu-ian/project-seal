@@ -1,7 +1,26 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom"; //for the web to be responsive
+import PropTypes from 'prop-types'
+import React from "react"
 
-class example extends React.Component{
-    render()
+
+const Header = ({ title }) =>{
+    return(
+        <header>
+            <h1 style={{color: 'red'}}>{title}</h1>
+        </header>
+    )
 }
+
+Header.defultProps = {
+    title: 'Task Tracker',
+}
+Header.protoType = {
+    title: PropTypes.string.isRequired,
+}
+
+//css in js
+// const headingStyle = {
+//     color: 'red',
+//     backgroudcolor: 'black',
+// }
+
+export default Header
