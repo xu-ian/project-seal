@@ -9,12 +9,13 @@ class PostViewerSpecific extends React.Component {
 
     constructor(posts){
       super(posts); 
-      this.state = {
-        author:this.props.author,
-        content:this.props.content,
-        tags:this.props.tags,
-        comments:this.props.comments,
-        pagenum:0
+      this.state = {/*
+        author:this.props.post.author,
+        content:this.props.post.content,
+        tags:this.props.post.tags,
+        comments:this.props.post.comments,*/
+        pagenum:0,
+        loaded:false
       }
 
       this.decreasePage = this.decreasePage.bind(this);
@@ -22,8 +23,7 @@ class PostViewerSpecific extends React.Component {
       this.displayComments = this.displayComments.bind(this);
       this.setInitialState = this.setInitialState.bind(this);
       Notification.requestPermission();
-
-      var pnum = window.localStorage.getItem('pagenum') || 0;
+      /*var pnum = window.localStorage.getItem('pagenum') || 0;
       var cmmt = JSON.parse(window.localStorage.getItem('comments')) || [];
       var author = window.localStorage.getItem('author') || "DefaultName";
       var content = window.localStorage.getItem('content') || "";
@@ -40,13 +40,17 @@ class PostViewerSpecific extends React.Component {
       }
       if(tags !== []){
         this.state.tags=tags;
-      }
+      }*/
     }
 
-
+    componentDidMount() {
+      axios.get("http://localhost:5000/posts/" + window.localStorage.getItem('id')/*this.state.id*/).then(res => {
+        this.setState({author:res.data.author, content:res.data.content, tags:[res.data.tags], comments:[res.data.comments]});
+        this.setState({loaded:true});
+        });
+    }
 
     decreasePage(){
-      new Notification(this.state.pagenum-1);
       if(this.state.pagenum > 0){
         this.setState({pagenum:this.state.pagenum-1});
         window.localStorage.setItem('pagenum', this.state.pagenum-1); 
@@ -76,8 +80,8 @@ class PostViewerSpecific extends React.Component {
       Notification.requestPermission();
       for(let i = 0; i < 5; i++){
         if(this.state.comments.length >= this.state.pagenum*5 + i + 1){
-          CommentsList.push(<Comment author={this.state.comments[i].author} 
-          content={this.state.comments[i].content}/>);
+          CommentsList.push(<Comment author={this.state.comments[parseInt(i) + this.state.pagenum*5].author} 
+          content={this.state.comments[parseInt(i) + this.state.pagenum*5].content}/>);
         }
         else{
           break;
@@ -87,6 +91,9 @@ class PostViewerSpecific extends React.Component {
     }
 
     render () {
+      if(this.state.loaded === false){
+        return <p>Loading...</p>
+      }
       return (
         <div>
           <div className="Posts">
@@ -96,16 +103,6 @@ class PostViewerSpecific extends React.Component {
                   <CommentWrite/>
                   {this.displayComments()}
                   {this.setInitialState()}
-                  {/*<Comment author={this.state.comments[this.state.pagenum*5 + 1].author} 
-                                   content={this.state.comments[this.state.pagenum*5 + 1].content}/>
-                  <Comment author={this.state.comments[this.state.pagenum*5 + 2].author} 
-                                   content={this.state.comments[this.state.pagenum*5 + 2].content}/>
-                  <Comment author={this.state.comments[this.state.pagenum*5 + 3].author} 
-                                   content={this.state.comments[this.state.pagenum*5 + 3].content}/>
-                  <Comment author={this.state.comments[this.state.pagenum*5 + 4].author} 
-                                   content={this.state.comments[this.state.pagenum*5 + 4].content}/>
-                  <Comment author={this.state.comments[this.state.pagenum*5 + 5].author} 
-                                   content={this.state.comments[this.state.pagenum*5 + 5].content}/>*/}
               </ul>
             </nav>
           </div>

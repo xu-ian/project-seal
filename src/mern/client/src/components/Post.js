@@ -2,14 +2,14 @@ import React from 'react';
 import Tag from './Tag.js';
 import './Post.css';
 
-class Post extends React.Component {
+export default class Post extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             author:this.props.author,
             content:this.props.content,
             tags:this.props.tags,
-            comment:this.props.comment
+            comment:[this.props.comment]
         }
 
         this.renderTags = this.renderTags.bind(this);
@@ -42,5 +42,3 @@ class Post extends React.Component {
 
 
 Post.defaultProps = {author: 'Default_User', content: 'Default_Body', tags: [], comment:[]};
-
-export default Post

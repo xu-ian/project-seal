@@ -7,12 +7,9 @@ class PostWrite extends React.Component {
         super(props);
         this.state = {
             author: "Name",
-            value : '',
+            title : 'dummy_title',
             content: 'Content',
-            tags:[],
-            tag1: "No",
-            tag2: "No",
-            tag3: "No"
+            tags:[]
         };
 
 
@@ -40,18 +37,19 @@ class PostWrite extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({content: event.target.value});
     }
 
     handleSubmit(event) {
         
         Notification.requestPermission();
-        axios.post("http://localhost:5000/add/", this.state).then(
+        axios.post("http://localhost:5000/posts/add/", this.state).then(
             res => {
                 console.log(res);
+                new Notification(res);
             }
         ).catch(event => (new Notification(event)));
-        new Notification(this.state.author + " " + this.state.value +" "+this.state.tags);
+        new Notification(this.state.author + " " + this.state.content +" "+this.state.tags);
         event.preventDefault();
     }
 

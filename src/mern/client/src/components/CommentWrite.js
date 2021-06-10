@@ -7,7 +7,8 @@ class CommentWrite extends React.Component {
         super(props);
         this.state = {
             author: "Name",
-            content: 'Content'
+            content: 'Content',
+            post_id: this.props.id,
         };
 
 
@@ -20,12 +21,12 @@ class CommentWrite extends React.Component {
     }
 
     handleSubmit(event) {
-        axios.post("http://localhost:5000/add/", this.state).then(
-            res => {
-                console.log(res);
-            }
-        );
         Notification.requestPermission();
+        axios.post("http://localhost:5000/posts/"+this.state.post_id.toString()+"/comments/add/", this.state).then(
+            res => {
+                new Notification(res);
+            }
+        ).catch(err =>{new Notification(err)});
         new Notification(this.state.author + " " + this.state.content);
         event.preventDefault();
     }
