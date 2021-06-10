@@ -18,20 +18,21 @@ const getCourseObjectIfExists = (payload, courseName) => payload.filter(course =
 class CoursePage extends Component {
     constructor(props){
         super();
-        this.name = qs.parse(props.location.search, { ignoreQueryPrefix: true }).name;
-        this.desc = "";
+        const defaultName = qs.parse(props.location.search, { ignoreQueryPrefix: true }).name;
+        this.state = {
+            courseName: defaultName,
+            desc: ""
+        };
         this.validCourse = false;
     }
 
     componentDidMount() {
         getCourseData.then(result => {
             const payload = result.payload
-            
-            if(courseNameExists(payload, this.name)) {
+            if(courseNameExists(payload, this.state.courseName)) {
                 this.setState({ validCourse: true });
-                const courseObject = getCourseObjectIfExists(payload, this.name);
+                const courseObject = getCourseObjectIfExists(payload, this.state.courseName);
                 this.setState({ desc: courseObject.desc });
-                console.log(this)
             }
         }).catch(error => {
             console.error(error);
@@ -41,10 +42,10 @@ class CoursePage extends Component {
     render() {
         return (
             <Sidebar>
-                {this.validCourse ? (
+                {this.state.validCourse ? (
                     <div>
-                        <h1>{this.name}</h1>
-                        {this.desc}
+                        <h1>{this.state.courseName}</h1>
+                        {this.state.desc}
                     </div>
                 ) : (
                     <div>
