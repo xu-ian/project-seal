@@ -15,9 +15,9 @@ const User = require('../models/user');
 router.post("/register", (req, res) => {
 
     //sanitize and conform data with express-validator functions
-    body('username', 'Username required').trim().isLength({ min: 4}).escape(),
-    body('email', 'Email required').trim().isLength({ min: 4}).normalizeEmail().isEmail().escape(),
-    body('password', 'Password required').trim().isLength({ min: 8}).escape()
+    body('username', 'Username required').trim().isLength({ min: 4}).not().isEmpty().escape(),
+    body('email', 'Email required').trim().isLength({ min: 4}).normalizeEmail().isEmail().not().isEmpty().escape(),
+    body('password', 'Password required').trim().isLength({ min: 8}).not().isEmpty().escape()
 
     const errors = validationResult(req);
 
