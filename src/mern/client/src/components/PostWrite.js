@@ -18,6 +18,10 @@ class PostWrite extends React.Component {
         this.handleTags = this.handleTags.bind(this);
     }
 
+    /**
+     * Adds or removes tags from the array of tags based on input.
+     * @param {*} event The input from the checkbox.
+     */
     handleTags(event){
         let newArray = [];
         let inArray = false;
@@ -35,25 +39,38 @@ class PostWrite extends React.Component {
         this.setState({tags:newArray});
     }
 
+    /**
+     * Changes the contents of the textarea based on what was written.
+     * @param {*} event The input from textarea.
+     */
     handleChange(event) {
         this.setState({content: event.target.value});
     }
 
+    /**
+     * Sends a request to the server to add a post to the database.
+     * @param {*} event Input from the form submission.
+     */
     handleSubmit(event) {
         axios.post("http://localhost:5000/posts/add/", this.state).then(
             res => {
-                console.log(res);
             }
-        ).catch(event => ({}));
+        ).catch();
         event.preventDefault();
     }
 
+    /**
+     * Returns the html for a PostWrite class.
+     * @returns The html code for a PostWrite interface.
+     */
     render (){
         return (
             <form onSubmit={this.handleSubmit} >
                 <label>
+                    {/* Textarea to write post in */}
                     <textarea placeholder = "Make a post" value={this.state.value} onChange={this.handleChange} />
                 </label>
+                {/* Tags to select. */}
                 <label class="switch">
                     <input type="checkbox" value="tag1" onChange={this.handleTags}/>
                     <span class="slider"><div class = 'center' >Tag1</div></span>

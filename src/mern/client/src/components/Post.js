@@ -1,6 +1,6 @@
 import React from 'react';
-import Tag from './Tag.js';
 import './Post.css';
+import axios from 'axios';
 
 export default class Post extends React.Component {
     constructor(props){
@@ -9,7 +9,9 @@ export default class Post extends React.Component {
             author:this.props.author,
             content:this.props.content,
             tags:[],
-            comment:[this.props.comment]
+            comment:[this.props.comment],
+            id:this.props.id,
+            deletable:this.props.del
         }
         this.renderTags = this.renderTags.bind(this);
         if(this.props.tags){
@@ -18,26 +20,37 @@ export default class Post extends React.Component {
         
     }
 
+    /**
+     * Returns the html code for the tags of a post.
+     * @returns {HTML Code} The html code representing each tag the post has.
+     */
     renderTags(){
         const tagsList = [];
         for(let i = 0; i< this.state.tags.length; i++){
-            tagsList.push(<Tag tag={this.state.tags[i]}/>);
+            tagsList.push(<div className="Tags" dangerouslySetInnerHTML={{__html:this.state.tags[i]}}/>);
         }
         return tagsList;
     }
 
+    
+    /* Displays the page */
     render () {
         return (
             <div class="Post clickable">
                 <div className="User">
+                    {/* Author of post */}
                     <h1 dangerouslySetInnerHTML={{__html:this.state["author"]}}/>
                 </div>
                 <hr/>
                 <div className="Body">
+                    {/* Body of post */}
                     <p readonly="true">{this.state.content}</p>
                 </div>
                 <hr/>
-                <div>{this.renderTags()}</div>
+                <div>
+                    {/* Tags of post */}
+                    {this.renderTags()}
+                </div>
             </div>
         );
     }

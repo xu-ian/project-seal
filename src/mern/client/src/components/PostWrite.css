@@ -1,4 +1,5 @@
-/* The switch - the box around the slider */
+/* Handles the styling for PostWrite Tag choices */
+
 .switch {
     position: relative;
     display: inline-block;
@@ -13,7 +14,6 @@
     height: 0;
   }
   
-  /* The slider */
   .slider {
     position: absolute;
     cursor: pointer;
@@ -41,13 +41,4 @@
   
   input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
   }
