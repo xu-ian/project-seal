@@ -36,7 +36,6 @@ require("./config/passport")(passport);
 app.use(cors());
 app.use(express.json());
 app.get('/', (req, res)=> res.send('Hello World!'));
-// app.use(require("./routes/record")); // commented out since record.js is deleted
 app.use('/users', usersRouter);
 // get driver connection
 //const dbo = require("./db/conn");

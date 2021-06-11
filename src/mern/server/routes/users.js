@@ -52,6 +52,8 @@ router.post("/register", [
       user.role.push("instructor");
     }
 
+    user.date_joined = new Date();
+
     // if all the previous pass, attempt to register
     if (!errors.isEmpty()) {
       console.log(errors.array());
