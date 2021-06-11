@@ -11,11 +11,14 @@ export default class Post extends React.Component {
             tags:[],
             comment:[this.props.comment],
             id:this.props.id,
+            edit:false,
             deletable:this.props.del
         }
         this.renderTags = this.renderTags.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.deletable = this.deletable.bind(this);
+        this.edits = this.edits.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         if(this.props.tags){
             this.state.tags=this.props.tags.toString().split(",");
         }
@@ -43,14 +46,41 @@ export default class Post extends React.Component {
 
         }
     }
-
+    
     deletable(){
+        let buttons = []
         if(this.state.deletable === "true"){
-            return(<button class="delete" type="button" onClick={this.deletePost}>Delete</button>);
+            buttons.push(<button class="delete" type="button" 
+                         onClick={this.deletePost}>Delete</button>);
+            buttons.push(<button class="modify" type="button" onClick={() =>{
+                if(this.state.edit){
+                    this.setState({edit:false});
+                    axios.patch("http://localhost:5000/posts/update/"+this.state.id, this.state);
+                }
+                else{
+                    this.setState({edit:true});
+                }
+            }}>Modify</button>)
+            return buttons;
         }
     }
 
+    handleChange(event) {
+        this.setState({content: event.target.value});
+    }
     
+    edits(){
+        if(this.state.edit){
+            return(
+                <textarea placeholder = "Edit this Post" value={this.state.content}
+                  onChange={this.handleChange} />
+            );
+        }
+        else{
+            return(<p readonly="true">{this.state.content}</p>);
+        }
+    }
+
     /* Displays the page */
     render () {
         return (
@@ -62,7 +92,7 @@ export default class Post extends React.Component {
                 <hr/>
                 <div className="Body">
                     {/* Body of post */}
-                    <p readonly="true">{this.state.content}</p>
+                    {this.edits()}
                 </div>
                 <hr/>
                 <div>

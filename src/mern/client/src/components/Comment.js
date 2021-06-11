@@ -8,9 +8,12 @@ class Comment extends React.Component {
         this.state = {
             author:this.props.author,
             content:this.props.content,
-            id:this.props.id
+            id:this.props.id,
+            edit:false
         }
         this.deleteComment = this.deleteComment.bind(this);
+        this.edits = this.edits.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
     
     /**
@@ -24,6 +27,22 @@ class Comment extends React.Component {
         }
         else{
             
+        }
+    }
+
+    handleChange(event) {
+        this.setState({content: event.target.value});
+    }
+
+    edits(){
+        if(this.state.edit){
+            return(
+                <textarea placeholder = "Edit this Post" value={this.state.content}
+                  onChange={this.handleChange} />
+            );
+        }
+        else{
+            return(<p readonly="true">{this.state.content}</p>);
         }
     }
 
@@ -41,10 +60,20 @@ class Comment extends React.Component {
                 <hr/>
                 <div className="Body">
                     {/* Content of comment */}
-                    <p>{this.state.content}</p>
+                    {this.edits()}
                 </div>
                 {/* Button to delete this comment */}
                 <button class="delete" type="button" onClick={this.deleteComment}>Delete</button>
+                <button class="modify" type="button" onClick={() =>{
+                if(this.state.edit){
+                    this.setState({edit:false});
+                    axios.patch("http://localhost:5000/posts/"+window.localStorage.getItem('id')+
+                    "/comments/update/"+ this.state.id, this.state);
+                }
+                else{
+                    this.setState({edit:true});
+                }
+            }}>Modify</button>
             </div>
         );
     }

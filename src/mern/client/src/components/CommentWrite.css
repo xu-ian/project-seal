@@ -1,6 +1,6 @@
 textarea {
     font-family: Arial;
-    width: 99%;
+    max-width: 99%;
     height: 80px;
     resize: none;
     font-size: 16px;

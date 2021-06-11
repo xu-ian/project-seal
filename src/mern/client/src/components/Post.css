@@ -22,6 +22,10 @@ div.clickable:hover{
     float:right;
 }
 
+.modify{
+    float:right;
+}
+
 hr {
     color:darkgray;
 }
