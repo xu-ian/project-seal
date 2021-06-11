@@ -1,0 +1,29 @@
+*{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+
+.container{
+  font-family: Arial, Helvetica, sans-serif;
+	background:rgb(236, 236, 235);
+}
+
+#player{
+  width:69%;
+	margin: 1em 5.5em 0 5.5em;
+}
+
+#video-header{
+	color:white;
+	background: #222;
+	font-size: 0.8em;
+  padding: 8px;
+}
+#title{
+	margin:0.8em 0 0 5.5em;
+}
+
+#description{
+	margin:0.8em 0 0 5.5em;
+}
