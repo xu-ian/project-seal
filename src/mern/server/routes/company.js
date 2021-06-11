@@ -4,8 +4,15 @@ const companyRoutes = express.Router();
 const dbo = require("../db/conn");
 
 
+// const { ObjectID } = require('bson');
+// const { json } = require('express');
+// const mongoose = require('mongoose');
+// const Company = require('../models/company'); 
+
+
+/* The axois method */
 // Get Company Profile List.
-companyRoutes.route("/company-profile").get(function (req, res) {
+companyRoutes.route("/").get(function (req, res) {
   let db_connect = dbo.getDb("employees");
   db_connect
     .collection("companys")
@@ -17,7 +24,7 @@ companyRoutes.route("/company-profile").get(function (req, res) {
 });
 
 // Get Company Profile List by id.
-companyRoutes.route("/company-profile/:id").get(function (req, res) {
+companyRoutes.route("/view/:id").get(function (req, res) {
   let db_connect = dbo.getDb("employees");
   let myquery = { id: req.body.id };
   db_connect
@@ -31,7 +38,7 @@ companyRoutes.route("/company-profile/:id").get(function (req, res) {
 
 
 // Create Company Profile.
-companyRoutes.route("/company-profile/create").post(function (req, res) {
+companyRoutes.route("/create").post(function (req, res) {
     let db_connect = dbo.getDb("employees");
     let myobj = {
       company_title: req.body.company_title,
@@ -75,4 +82,3 @@ companyRoutes.route("/update/:id").post(function (req, res) {
 module.exports = companyRoutes;
 
 
-  

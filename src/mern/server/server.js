@@ -38,10 +38,13 @@ app.use(express.json());
 app.get('/', (req, res)=> res.send('Hello World!'));
 app.use('/users', usersRouter);
 // app.use(require("./routes/record")); //the example one
+const mongoose = require("mongoose");
+const MongoClient = require('mongodb').MongoClient;
 
-//import postRoutes from './routes/posts.js';
-//app.use('/posts', postRoutes);
-app.use(require('./routes/company'));
+
+// Importing routes for posts
+const companyRouter = require('./routes/company');  
+app.use('/company-profile', companyRouter);
 
 // get driver connection
 //const dbo = require("./db/conn");
@@ -49,6 +52,8 @@ app.use(require('./routes/company'));
 //SEAL-3
 require("dotenv").config({ path: "./config.env" });
 const dbo = require("./db/conn"); 
+const companyRoutes = require("./routes/company");
+
 
 app.listen(port, () => {
   // perform a database connection when server starts

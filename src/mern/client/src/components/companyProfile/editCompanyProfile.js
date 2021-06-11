@@ -2,41 +2,11 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import { Container ,TextField, Button, Grid, makeStyles, Typography, Avatar, CssBaseline } from '@material-ui/core';
+import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import BusinessIcon from '@material-ui/icons/Business';
 import './company-profile-style.css'
 
-
-const useStyles = makeStyles((theme) => ({
-    root:{
-    marginTop: '100px',
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '20%',
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
 
 /* This class update an existing company profile through id */
 class EditCompanyProfile extends Component {
@@ -66,23 +36,29 @@ class EditCompanyProfile extends Component {
   }
   // This will get the record based on the id from the database.
   componentDidMount() {
-    axios
-      .get("http://localhost:3000/company-profile/" + this.props.match.params.id)
+    axios.get("http://localhost:3000/company-profile/?_id:" + this.props.match.params.id)
       .then((response) => {
+        const companyLists = response.data;
+        const currentCompany = companyLists.find(person => person._id === this.props.match.params.id);
+
         this.setState({
-          company_title: response.data.company_title,
-          tagline: response.data.tagline,
-          description: response.data.description,
-          emailAddress: response.data.emailAddress,
-          logo: response.data.logo,
-          links: response.data.links,
-          members: response.data.members,
+          company_title: currentCompany.company_title,
+          tagline: currentCompany.tagline,
+          description: currentCompany.description,
+          emailAddress: currentCompany.emailAddress,
+          logo: currentCompany.logo,
+          links: currentCompany.links,
+          members: currentCompany.members,
         });
+        // console.log("edit is fetching: " + JSON.stringify(response.data));
+        // console.log("edit is fetching: " + response.status);
+        // console.log("the id is: " + this.props.match.params.id);
+        console.log("the desired is: " + JSON.stringify(currentCompany));
+        // console.log("company title: ", this.state.company_title);
       })
       .catch(function (error) {
         console.log(error);
       });
-    console.log("the title is" + this.state.company_title)
   }
 
   // These methods will update the state properties.
@@ -140,32 +116,37 @@ class EditCompanyProfile extends Component {
     // This will send a post request to update the data in the database.
     axios
       .post(
-        "http://localhost:3000/update/:id" + this.props.match.params.id,
+        "http://localhost:3000/update/:_id" + this.props.match.params.id,
         newEditedCompanyProfile
       )
-      .then((res) => console.log(res.data));
+      .then((res) => console.log(res.data))
+      .catch(function (error) {
+        console.log(error);
+      });
 
-    this.props.history.push("/company-profile/");
+    this.props.history.push("/list");
   }
 
   // This following section will display the update-form that takes the input from the user to update the data.
   render() {
     return (
-      <div className={useStyles.root} style={{backgroundColor: "white"}}>    
+      <div className="" style={{backgroundColor: "white"} , {marginTop:"30px"}}>    
         <Container component="main" maxWidth="md"> 
           <CssBaseline />
-          <div className={useStyles.paper}>
-            <Avatar className={useStyles.avatar}>
+          <div className="">
+            <Avatar className="">
               <BusinessIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" gutterBottom >
               Update Company Profile
             </Typography>
 
-            <form id="company-form" onSubmit={this.handleSubmit}>
-              <TextField fullWidth 
+            <form id="company-form" onSubmit={this.handleSubmit} style={{marginTop:"20px"}}>
+              <TextField fullWidth
                 label="Company Title" 
                 className="company-form-group"
+                style={{marginBottom:"20px"}}
+                defaultValue = {this.state.company_title}
                 value={this.state.company_title}
                 onChange={this.onChangeCompanyTitle}
               >
@@ -174,16 +155,18 @@ class EditCompanyProfile extends Component {
                 label="Tagline" 
                 placeholder="A brief line that describes the company" 
                 className="company-form-group"
+                style={{marginBottom:"20px"}}
+                defaultValue = {this.state.tagline}
                 value={this.state.tagline}
                 onChange={this.onChangeTagline}
               >
               </TextField>
-              <br /> <br /> <br /> 
               <TextField fullWidth 
                 label="Description" 
                 id="company-form-description" 
                 className="company-form-group" 
                 variant="outlined" 
+                defaultValue = {this.state.description}
                 InputLabelProps={{shrink: true,}}
                 value={this.state.description}
                 onChange={this.onChangeDescription}
@@ -195,6 +178,7 @@ class EditCompanyProfile extends Component {
                     label="Email Address" 
                     margin= "normal" 
                     className="company-form-group"
+                    defaultValue = {this.state.emailAddress}
                     value={this.state.emailAddress}
                     onChange={this.onChangeEmailAddress}
                   >
@@ -206,6 +190,7 @@ class EditCompanyProfile extends Component {
                     margin= "normal" 
                     helperText="Company Website or social media" 
                     className="company-form-group"
+                    defaultValue = {this.state.links}
                     value={this.state.links}
                     onChange={this.onChangeLinks}
                   >
@@ -215,12 +200,13 @@ class EditCompanyProfile extends Component {
               <TextField fullWidth 
                 label="Search members" 
                 className="company-form-group"
+                style={{marginBottom:"20px"}}
+                defaultValue = {this.state.memebers}
                 value={this.state.members}
                 onChange={this.onChangeMembers}
               >
               </TextField>
-              <br /> <br />
-              <div className="company-form-group">
+              <div className="company-form-group" style={{marginBottom:"20px"}}>
                 <body1>Browse File to upload Logo: </body1>
                 <FileBase
                   type="file" 
@@ -230,8 +216,7 @@ class EditCompanyProfile extends Component {
                   ({ base64 }) => setPostData({ ...postData, selectedFile: base64 }) }*/
                   onDone={this.onDoneLogo} />
               </div>
-              <br />
-              <Button variant="contained" color="primary" type="submit" align="center" classname={useStyles.submit}>Update Company Profile</Button>
+              <Button variant="contained" color="primary" type="submit" align="center" classname="">Update Company Profile</Button>
             </form>
           </div>
         </Container>
