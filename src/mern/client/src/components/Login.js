@@ -25,6 +25,8 @@ const Login = () =>  {
       password: passw
     }).then((response) => {
       alert("Login success!");
+      window.localStorage.setItem("username", response.data.username);
+      window.localStorage.setItem("userId", response.data._id);
     }, (error) => {
       alert("Invalid username or password");
     });

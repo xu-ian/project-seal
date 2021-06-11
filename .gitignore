@@ -1,7 +1,7 @@
 .DS_Store
+node_modules/
 
 #should be production secret
 /src/mern/server/config.env
 
-#not needed 
 /src/mern/server/node_modules
