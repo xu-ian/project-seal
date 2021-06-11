@@ -6,7 +6,7 @@ class PostWrite extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            author: "Name",
+            author: window.localStorage.getItem("username"),
             title : 'dummy_title',
             content: 'Content',
             tags:[]

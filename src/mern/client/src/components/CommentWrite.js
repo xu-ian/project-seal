@@ -6,7 +6,7 @@ class CommentWrite extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            author: "Name",
+            author: window.localStorage.getItem("username"),
             content: '',
             post_id: this.props.id,
         };
