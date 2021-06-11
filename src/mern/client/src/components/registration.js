@@ -64,6 +64,8 @@ const Registration = () => {
         </div>
         <div className="input">
           <TextField name="password" type="password" variant="outlined" color="primary" label="Password:"/>
+          <br/>
+          <div>(minimum of 8 characters)</div>
         </div>
 
         {/* Role selection */}

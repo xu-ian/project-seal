@@ -21,6 +21,7 @@
 
 - path: “/signup”
 - take user input and send POST request to “users/register”
+- Note: password requires at least 8 characters
 
 ## Back-end:
 
