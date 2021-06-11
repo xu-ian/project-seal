@@ -43,7 +43,7 @@ class CommentWrite extends React.Component {
                     {/* The textarea to type in your comment. */}
                     <textarea placeholder = "Make a comment" value={this.state.content} onChange={this.handleChange} />
                 </label>
-                <input type="submit" value="Create Comment" />
+                <input class="addButton" type="submit" value="Create Comment" />
             </form>
         );
     }

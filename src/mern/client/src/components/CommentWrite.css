@@ -25,11 +25,11 @@ input {
     font-weight: bold;
 }
 
-input:hover {
+input.addButton:hover {
     background-color: blue;
     border-color: rgb(90, 90, 248);
     cursor: pointer;
-}
+}*/
 
 form {
     margin: 10px auto;
