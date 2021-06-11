@@ -38,8 +38,8 @@ app.use(express.json());
 app.get('/', (req, res)=> res.send('Hello World!'));
 app.use('/users', usersRouter);
 // app.use(require("./routes/record")); //the example one
-const mongoose = require("mongoose");
-const MongoClient = require('mongodb').MongoClient;
+// const mongoose = require("mongoose");
+// const MongoClient = require('mongodb').MongoClient;
 
 // Importing routes for posts
 const companyRouter = require('./routes/company');  

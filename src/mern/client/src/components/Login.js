@@ -3,8 +3,8 @@ import './styling.css';
 import axios from 'axios';
 
 import Button from '@material-ui/core/Button';
-import 'fontsource-roboto';
-import Typography from '@material-ui/core/Typography';
+// import 'fontsource-roboto';
+// import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 const url = "http://localhost:5000";
@@ -36,9 +36,9 @@ const Login = () =>  {
     <div className="container">
 
       {/* Heading */}
-      <Typography className="loginHeading" variant="h3">
+      <h1 className="loginHeading">
         Sign In
-      </Typography>
+      </h1>
 
       {/* getUserData() is called and pass event to the function when Login button is clicked*/}
       <form onSubmit={getUserData}> 

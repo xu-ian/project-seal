@@ -15,10 +15,6 @@ import Select from "./components/select"
 
 // import Navbar from "./components/navbar"
 
-// We use Route in order to define the different routes of our application
-import { Route } from "react-router-dom";
-
-
 const App = () => {
   return (
     <div>
