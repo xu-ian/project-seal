@@ -4,9 +4,11 @@ import Header from './Header'
 import Description from './Description'
 import NextVideo from './NextVideo'
 import './index.css'
-function App() {
+function App(){
   return (
-    <div className='container'>
+		//VideoPlayer that merges all video-components
+		//Modular and can be imporved in the future
+    <div className='video-container'>
 			<Header/>
 			<aside id='video-sidebar'>
 				<NextVideo/>
