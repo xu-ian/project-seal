@@ -77,9 +77,12 @@ import {Link, Switch,
                    onClick={this.decreasePage}>{"<"}</button>);
     }
     buttons.push(<div class="pagenum">Page: {parseInt(this.state.pg) + 1}</div>);
-    buttons.push(<button class="button" type="button" onClick={this.changePage}>
-      {"#"}</button>)
-    if(this.state.pg + 1 < this.state.posts.length / window.localStorage.getItem("epp")){
+    if(Math.floor(this.state.posts.length / 5) !== 0){
+      buttons.push(<button class="button" type="button" onClick={this.changePage}>
+        {"#"}</button>)
+    }
+    if(parseInt(this.state.pg) + 1 < Math.ceil(this.state.posts.length / 
+      window.localStorage.getItem("epp"))){
       buttons.push(<button class="button" type="button" 
                    onClick={this.increasePage}>{">"}</button>);
     }

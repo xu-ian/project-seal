@@ -57,6 +57,7 @@ class PostWrite extends React.Component {
             }
         ).catch();
         event.preventDefault();
+        window.location.reload();
     }
 
     /**
@@ -79,7 +80,7 @@ class PostWrite extends React.Component {
                     <input type="checkbox" value="tag2" onChange={this.handleTags}/>
                     <span class="slider"><div class = 'center'>Tag2</div></span>
                 </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Create Post" />
             </form>
         );
     }

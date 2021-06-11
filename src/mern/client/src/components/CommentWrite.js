@@ -41,9 +41,9 @@ class CommentWrite extends React.Component {
             <form onSubmit={this.handleSubmit} >
                 <label>
                     {/* The textarea to type in your comment. */}
-                    <textarea placeholder = "Write a comment" value={this.state.content} onChange={this.handleChange} />
+                    <textarea placeholder = "Make a comment" value={this.state.content} onChange={this.handleChange} />
                 </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Create Comment" />
             </form>
         );
     }

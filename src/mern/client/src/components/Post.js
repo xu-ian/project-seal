@@ -14,6 +14,8 @@ export default class Post extends React.Component {
             deletable:this.props.del
         }
         this.renderTags = this.renderTags.bind(this);
+        this.deletePost = this.deletePost.bind(this);
+        this.deletable = this.deletable.bind(this);
         if(this.props.tags){
             this.state.tags=this.props.tags.toString().split(",");
         }
@@ -30,6 +32,22 @@ export default class Post extends React.Component {
             tagsList.push(<div className="Tags" dangerouslySetInnerHTML={{__html:this.state.tags[i]}}/>);
         }
         return tagsList;
+    }
+
+    deletePost(){
+        if(window.confirm("This will delete your post and all comments, are you sure?")){
+            axios.delete("http://localhost:5000/posts/delete/" + this.state.id, {id:this.state.id});
+            window.location.assign("/posts/1");
+        }
+        else{
+
+        }
+    }
+
+    deletable(){
+        if(this.state.deletable === "true"){
+            return(<button class="delete" type="button" onClick={this.deletePost}>Delete</button>);
+        }
     }
 
     
@@ -50,6 +68,7 @@ export default class Post extends React.Component {
                 <div>
                     {/* Tags of post */}
                     {this.renderTags()}
+                    {this.deletable()}
                 </div>
             </div>
         );

@@ -72,7 +72,8 @@ class PostViewerSpecific extends React.Component {
         if(this.state.comments.length >= this.state.pagenum*5 + i + 1){
           CommentsList.push(<div class="post"><Comment author={this.state.comments[parseInt(i)
                             + this.state.pagenum*5].author} 
-          content={this.state.comments[parseInt(i) + this.state.pagenum*5].content}/></div>);
+          content={this.state.comments[parseInt(i) + this.state.pagenum*5].content}
+          id={this.state.comments[parseInt(i) + this.state.pagenum*5]._id}/></div>);
         }
         else{
           break;
@@ -116,8 +117,10 @@ class PostViewerSpecific extends React.Component {
       }
       buttons.push(<div role="button" class="pagenum">
                    Page: {parseInt(this.state.pagenum) + 1}</div>);
-      buttons.push(<button class="button" type="button" onClick={this.changePage}>#</button>)
-      if(this.state.pagenum + 1 < this.state.comments.length / 5){
+      if(Math.floor(this.state.comments.length /5) !== 0){
+        buttons.push(<button class="button" type="button" onClick={this.changePage}>#</button>);
+      }
+      if(parseInt(this.state.pagenum) + 1 < Math.ceil(this.state.comments.length / 5)){
         buttons.push(<button class="button" type="button" 
                      onClick={this.increasePage}>{">"}</button>);
       }
@@ -140,7 +143,7 @@ class PostViewerSpecific extends React.Component {
               {this.getInitialState}
               {/* The main post being displayed */}
               <ul><Post author = {this.state.author} content={this.state.content} 
-                   tags={this.state.tags} del="true"/>
+                   tags={this.state.tags} del="true" id={window.localStorage.getItem('id')}/>
                   {/* The comment adding interface */}
                   <CommentWrite id={this.state.id} />
                   {/* The comments associated with the posts*/}
