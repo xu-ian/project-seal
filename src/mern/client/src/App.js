@@ -8,7 +8,6 @@ import CreateCompanyProfile from "./components/companyProfile/createCompanyProfi
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
 import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 
-
 import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"

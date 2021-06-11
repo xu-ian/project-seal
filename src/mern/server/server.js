@@ -41,7 +41,6 @@ app.use('/users', usersRouter);
 const mongoose = require("mongoose");
 const MongoClient = require('mongodb').MongoClient;
 
-
 // Importing routes for posts
 const companyRouter = require('./routes/company');  
 app.use('/company-profile', companyRouter);
@@ -53,7 +52,6 @@ app.use('/company-profile', companyRouter);
 require("dotenv").config({ path: "./config.env" });
 const dbo = require("./db/conn"); 
 const companyRoutes = require("./routes/company");
-
 
 app.listen(port, () => {
   // perform a database connection when server starts
