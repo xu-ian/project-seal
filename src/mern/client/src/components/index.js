@@ -9,6 +9,7 @@ class Components extends Component {
             <Switch>
                 <Route path="/courses" component={Courses} />
                 <Route path="/coursepage" component={CoursePage} />
+								<Route path="/player" component={CoursePage}/>
             </Switch>
         );
     }
