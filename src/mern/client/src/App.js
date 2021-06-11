@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import './App.css';
 import PostViewer from './components/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
+import Registration from "./components/registration"
+import Login from "./components/Login"
+import Select from "./components/select"
+// import RoleSelection from "./components/roleSelection"
+
+// import Navbar from "./components/navbar"
 
 // We use Route in order to define the different routes of our application
 import {
@@ -22,8 +28,14 @@ export default function App(){
           <Route path="/posts/">
             <PostViewer />
           </Route>
-          <Route path="/">
-            <Home />
+          <Route exact path="/">
+            <Select />
+          </Route>
+          <Route exact path="/signin">
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <Registration />
           </Route>
         </Switch>
       </div>

@@ -147,7 +147,7 @@ import {Link, Switch,
    */
   render () {
     //Displays the loading screen until the database query is finished.
-    if(this.state.loaded = false){
+    if(this.state.loaded === false){
       return <p>Loading...</p>
     }
     return (

@@ -1,0 +1,40 @@
+.container {
+  text-align: center;
+  /* position: relative; */
+}
+
+.heading {
+  font-size: 70px;
+  padding-top: 150px;
+  padding-bottom: 80px;
+}
+
+.selectButton {
+  height: 100;
+  width: 300;
+  font-size: 30;
+
+}
+
+.input {
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.button {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  width: 50;
+}
+
+.signUpHeading {
+  font-size: 70px;
+  padding-top: 70px;
+  padding-bottom: 50px;
+}
+
+.loginHeading {
+  font-size: 70px;
+  padding-top: 120px;
+  padding-bottom: 30px;
+}
