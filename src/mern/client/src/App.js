@@ -38,7 +38,7 @@ export default function App(){
           <Route exact path="/signup">
             <Registration />
           </Route>
-          <Route exact path="/signup">
+          <Route exact path="/player">
             <VideoPlayer />
           </Route>
         </Switch>
