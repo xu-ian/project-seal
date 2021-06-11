@@ -1,40 +1,10 @@
 import React, { Component } from "react";
 // This will require to npm install axios
 import axios from 'axios';
-import { Container ,TextField, Button, Grid, makeStyles, Typography, Avatar, CssBaseline } from '@material-ui/core';
+import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
 import FileBase from 'react-file-base64';
 import './company-profile-style.css';
-
-
-const useStyles = makeStyles((theme) => ({
-  root:{
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  TextField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '20%',
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
 
 export default class CreateCompanyProfile extends Component{
   //Constructor that stores the data
@@ -130,26 +100,27 @@ export default class CreateCompanyProfile extends Component{
       links: '',          
       members: ''
     });
-    this.props.history.push("/company-profile/list");
+    this.props.history.push("/list");
   }
 
   //render on the page
   render(){
     return(
-      <div className={useStyles.root} style={{backgroundColor: "white"}}>    
+      <div className="root"style={{backgroundColor: "white"}, {marginTop:"30px"}}>    
         <Container component="main" maxWidth="md"> 
           <CssBaseline />
-          <div className={useStyles.paper}>
-            <Avatar className={useStyles.avatar}>
+          <div className="">
+            <Avatar className="">
               <BusinessIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" gutterBottom>
               Create Company Profile
             </Typography>
-            <form id="company-form" className={useStyles.form} onSubmit={this.handleSubmit}>
+            <form id="company-form" className="form" onSubmit={this.handleSubmit}>
               <TextField required fullWidth 
                 label="Company Title" 
                 className="company-form-group"
+                style={{marginBottom:"20px"}}
                 value={this.state.company_title}
                 onChange={this.onChangeCompanyTitle}
               >
@@ -158,11 +129,11 @@ export default class CreateCompanyProfile extends Component{
                 label="Tagline" 
                 placeholder="A brief line that describes the company" 
                 className="company-form-group"
+                style={{marginBottom:"20px"}}
                 value={this.state.tagline}
                 onChange={this.onChangeTagline}
               >
               </TextField>
-              <br /> <br /> <br /> 
               <TextField required fullWidth 
                 label="Description" 
                 id="company-form-description" 
@@ -199,12 +170,13 @@ export default class CreateCompanyProfile extends Component{
               <TextField fullWidth 
                 label="Search members" 
                 className="company-form-group"
+                style={{marginBottom:"20px"}}
                 value={this.state.members}
                 onChange={this.onChangeMembers}
               >
               </TextField>
               <br /> <br />
-              <div className="company-form-group">
+              <div className="company-form-group" style={{marginBottom:"20px"}}>
                 <body1>Browse File to upload Logo: </body1>
                 <FileBase
                   type="file" 
@@ -215,7 +187,7 @@ export default class CreateCompanyProfile extends Component{
                   onDone={this.onDoneLogo} />
               </div>
               <br />
-              <Button variant="contained" color="primary" type="submit" align="center" classname={useStyles.submit}>Create Company Profile</Button>
+              <Button variant="contained" color="primary" type="submit" align="center" classname="submit">Create Company Profile</Button>
             </form>
           </div>
         </Container>
