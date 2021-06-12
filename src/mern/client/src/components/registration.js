@@ -33,6 +33,7 @@ const Registration = () => {
       // send info to enpoint
       axios.post(url + route, info).then((response) => {  
         alert("Registered");
+        window.location.replace("/signin");
       }, (error) => {
         alert("Failed:"+ error);
       });
