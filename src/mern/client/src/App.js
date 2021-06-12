@@ -11,6 +11,7 @@ import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
+=======
 // import RoleSelection from "./components/roleSelection"
 
 // import Navbar from "./components/navbar"
