@@ -93,7 +93,7 @@ _Legend:_
 
 **Seal-7\*:** Updated: 8 (Many resources were discovered)
 
-Votes: 8,8,8,8,13,13,13 
+	Votes: 8,8,8,8,13,13,13 
 
 Original Estimate: 52
 
