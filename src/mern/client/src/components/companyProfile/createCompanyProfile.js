@@ -87,7 +87,7 @@ export default class CreateCompanyProfile extends Component{
     //this sends the data to the database, using post method.
     //subsitution for this could be fetch. 
     axios
-      .post("http://localhost:3000/company-profile/create", newcompany)
+      .post("http://localhost:5000/company-profile/create", newcompany)
       .then((res) => console.log(res.data));
 
     //empty the state after posting the data to the database
@@ -100,7 +100,7 @@ export default class CreateCompanyProfile extends Component{
       links: '',          
       members: ''
     });
-    this.props.history.push("/list");
+    // this.props.history.push("/list");
   }
 
   //render on the page

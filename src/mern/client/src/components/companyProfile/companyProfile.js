@@ -31,7 +31,7 @@ export default class CompanyProfileList extends Component {
     // This method will get the data from the database.
     componentDidMount() {
         axios
-        .get("http://localhost:3000/company-profile/")
+        .get("http://localhost:5000/company-profile/")
         .then((response) => {
             this.setState({ companyProfile: response.data });
         })

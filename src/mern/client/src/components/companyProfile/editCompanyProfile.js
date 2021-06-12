@@ -36,7 +36,7 @@ class EditCompanyProfile extends Component {
   }
   // This will get the record based on the id from the database.
   componentDidMount() {
-    axios.get("http://localhost:3000/company-profile/?_id:" + this.props.match.params.id)
+    axios.get("http://localhost:5000/company-profile/?_id:" + this.props.match.params.id)
       .then((response) => {
         const companyLists = response.data;
         const currentCompany = companyLists.find(person => person._id === this.props.match.params.id);
@@ -116,7 +116,7 @@ class EditCompanyProfile extends Component {
     // This will send a post request to update the data in the database.
     axios
       .post(
-        "http://localhost:3000/update/:_id" + this.props.match.params.id,
+        "http://localhost:5000/update/:_id" + this.props.match.params.id,
         newEditedCompanyProfile
       )
       .then((res) => console.log(res.data))

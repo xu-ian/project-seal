@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // This will require to npm install axios
 import axios from 'axios';  //this communicates with backend
-import { Stack, Paper, Avatar, Typography, Container } from '@material-ui/core';
+import { Paper, Avatar, Typography, Container } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import './my-company-profile-style.css';
 
@@ -22,7 +22,7 @@ export default class MyCompanyProfile extends Component{
 
   // This will get the record based on the id from the database.
     componentDidMount() {
-        axios.get("http://localhost:3000/company-profile/?_id:" + this.props.match.params.id)
+        axios.get("http://localhost:5000/company-profile/?_id:" + this.props.match.params.id)
         .then((response) => {
             const companyLists = response.data;
             const currentCompany = companyLists.find(person => person._id === this.props.match.params.id);
@@ -80,7 +80,7 @@ export default class MyCompanyProfile extends Component{
                     </Container>
                 </div>
                 {/* Profile Content */}
-                <Stack spacing={2} className="profile-wrapper">                         
+                <div spacing={2} className="profile-wrapper">                         
                     <Item className="block-group" style={{padding: "20px"}}>
                         <Typography className="text-title" variant="h5" > About: </Typography>
                         <Typography className="text-wrapper" variant="h6" style={{marginLeft: "5%"}}> {this.state.description} </Typography>
@@ -100,7 +100,7 @@ export default class MyCompanyProfile extends Component{
                         </div>
                     </Item>
                     <Item className="block-group" style={{padding: "20px"}} > Teams </Item>
-                </Stack>
+                </div>
             </div>
         )
     }
