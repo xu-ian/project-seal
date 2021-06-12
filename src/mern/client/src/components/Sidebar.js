@@ -8,6 +8,7 @@ class Sidebar extends React.Component {
                 <h1 class="title">AIC</h1>
                 <a href="/">Home</a>
                 <a href="/posts/1">Posts</a>
+                <a href="/list">Companies</a>
             </div>
         );
     }

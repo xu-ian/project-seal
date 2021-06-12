@@ -116,12 +116,11 @@ class EditCompanyProfile extends Component {
     // This will send a post request to update the data in the database.
     axios
       .post(
-        "http://localhost:5000/update/:_id" + this.props.match.params.id,
+        "http://localhost:5000/company-profile/update/" + this.props.match.params.id,
         newEditedCompanyProfile
       )
       .then((res) => console.log(res.data))
       .catch(function (error) {
-        console.log(error);
       });
 
     this.props.history.push("/list");
