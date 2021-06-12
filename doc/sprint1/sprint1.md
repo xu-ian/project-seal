@@ -91,7 +91,7 @@ _Legend:_
 
 	Votes: 13,13,21,21,21,21,21
 
-**_Seal-7*:_** Updated: 8 (Many resources were discovered)
+**Seal-7\*:** Updated: 8 (Many resources were discovered)
 
 Votes: 8,8,8,8,13,13,13 
 
