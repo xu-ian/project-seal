@@ -16,7 +16,7 @@
 
 
 
-*   **SEAL-1 (Signup and User Credential Storage) [8] ** : Brandon
+*   **SEAL-1 (Signup and User Credential Storage) [8]** : Brandon
     *   Frontend
         *   Sign Up Page
     *   Backend
