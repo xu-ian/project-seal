@@ -14,7 +14,7 @@
 
 * As a user, I want to create posts that also display my user information, so that other people are able to find out more about me.
 * As a user, I want to be recognized in the client after I've logged in, so that I can access other resources under my account.
-* As a user, I want all features to be in one branch, so that I can navigate through the website easily.
+* As a user, I want to access all the features from the previous sprint, so that I can navigate through the website easily.
 
 ## What are practices that you should continue during next sprint?
 Most of our members agreed that having frequent meetings was beneficial to our team, and should be longer (if needed) 
