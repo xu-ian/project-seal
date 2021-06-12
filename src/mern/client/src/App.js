@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import './App.css';
 import PostViewer from './components/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
+//component for the part
+import CompanyProfileList from "./components/companyProfile/companyProfile";
+import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
+import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
+import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
@@ -41,12 +46,17 @@ export default function App(){
           <Route exact path="/player">
             <VideoPlayer />
           </Route>
+          <Route path="/list"> 
+            <CompanyProfileList />
+          </Route>
+          <Route path="/create">
+            <CreateCompanyProfile />
+          </Route>
+        <Route path= "/view/:id" component={MyCompanyProfile} />
+        <Route path="/edit/:id" component={EditCompanyProfile} />
         </Switch>
       </div>
       </Router>  
     );
 };
 
-function Home() {
-    return <h2>Home</h2>;
-  }
