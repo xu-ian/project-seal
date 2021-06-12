@@ -10,6 +10,7 @@ import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
+import VideoPlayer from "./components/VideoPlayer"
 // import RoleSelection from "./components/roleSelection"
 
 // import Navbar from "./components/navbar"
@@ -41,6 +42,9 @@ export default function App(){
           </Route>
           <Route exact path="/signup">
             <Registration />
+          </Route>
+          <Route exact path="/player">
+            <VideoPlayer />
           </Route>
           <Route path="/list"> 
             <CompanyProfileList />
