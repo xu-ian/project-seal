@@ -13,8 +13,6 @@ const passport = require("passport");
 
 var usersRouter = require("./routes/users");
 
-
-
 // create application/json parser
  
 // create application/x-www-form-urlencoded parser
@@ -47,14 +45,35 @@ require("./config/passport")(passport);
 const commentsRouter = require('./routes/comments');
 app.use('/', commentsRouter);
 // get driver connection
-const dbo = require("./db/conn");
 const postsRoutes = require("./routes/posts");
 const commentsRoutes = require("./routes/comments");
 
 app.get('/', (req, res)=> res.send('Hello World!'));
 app.use('/users', usersRouter);
+// app.use(require("./routes/record")); //the example one
+// const mongoose = require("mongoose");
+// const MongoClient = require('mongodb').MongoClient;
+
+// Importing routes for posts
+const companyRouter = require('./routes/company');  
+app.use('/company-profile', companyRouter);
+
 // get driver connection
 //const dbo = require("./db/conn");
+
+//SEAL-3
+require("dotenv").config({ path: "./config.env" });
+const dbo = require("./db/conn"); 
+const companyRoutes = require("./routes/company");
+
+app.listen(port, () => {
+  // perform a database connection when server starts
+  dbo.connectToServer(function (err) {
+    if (err) console.error(err);
+
+  });
+  console.log(`Server is running on port: ${port}`);
+});
 
 // app.listen(port, () => {
 //   // perform a database connection when server starts
@@ -64,7 +83,4 @@ app.use('/users', usersRouter);
 //   });
 //   console.log(`Server is running on port: ${port}`);
 // });
-
-
-app.listen(port, () => console.log(`Server up and running on port ${port} !`));
 
