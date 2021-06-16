@@ -254,16 +254,14 @@ As someone with an outside perspective, it was nice to get a quick overview but 
   - 8 marks = features presented work flawlessly
     - 1 mark removed for each error or missing records on Jira
 
-  Your Mark: 0 / 10
-
-Mark pending from Demo TA.
+  Your Mark: 9 / 10
 
 ---
 
 
 ## Total Mark
 
-77 / 89
+86 / 89
 
 It is best practice to not commit .env files as that is a security risk if the repo is made public.
 
