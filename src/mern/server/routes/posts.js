@@ -5,12 +5,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Post = require('../models/Post'); 
 const postsRoutes = express.Router();
+const User = require('../models/user');
 
 // Get a list of all the posts.
 postsRoutes.route('/').get((req, res) => {
     if (Object.keys(req.query).length === 0) {
        Post.find()
-        .populate('comments', 'author content')
+        .populate({
+            path: 'comments',
+            populate: {                                 
+                path: 'author'
+            }
+        })
+        .populate('author')                             
         .then(posts => {
             res.json(posts);
         })
@@ -18,9 +25,14 @@ postsRoutes.route('/').get((req, res) => {
             res.status(400).json({ msg: err.msg });
         });
     } else {
-        console.log(req.query);
         Post.find({ tags: req.query.tags })
-            .populate('comments', 'author content')
+            .populate({
+                path: 'comments',
+                populate: {                                 
+                    path: 'author'
+                }
+            })
+            .populate('author')                             
             .then(posts => {
                 res.json(posts);
             })
@@ -33,7 +45,13 @@ postsRoutes.route('/').get((req, res) => {
 // Get a specific post by ID.
 postsRoutes.route('/:id').get((req, res) => {
     Post.findById(req.params.id)
-        .populate('comments', 'author content')
+        .populate({
+            path: 'comments',
+            populate: {                                 
+                path: 'author'
+            }
+        })
+        .populate('author')                             
         .then(post => {
             res.json(post);
         })
@@ -45,7 +63,7 @@ postsRoutes.route('/:id').get((req, res) => {
 // Create a post.
 postsRoutes.route("/add").post((req, res) => {
     let newPost = new Post({
-        author: req.body.author,
+        author: ObjectID(req.body.user._id),
         title: req.body.title,
         content: req.body.content,
         tags: req.body.tags

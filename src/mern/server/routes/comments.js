@@ -10,7 +10,12 @@ const commentsRoutes = express.Router();
 // Getting comments from a post
 commentsRoutes.route("/posts/:id/comments").get((req, res) => {
     Post.findById(req.params.id)
-        .populate("comments")
+        .populate({
+            path: "comments",
+            populate: {
+                path: "author"
+            }
+        })
         .select("-tags -content -createdAt -updatedAt -_id -author -title -__v")
         .then(comments => {
             res.json(comments);
@@ -25,6 +30,7 @@ commentsRoutes.route("/posts/:postId/comments/:commentId").get((req, res) => {
     Post.findById(req.params.postId)
         .then(
             Comment.findById(req.params.commentId)
+                   .populate("author")
                    .then(comment => {
                        res.json(comment);
                    })
@@ -37,7 +43,7 @@ commentsRoutes.route("/posts/:postId/comments/:commentId").get((req, res) => {
 // Adding a comment
 commentsRoutes.route("/posts/:id/comments/add").post((req, res) => {
     let newComment = new Comment({
-        author: req.body.author,
+        author: ObjectId(req.body.user._id),
         content: req.body.content
     });
 
