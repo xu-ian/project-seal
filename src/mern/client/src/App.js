@@ -11,7 +11,9 @@ import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
-=======
+import FriendList from "./components/FriendList"
+//import UploadFile from "./components/UploadFile"
+
 // import RoleSelection from "./components/roleSelection"
 
 // import Navbar from "./components/navbar"
@@ -53,8 +55,14 @@ export default function App(){
           <Route path="/create">
             <CreateCompanyProfile />
           </Route>
-        <Route path= "/view/:id" component={MyCompanyProfile} />
-        <Route path="/edit/:id" component={EditCompanyProfile} />
+          <Route path = "/friendlist/">
+            <FriendList/>
+          </Route>
+          {/*<Route path ="/testing">
+            <UploadFile />
+          </Route>*/}
+          <Route path= "/view/:id" component={MyCompanyProfile} />
+          <Route path="/edit/:id" component={EditCompanyProfile} />
         </Switch>
       </div>
       </Router>  
