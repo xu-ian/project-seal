@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import './App.css';
 import PostViewer from './components/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
@@ -12,7 +12,7 @@ import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
 import FriendList from "./components/FriendList"
-//import UploadFile from "./components/UploadFile"
+import Submit from './components/Submit';
 
 // import RoleSelection from "./components/roleSelection"
 
@@ -22,8 +22,7 @@ import FriendList from "./components/FriendList"
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
   } from "react-router-dom";
 
 export default function App(){
@@ -58,9 +57,9 @@ export default function App(){
           <Route path = "/friendlist/">
             <FriendList/>
           </Route>
-          {/*<Route path ="/testing">
-            <UploadFile />
-          </Route>*/}
+          <Route path = "/submit">
+            <Submit/>
+          </Route>
           <Route path= "/view/:id" component={MyCompanyProfile} />
           <Route path="/edit/:id" component={EditCompanyProfile} />
         </Switch>
