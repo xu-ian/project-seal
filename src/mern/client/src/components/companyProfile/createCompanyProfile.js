@@ -100,7 +100,7 @@ export default class CreateCompanyProfile extends Component{
       links: '',          
       members: ''
     });
-    // this.props.history.push("/list");
+    window.location.href = "/company-profile/list";
   }
 
   //render on the page

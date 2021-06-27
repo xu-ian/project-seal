@@ -13,8 +13,8 @@ const CompanyProfile = (props) => (
         <td>{props.record.logo}</td>
         <td>{props.record.members}</td>
         <td>
-            <Link to={"/edit/" + props.record._id}>Edit</Link>
-            <Link to={"/view/" + props.record._id}>View Profile</Link>
+            <Link to={"/company-profile/edit/" + props.record._id}>Edit</Link>
+            <Link to={"/company-profile/view/" + props.record._id}>View Profile</Link>
         </td>
     </tr>
 );
