@@ -46,7 +46,7 @@ export default class SearchProfile extends Component{
             this.setState({ companyProfile: response.data });
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error); 
         });
     }
 

@@ -60,7 +60,7 @@ export default function App(){
           <Route path="/company-profile/create" component={CreateCompanyProfile} />
           <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
           <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-          <Route path = "/user-profile/create" component={CreateUserProfile} />
+          <Route path = "/user-profile/create" component={CreateUserProfile} /> 
         </Switch>
       </div>
       </Router>  

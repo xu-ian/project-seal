@@ -52,7 +52,7 @@ export default class ProfilePage extends Component{
                         </Grid>
                     </Grid>
                     <Grid> <Link href= "/posts/" style={styledLink}> Or...Skip this step first</Link> </Grid>
-                </Container>
+                </Container> 
             </div>
         )
     }
