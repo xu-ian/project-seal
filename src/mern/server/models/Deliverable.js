@@ -12,6 +12,14 @@ const DeliverableSchema = mongoose.Schema({
     course: {
         type: String,
         required: true
+    },
+    assignment: {
+        type: String,
+        required: true
+    },
+    path: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

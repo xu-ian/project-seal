@@ -2,6 +2,7 @@ const express = require("express");
 var bodyParser = require('body-parser')
 const cors = require("cors");
 var mongoose = require("mongoose");
+var multer = require("multer");
 require("dotenv").config({ path: "./config.env" });
 require("dotenv").config({ path: "./config/config.env" });
 const port = process.env.PORT || 5000;
@@ -65,6 +66,27 @@ app.use('/company-profile', companyRouter);
 require("dotenv").config({ path: "./config.env" });
 const dbo = require("./db/conn"); 
 const companyRoutes = require("./routes/company");
+
+// SEAL-12: Setting storage for file uploads
+
+/*var deliverableStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './uploads/deliverables');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now + "-" + file.originalname);
+    }
+});
+
+var deliverableUpload = multer({ storage: deliverableStorage });*/
+
+var deliverableRouter = require('./routes/deliverables');
+app.use('/deliverables', deliverableRouter);
+
+var deliverableRoutes = require('./routes/deliverables');
+
+
+//
 
 app.listen(port, () => {
   // perform a database connection when server starts
