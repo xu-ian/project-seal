@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import './App.css';
 import PostViewer from './components/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
-//component for the part
+
 import CompanyProfileList from "./components/companyProfile/companyProfile";
 import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
@@ -11,17 +11,14 @@ import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
-import ProfilePage from "./components/ProfilePage";
-// import RoleSelection from "./components/roleSelection"
-
-// import Navbar from "./components/navbar"
+import Courses from "./components/Courses"
+import CoursePage from "./components/CoursePage"
 
 // We use Route in order to define the different routes of our application
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
   } from "react-router-dom";
 
 function hideSideBar(){
@@ -38,6 +35,12 @@ export default function App(){
         </div>
         <div class="content">
         <Switch>
+          <Route path="/courses">
+            <Courses />
+          </Route>
+          <Route path="/coursepage">
+            <CoursePage />
+          </Route>
           <Route path="/posts/">
             <PostViewer />
           </Route>
@@ -57,7 +60,6 @@ export default function App(){
           <Route path="/company-profile/create" component={CreateCompanyProfile} />
           <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
           <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-          <Route path = "/profile/create" component={ProfilePage} />
         </Switch>
       </div>
       </Router>  
