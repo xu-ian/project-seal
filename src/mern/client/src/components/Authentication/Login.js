@@ -1,67 +1,104 @@
-import React from 'react';
+import React, { Component } from "react";
 import '../styling.css';
-import axios from 'axios';
 
 import Button from '@material-ui/core/Button';
-// import 'fontsource-roboto';
-// import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-const url = "http://localhost:5000";
-const route = "/users/login";
+// for redux 
+import PropTypes from "prop-types";
+import { loginUser } from '../actions/authActions';
+import { connect } from 'react-redux';
+import classnames from "classnames";
 
-// Sign in component
-const Login = () =>  {
 
-  // this function is called when login button is clicked
-  function getUserData(e) {
-    e.preventDefault();
-    const userName = e.target.elements.username.value;  // get username and password from user input
-    const passw = e.target.elements.password.value;
+class Login extends Component {
 
-    axios.post(url + route, { // post information to database
-      username: userName,
-      password: passw
-    }).then((response) => {
-      alert("Login success!");
-      window.localStorage.setItem("username", response.data.username);
-      window.localStorage.setItem("userId", response.data._id);
-    }, (error) => {
-      alert("Invalid username or password");
-    });
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      password: "",
+      errors: {},
+    };
   }
 
-  return(
+  componentDidMount() {
+    // If logged in and user navigates to Login page, should redirect them to dashboard
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
 
-    <div className="container">
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/"); // push user to dashboard when they login
+    }
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors,
+      });
+    }
+  }
 
-      {/* Heading */}
-      <h1 className="loginHeading">
-        Sign In
-      </h1>
+  onChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
 
-      {/* getUserData() is called and pass event to the function when Login button is clicked*/}
-      <form onSubmit={getUserData}> 
-        
-        {/* User inputs */}
-        <div className="input">
-          <TextField name="username" variant="outlined" color="primary" label="User name:"/>
-        </div>
-        <div className="input">
-          <TextField name="password" type="password" variant="outlined" color="primary" label="Password:"/>
-        </div>
+  onSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      username: this.state.name,
+      password: this.state.password,
+    };
+    this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
+  };
 
-        {/* Login Button */}
-        <div className="button">
-          <Button type="submit" variant="contained" size="large" color="primary">
-            Login
-          </Button>
-        </div>
-      </form>
-    </div>
+  render() {
+    const { errors } = this.state;
 
-  );
+    return (
+      <div className="container">
+
+        {/* Heading */}
+        <h1 className="loginHeading">
+          Sign In
+        </h1>
+
+        {/* getUserData() is called and pass event to the function when Login button is clicked*/}
+        <form onSubmit={this.onSubmit}> 
+          
+          {/* User inputs */}
+          <div className="input">
+            <TextField name="username" variant="outlined" color="primary" label="User name:"
+              id="name" onChange={this.onChange} value={this.state.name} error={errors.name} className={classnames("", {invalid: errors.name,})}/>
+          </div>
+          <div className="input">
+            <TextField name="password" type="password" variant="outlined" color="primary" label="Password:"
+              id="password" onChange={this.onChange} value={this.state.password} error={errors.password} className={classnames("", {invalid: errors.password,})}/>
+          </div>
+
+          {/* Login Button */}
+          <div className="button">
+            <Button type="submit" variant="contained" size="large" color="primary">
+              Login
+            </Button>
+          </div>
+        </form>
+      </div>      
+    )
+  }
+
+}
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors,
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

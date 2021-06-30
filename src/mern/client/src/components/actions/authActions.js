@@ -14,13 +14,16 @@ const url = "http://localhost:5000";
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post(url + "/users/register", userData)
-    .then(res => history.push("/users/login")) // re-direct to login on successful register
-    .then(res => {})
-    .catch(err =>
+    .then(res => history.push("/signin")) // re-direct to login on successful register
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
+      });
+
+      alert("Failed:"+ err);
+
+      }
     );
 };// Login - get user token
 
@@ -38,12 +41,19 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
+
+      alert("Login success!");
     })
-    .catch(err =>
+    .catch(err => {
+
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
+      });
+
+      alert("Invalid username or password");
+      }
+
     );
 };
 

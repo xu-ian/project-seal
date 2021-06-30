@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import '../styling.css';
 
 import Button from '@material-ui/core/Button';
-// import 'fontsource-roboto';
-// import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-
 
 //redux required imports
 import PropTypes from "prop-types";
@@ -23,7 +20,9 @@ class Registration extends Component {
       name: "",
       email: "",
       password: "",
-      roles: {startupfounder:false, investor:false, instructor:false},
+      startupfounder: false,
+      investor: false,
+      instructor: false,
       errors: {},
     };
   }
@@ -51,14 +50,15 @@ class Registration extends Component {
     e.preventDefault();
 
     const newUser = {
-      name: this.state.name,
+      username: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      roles: this.state.roles
-
+      role: {startupfounder: this.state.startupfounder, 
+        investor: this.state.investor,
+        instructor: this.state.instructor
+      }
     };
 
-    console.log(this.state.roles);
     this.props.registerUser(newUser, this.props.history);
   }
 
@@ -88,38 +88,40 @@ class Registration extends Component {
           <div className="input">
             <TextField name="password" type="password" variant="outlined" color="primary" label="Password:"
               id="password" onChange={this.onChange} value={this.state.password} error={errors.password} className={classnames("", {invalid: errors.password,})}/>
-              {/* id="password" onChange={this.onChange} value={this.state.password}/> */}
               
             <br/>
             <div>(minimum of 8 characters)</div>
           </div>
 
-          {/* Role selection*/}
+          {/* Role selection */}
           <div>
-          <h1 >
-            Please select roles:
-          </h1> 
+            <h1 >
+              Please select roles:
+            </h1> 
           </div>
           <div className="input">
             <label>
               {/* set roles.startupfounder to true if the box is checked */}
               <input type="checkbox" id="founder"
-                  onClick={() => this.state.roles.startupfounder = document.getElementById("founder").checked}/>
+                  onClick={() => 
+                    this.setState( {startupfounder: document.getElementById("founder").checked} )}/>
               I am a Startup Founder 
             </label><br/>
             <label>
               {/* set roles.investor to true if the box is checked */}
               <input type="checkbox" id="investor"
-                  onClick={() => this.state.roles.investor = document.getElementById("investor").checked}/>
+                  onClick={() => 
+                    this.setState( {investor: document.getElementById("investor").checked} )}/>
               I am an Investor 
             </label><br/>
             <label>
               {/* set roles.instructor to true if the box is checked */}
               <input type="checkbox" id="instructor"
-                  onClick={() => this.state.roles.instructor = document.getElementById("instructor").checked}/>
+                  onClick={() => 
+                    this.setState( {instructor: document.getElementById("instructor").checked} )}/>
               I am an Instructor 
             </label>
-          </div>          
+          </div>             
 
           {/* Sign up button */}
           <div className="button">
