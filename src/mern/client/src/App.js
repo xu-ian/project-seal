@@ -12,7 +12,7 @@ import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
 import ProfilePage from "./components/ProfilePage";
-import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
+// import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
 import SearchProfile from "./components/SearchProfile";
 // import RoleSelection from "./components/roleSelection"
 
@@ -60,7 +60,7 @@ export default function App(){
           <Route path="/company-profile/create" component={CreateCompanyProfile} />
           <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
           <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-          <Route path = "/user-profile/create" component={CreateUserProfile} />
+          {/* <Route path = "/user-profile/create" component={CreateUserProfile} /> */}
         </Switch>
       </div>
       </Router>  
