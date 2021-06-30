@@ -1,5 +1,5 @@
 import React from 'react';
-import './styling.css';
+import '../styling.css';
 import axios from 'axios';
 
 import Button from '@material-ui/core/Button';

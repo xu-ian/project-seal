@@ -7,14 +7,15 @@ import CompanyProfileList from "./components/companyProfile/companyProfile";
 import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
 import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
-import Registration from "./components/registration";
-import Login from "./components/Login";
-import Select from "./components/select";
+import Registration from "./components/Authentication/registration";
+import Login from "./components/Authentication/Login";
+import Select from "./components/Authentication/select";
 import VideoPlayer from "./components/VideoPlayer";
 
-// import RoleSelection from "./components/roleSelection"
-
-// import Navbar from "./components/navbar"
+// for redux
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./authUtils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./components/actions/authActions";
 
 // We use Route in order to define the different routes of our application
 
@@ -30,6 +31,32 @@ import {
     Route,
     Link
   } from "react-router-dom";
+
+
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+
+  // Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+
+    // Redirect to login
+    window.location.href = "./login";
+  }
+}
+
 
 function hideSideBar(){
   //include the URL to disclude Sidebar

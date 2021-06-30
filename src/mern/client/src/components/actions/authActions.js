@@ -7,12 +7,15 @@ import {
   USER_LOADING
 } from "./types";
 
+const url = "http://localhost:5000";
+
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/users/register", userData)
-    .then(res => history.push("/login")) // re-direct to login on successful register
+    .post(url + "/users/register", userData)
+    .then(res => history.push("/users/login")) // re-direct to login on successful register
+    .then(res => {})
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -24,7 +27,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 export const loginUser = userData => dispatch => {
   axios
-    .post("/api/users/login", userData)
+    .post(url + "/users/login", userData)
     .then(res => {
       // Save to localStorage// Set token to localStorage
       const { token } = res.data;
