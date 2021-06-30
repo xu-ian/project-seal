@@ -58,9 +58,6 @@ export default function App(){
           <Route path = "/friendlist/">
             <FriendList/>
           </Route>
-          {/*<Route path ="/testing">
-            <UploadFile />
-          </Route>*/}
           <Route path= "/view/:id" component={MyCompanyProfile} />
           <Route path="/edit/:id" component={EditCompanyProfile} />
         </Switch>
