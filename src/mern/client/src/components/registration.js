@@ -7,6 +7,14 @@ import Button from '@material-ui/core/Button';
 // import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
+
+//redux required imports
+// import PropTypes from "prop-types";
+// import { withRouter } from 'react-router-dom';
+// import { connect } from 'react-redux';
+// import { registerUser } from './actions/authActions';
+// import classnames from "classnames";
+
 const url = "http://localhost:5000";
 const route = "/users/register";
 
@@ -44,6 +52,15 @@ const Registration = () => {
 
   }
 
+
+  //?
+  // function componentWillReceiveProps(nextProps) {
+  //   if (nextProps.errors) {
+  //     this.setState({
+  //       errors: nextProps.errors
+  //     });
+  //   }
+  // }
 
 
   return(
@@ -110,4 +127,23 @@ const Registration = () => {
   );
 };
 
+//without redux
 export default Registration;
+
+
+//with redux
+// Registration.propTypes = {
+//   registerUser: PropTypes.func.isRequired,
+//   auth: PropTypes.object.isRequired,
+//   errors: PropTypes.object.isRequired
+// };
+
+// const mapStateToProps = state => ({
+//   auth: state.auth,
+//   errors: state.errors
+// });
+
+// export default connect(
+//   mapStateToProps,
+//   {registerUser}
+// )(withRouter(Registration));
