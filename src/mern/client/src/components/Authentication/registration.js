@@ -30,7 +30,7 @@ class Registration extends Component {
   componentDidMount() {
     // If logged in and user navigates to Register page, should redirect them to dashboard
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
+      // this.props.history.push("/");
     }
   }
 
@@ -59,7 +59,12 @@ class Registration extends Component {
       }
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    // check if user select at least one role
+    if (newUser.role.startupfounder || newUser.role.investor || newUser.role.instructor) {
+      this.props.registerUser(newUser, this.props.history);
+    } else {
+      alert("Please select at least one role");
+    }
   }
 
   render() {
