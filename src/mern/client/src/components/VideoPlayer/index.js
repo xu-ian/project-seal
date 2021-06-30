@@ -3,7 +3,7 @@ import Video from './video-components/Video'
 import Header from './video-components/Header'
 import Description from './video-components/Description'
 import NextVideo from './video-components/NextVideo'
-import './index.css'
+import './playerStyle.css'
 function App(){
   return (
 		//VideoPlayer that merges all video-components

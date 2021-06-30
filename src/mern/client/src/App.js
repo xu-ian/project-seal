@@ -11,7 +11,7 @@ import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
-=======
+import AssignTest from "./components/ToggleForm"
 // import RoleSelection from "./components/roleSelection"
 
 // import Navbar from "./components/navbar"
@@ -47,6 +47,9 @@ export default function App(){
           <Route exact path="/player">
             <VideoPlayer />
           </Route>
+					<Route exact path="/assigntest">
+						<AssignTest />
+					</Route>
           <Route path="/list"> 
             <CompanyProfileList />
           </Route>
