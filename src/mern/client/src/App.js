@@ -12,6 +12,8 @@ import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
 import ProfilePage from "./components/ProfilePage";
+// import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
+import SearchProfile from "./components/SearchProfile";
 // import RoleSelection from "./components/roleSelection"
 
 // import Navbar from "./components/navbar"
@@ -26,10 +28,9 @@ import {
 
 function hideSideBar(){
   //include the URL to disclude Sidebar
-  if (['/profile/create','/signin'].includes(window.location.pathname)) return null;
+  if (['/signin', '/profile/create', '/user-profile/create', '/company-profile/create'].includes(window.location.pathname)) return null;
   return <Sidebar />;
-}
-
+} 
 export default function App(){
     return(
       <Router>
@@ -53,11 +54,13 @@ export default function App(){
           <Route exact path="/player">
             <VideoPlayer />
           </Route>
+          <Route path = "/profile/create" component={ProfilePage} /> 
+          <Route path = "/profile/search" component={SearchProfile} />
           <Route path="/company-profile/list" component={CompanyProfileList} />
           <Route path="/company-profile/create" component={CreateCompanyProfile} />
           <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
           <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-          <Route path = "/profile/create" component={ProfilePage} />
+          {/* <Route path = "/user-profile/create" component={CreateUserProfile} /> */}
         </Switch>
       </div>
       </Router>  
