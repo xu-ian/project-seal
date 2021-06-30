@@ -11,7 +11,7 @@ import Registration from "./components/registration"
 import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
-=======
+import ProfilePage from "./components/ProfilePage";
 // import RoleSelection from "./components/roleSelection"
 
 // import Navbar from "./components/navbar"
@@ -24,11 +24,17 @@ import {
     Link
   } from "react-router-dom";
 
+function hideSideBar(){
+  //include the URL to disclude Sidebar
+  if (['/profile/create','/signin'].includes(window.location.pathname)) return null;
+  return <Sidebar />;
+}
+
 export default function App(){
     return(
       <Router>
         <div>
-          <Sidebar />
+          {hideSideBar()}
         </div>
         <div class="content">
         <Switch>
@@ -47,14 +53,11 @@ export default function App(){
           <Route exact path="/player">
             <VideoPlayer />
           </Route>
-          <Route path="/list"> 
-            <CompanyProfileList />
-          </Route>
-          <Route path="/create">
-            <CreateCompanyProfile />
-          </Route>
-        <Route path= "/view/:id" component={MyCompanyProfile} />
-        <Route path="/edit/:id" component={EditCompanyProfile} />
+          <Route path="/company-profile/list" component={CompanyProfileList} />
+          <Route path="/company-profile/create" component={CreateCompanyProfile} />
+          <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
+          <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
+          <Route path = "/profile/create" component={ProfilePage} />
         </Switch>
       </div>
       </Router>  
