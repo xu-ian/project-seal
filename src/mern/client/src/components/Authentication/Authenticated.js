@@ -23,7 +23,8 @@ class Authenticated extends Component {
 
     return (
       <div>
-        <h2>Welcome </h2>
+        <h2>Welcome </h2> 
+        {/* {window.localStorage.getItem("username")} */}
         <button
         style={{
           width: "150px",

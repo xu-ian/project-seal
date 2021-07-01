@@ -42,6 +42,8 @@ export const loginUser = userData => dispatch => {
       // Set current user
       dispatch(setCurrentUser(decoded));
 
+      window.localStorage.setItem("username", res.data.username);
+      window.localStorage.setItem("userId", res.data._id);
       alert("Login success!");
     })
     .catch(err => {
