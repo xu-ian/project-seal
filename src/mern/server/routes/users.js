@@ -95,10 +95,7 @@ router.post("/login", (req, res) => {
     if (!user) {
       return res.status(404).json({ emailnotfound: "Incorrect info" });
     }
-    else{
-      res.json(user);
-    }
-    
+
     
     
     // Check password
