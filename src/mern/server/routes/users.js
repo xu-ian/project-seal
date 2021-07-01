@@ -27,7 +27,13 @@ router.post("/register", [
         { 
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password 
+            password: req.body.password ,
+            user_id: User.countDocuments({}) + 1,
+            userbio: "",
+            gender: "",
+            links: [],
+            belongingCompany: "",
+            position: "",
         }
     )
     var pw = req.body.password;
@@ -95,10 +101,6 @@ router.post("/login", (req, res) => {
     if (!user) {
       return res.status(404).json({ emailnotfound: "Incorrect info" });
     }
-    else{
-      res.json(user);
-    }
-    
     
     
     // Check password
@@ -108,7 +110,9 @@ router.post("/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.name,
+          role: user.role,
+          datejoined: user.date_joined,
         };// Sign token
         jwt.sign(payload,keys.secret,
           {
