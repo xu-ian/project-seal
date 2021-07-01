@@ -12,7 +12,10 @@ import Login from "./components/Login"
 import Select from "./components/select"
 import VideoPlayer from "./components/VideoPlayer"
 import ProfilePage from "./components/ProfilePage";
+import UserProfileList from "./components/UserProfile/UserProfile";
 import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
+import EditUserProfile from "./components/UserProfile/EditUserProfile";
+import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
 // import RoleSelection from "./components/roleSelection"
 
@@ -58,9 +61,12 @@ export default function App(){
           <Route path = "/profile/search" component={SearchProfile} />
           <Route path="/company-profile/list" component={CompanyProfileList} />
           <Route path="/company-profile/create" component={CreateCompanyProfile} />
-          <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
           <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-          <Route path = "/user-profile/create" component={CreateUserProfile} /> 
+          <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
+          <Route path="/user-profile/list" component={UserProfileList} />
+          <Route path="/user-profile/create" component={CreateUserProfile} />
+          <Route path = "/user-profile/edit/:id" component={EditUserProfile} /> 
+          <Route path= "/user-profile/view/:id" component={MyUserProfile} />
         </Switch>
       </div>
       </Router>  

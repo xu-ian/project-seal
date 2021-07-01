@@ -57,6 +57,10 @@ app.use('/users', usersRouter);
 // Importing routes for posts
 const companyRouter = require('./routes/company');  
 app.use('/company-profile', companyRouter);
+app.use(express.json({limit: '50mb', extended: true }));
+app.use(express.urlencoded({limit: '50mb', extended: true }));
+const userProfilesRoute = require('./routes/userProfile'); 
+app.use('/user-profile', userProfilesRoute);
 
 // get driver connection
 //const dbo = require("./db/conn");

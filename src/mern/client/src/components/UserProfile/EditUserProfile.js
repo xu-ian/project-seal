@@ -8,7 +8,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import BusinessIcon from '@material-ui/icons/Business';
 
 /* This class update/create an existing user profile through id */
-class CreateUserProfile extends Component {
+class EditUserProfile extends Component {
   // This is the constructor that stores the data.
   constructor(props) {
     super(props);
@@ -40,7 +40,36 @@ class CreateUserProfile extends Component {
       backgroundImage: "",    //image to be uploaded
     };
   }
+  // This will get the record based on the id from the database.
+  componentDidMount() {
+    axios.get("http://localhost:5000/user-profile/?_id:" + this.props.match.params.id)
+      .then((response) => {
+        const userLists = response.data;
+        const currentUser = userLists.find(person => person._id === this.props.match.params.id);
 
+        this.setState({
+          user_id: currentUser.user_id,
+          username: currentUser.username,
+          userbio: currentUser.userbio,
+          gender: currentUser.gender,
+          email: currentUser.email,
+          links: currentUser.links,
+          belongingCompany: currentUser.belongingCompany,
+          position: currentUser.position,
+
+          profileImage: currentUser.profileImage,
+          backgroundImage: currentUser.backgroundImage,
+        });
+        // console.log("edit is fetching: " + JSON.stringify(response.data));
+        // console.log("edit is fetching: " + response.status);
+        // console.log("the id is: " + this.props.match.params.id);
+        console.log("the desired is: " + JSON.stringify(currentUser));
+        // console.log("company title: ", this.state.company_title);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   // These methods will update the state properties.
   onChangeUsername(e) {
@@ -90,49 +119,38 @@ class CreateUserProfile extends Component {
   }
 
   // This function will handle the submission.
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault();
-
-    // When post request is sent to the create url, axios will add a new record(newcompany) to the database.
     const newEditedUserProfile = {
-        user_id: this.state.user_id,
-        username: this.state.username, 
-        userbio: this.state.userbio, 
-        gender: this.state.gender,  
-        email: this.state.email,  
-        links: this.state.links,
-        belongingCompany: this.state.belongingCompany,  
-        position: this.state.position, 
-        profileImage: this.state.profileImage,
-        backgroundImage: this.state.backgroundImage,
-      };
+      user_id: this.state.user_id,
+      username: this.state.username, 
+      userbio: this.state.userbio, 
+      gender: this.state.gender,  
+      email: this.state.email,  
+      links: this.state.links,
+      belongingCompany: this.state.belongingCompany,  
+      position: this.state.position, 
+      profileImage: this.state.profileImage,
+      backgroundImage: this.state.backgroundImage,
+    };
+    console.log(newEditedUserProfile);
 
-    //this sends the data to the database, using post method.
-    //subsitution for this could be fetch. 
+    // This will send a post request to update the data in the database.
     axios
-      .post("http://localhost:5000/user-profile/create", newEditedUserProfile)
-      .then((res) => console.log(res.data));
+      .post(
+        "http://localhost:5000/user-profile/update/" + this.props.match.params.id,
+        newEditedUserProfile
+      )
+      .then((res) => console.log(res.data))
+      .catch(function (error) {
+      });
 
-    //empty the state after posting the data to the database
-    this.setState({
-        user_id: "",            //user id in the "users" collection (hidden to user)
-        username: "",           //precollected
-        userbio: "",            
-        gender: "",
-        email: "",              //precollected
-        links: "",              //social media
-        belongingCompany: "",   
-        position: "",
-  
-        profileImage: "",          //image to be uploaded: user profile image
-        backgroundImage: "",    //image to be uploaded
-    });
-    window.location.href = "/user-profile/list";
+    this.props.history.push("/list");
   }
 
 
 
-  // render on the page: "/company-profile/create"
+  //render on the page: "/company-profile/edit:"
   render() {
     return (
       <div className="" style={{backgroundColor: "white"} , {marginTop:"30px"}}> 
@@ -267,4 +285,4 @@ class CreateUserProfile extends Component {
 // You can get access to the history object's properties and the closest <Route>'s match via the withRouter
 // higher-order component. This makes it easier for us to edit our records.
 
-export default withRouter(CreateUserProfile);
+export default withRouter(EditUserProfile);
