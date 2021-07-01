@@ -25,9 +25,9 @@ export const registerUser = (userData, history) => dispatch => {
 
       }
     );
-};// Login - get user token
+};
 
-
+// Login - get user token
 export const loginUser = userData => dispatch => {
   axios
     .post(url + "/users/login", userData)
@@ -46,10 +46,10 @@ export const loginUser = userData => dispatch => {
     })
     .catch(err => {
 
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+    //   dispatch({
+    //     type: GET_ERRORS,
+    //     payload: err.response.data
+    //   });
 
       alert("Invalid username or password");
       }

@@ -55,7 +55,7 @@ const Select = () => {
         </Button>
         <Button variant="contained" size="large" color="secondary" onClick={toSignup}>
           Sign Up
-        </Button>        
+        </Button>       
       </ButtonGroup>
     </div>
   );
