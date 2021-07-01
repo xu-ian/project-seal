@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 const Deliverable = require('../models/Deliverable'); 
 const deliverableRoutes = express.Router();
 
@@ -25,7 +26,7 @@ const deliverableStorage = multer.diskStorage({
 const deliverableUpload = multer({ storage: deliverableStorage });
 
 // GET: All deliverables
-deliverableRoutes.route('/').get((req, res) => {
+deliverableRoutes.route('/').get((req, res) => {    
     Deliverable.find()
                .then(deliverables => {
                    res.json(deliverables);
@@ -35,7 +36,7 @@ deliverableRoutes.route('/').get((req, res) => {
                });
 });
 
-// GET: One homework via filename(?)
+// GET: One homework via filename
 deliverableRoutes.route('/:name').get((req, res) => {
     Deliverable.findOne({ name: req.params.name })
                .then(deliverable => {
@@ -47,7 +48,7 @@ deliverableRoutes.route('/:name').get((req, res) => {
     
 });
 
-// POST: (Upload) a single file
+// POST: Upload a single file
 deliverableRoutes.route('/upload/single').post(deliverableUpload.single('deliverable'), (req, res) => {
     const newDeliverable = {
         name: req.file.filename,
@@ -55,26 +56,40 @@ deliverableRoutes.route('/upload/single').post(deliverableUpload.single('deliver
         assignment: req.body.assignment,
         path: req.file.path
     }
-    
+
     Deliverable.create(newDeliverable, err => {
         if (err) {
             res.json({ msg: err.msg });
         } else {
             res.json({ msg: 'Deliverable successfully uploaded.' });
-            console.log(req.file.path);
         }
     });
 });
 
-// POST: (Upload) multiple files
+// POST: Upload multiple files
 // Note: Need to modify so that files get added to the actual database
 deliverableRoutes.route('/upload/multiple').post(deliverableUpload.array('deliverables'), (req, res) => {
     res.json('Deliverable successfully uploaded.');
 });
 
 // DELETE: A file using the file's name
-deliverableRoutes.route('/delete/:name').delete((req, res) => {
-    
+deliverableRoutes.route('/delete/:filename').delete((req, res) => {
+    const pathLocation = path.join(__dirname, "..", "uploads", "deliverables", req.params.filename);
+
+    fs.unlink(pathLocation, err => {
+        if (err) {
+            res.status(400).json({ msg: err.msg });
+            return;
+        } 
+    });
+
+    Deliverable.deleteOne({ name: req.params.filename })
+               .then(() => {
+                   res.json({ msg: "File has been successfully deleted." });
+               })
+               .catch(err => {
+                   res.status(400).json({ msg: err.msg });
+               });
 });
 
 module.exports = deliverableRoutes;
