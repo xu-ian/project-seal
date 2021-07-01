@@ -69,17 +69,6 @@ const companyRoutes = require("./routes/company");
 
 // SEAL-12: Setting storage for file uploads
 
-/*var deliverableStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, './uploads/deliverables');
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now + "-" + file.originalname);
-    }
-});
-
-var deliverableUpload = multer({ storage: deliverableStorage });*/
-
 var deliverableRouter = require('./routes/deliverables');
 app.use('/deliverables', deliverableRouter);
 
