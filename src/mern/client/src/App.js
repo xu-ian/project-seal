@@ -10,6 +10,8 @@ import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
+import Authenticated from "./components/Authentication/Authenticated";
+
 import VideoPlayer from "./components/VideoPlayer";
 
 // for redux
@@ -83,6 +85,9 @@ export default function App(){
             </Route>
             <Route exact path="/signup">
               <Registration />
+            </Route>
+            <Route exact path="/authenticated">
+              <Authenticated />
             </Route>
             <Route exact path="/player">
               <VideoPlayer />
