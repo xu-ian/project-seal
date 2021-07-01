@@ -1,12 +1,20 @@
 import React from 'react';
-import { Paper, Typography, Button } from "@material-ui/core";
+import { Paper, Typography, Button, CardMedia } from "@material-ui/core";
 import axios from "axios";
+import generic from "./assets/img/generic.png";
+import pdf from "./assets/img/pdf.png";
+import txt from "./assets/img/txt.png";
+import word from "./assets/img/word.png";
+
+const path = require('path');
 
 export default class Submit extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            files:[]
+            files:[],
+            assignment:"Assignment", //Placeholder until Course creation is completed
+            course:"Course" //Placeholder until Course creation is completed
         };
         this.onChange = this.onChange.bind(this);
         this.onClick = this.onClick.bind(this);
@@ -40,22 +48,44 @@ export default class Submit extends React.Component {
           window.confirm("Are you sure you want to submit no files?") === false){
               return;
         }
-        //Not completed yet.
-        axios.post("/update/single", files).then(() => {
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onLoad = () => {
+            new Notification(reader.result);
+        }
+        for(let i = 0; i < files.length; i++){
+            let formData = new FormData();
+            formData.append("deliverable", files[i]);
+            formData.append("course", this.state.course);
+            formData.append("assignment", this.state.assignment);
+        axios.post("http://localhost:5000/deliverables/upload/single", formData).then(() => {
             alert("File upload successful");
-        }).catch( () => {
-            alert("File upload failed");
-        });
-
+            }).catch( (err) => {
+                alert(err);
+            });
+        }
     }
 
     displayFiles() {
         let downloadLinks = [];
+        let files = this.state.files;
         for(let i = 0; i < this.state.files.length; i++){
+            let fileIcon = generic;
+            if(files[i].name.split(".").pop() === "docx"){
+                fileIcon = word;
+            }
+            else if(files[i].name.split(".").pop() === "pdf"){ 
+                fileIcon = pdf;
+            }
+            else if(files[i].name.split(".").pop() === "txt"){
+                fileIcon = txt;
+            }
             downloadLinks.push(
             <Paper style={{left:"4%", margin:"10px", "max-width":"90%", position:"relative"}}>
-                <a href={this.state.files[i].data} download={this.state.files[i].name}>
-                    {this.state.files[i].name}
+                <img src={fileIcon} alt="File Icon" style={{width:"5%", height:"5%"}}/>
+                <a href={this.state.files[i].data} style={{"font-size":"300%"}}
+                  download={this.state.files[i].name}>
+                  {this.state.files[i].name}
                 </a>
             </Paper>
             );
