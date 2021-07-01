@@ -2,10 +2,11 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline, Icon } from '@material-ui/core';
+import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline, 
+  Select, MenuItem, InputLabel } from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import BusinessIcon from '@material-ui/icons/Business';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 /* This class update/create an existing user profile through id */
 class CreateUserProfile extends Component {
@@ -136,40 +137,45 @@ class CreateUserProfile extends Component {
   render() {
     return (
       <div className="" style={{backgroundColor: "white"} , {marginTop:"30px"}}> 
+        <div> 
+          <KeyboardBackspaceIcon style={{ fontSize: 50 }} onClick={() =>  window.location.href='/profile/create'}  />
+        </div>
         <Container component="main" maxWidth="lg"> 
           <CssBaseline />
-          <div href="/profile/create" style={{border: "1px solid #0B345C"}} > 
-            <ArrowBackIcon fontSize="large" />
-          </div>
           <Container maxWidth="lg">
-            <Avatar style={{marginBottom:"10px"}}>
-              <BusinessIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5" gutterBottom>
-              My User Profile
-            </Typography>
-
+            <div style={{marginBottom:"10px"}}>
+              <AccountBoxIcon style={{ fontSize: 50 }} color="primary"/>
+              <Typography variant="h4">
+                My User Profile
+              </Typography>
+            </div>
             <form id="user-form" onSubmit={this.handleSubmit} style={{marginTop:"20px"}}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={9}> 
+                    <InputLabel required shrink> User Name </InputLabel>
                     <TextField fullWidth
-                    label="User Name" 
                     className="user-form-group"
                     style={{marginBottom:"20px"}}
+                    required
                     defaultValue = {this.state.username}
                     value={this.state.username}
                     onChange={this.onChangeUsername}
                     > </TextField>
                 </Grid>
                 <Grid item xs={12} sm={3}> 
-                  <TextField fullWidth 
+                  <InputLabel required shrink> Gender </InputLabel>
+                  <Select fullWidth 
                     label="Gender, will be a drag down" 
                     className="company-form-group"
-                    defaultValue = {this.state.gender}
+                    required
                     value={this.state.gender}
                     onChange={this.onChangeGender}
                   >
-                  </TextField>
+                    <MenuItem value='Male'>Male</MenuItem>
+                    <MenuItem value='Female'>Female</MenuItem>
+                    <MenuItem value='Other'>Other</MenuItem>
+                    <MenuItem value='None'>Prefer not to Answer</MenuItem>
+                  </Select>
                 </Grid>
               </Grid>
               <TextField fullWidth 
@@ -177,7 +183,7 @@ class CreateUserProfile extends Component {
                 id="company-form-description" 
                 className="company-form-group" 
                 variant="outlined" 
-                multiline
+                multiline required
                 defaultValue = {this.state.userbio}
                 InputLabelProps={{shrink: true,}}
                 value={this.state.userbio}
@@ -191,7 +197,7 @@ class CreateUserProfile extends Component {
                     margin= "normal" 
                     className="company-form-group"
                     defaultValue = {this.state.email}
-                    // disabled
+                    required
                     value={this.state.email}
                     onChange={this.onChangeEmail}
                   >
@@ -201,7 +207,8 @@ class CreateUserProfile extends Component {
                   <TextField fullWidth 
                     label="External Links" 
                     margin= "normal" 
-                    helperText="Company Website or social media" 
+                    helperText="External Links or Social Media Accounts" 
+                    multiline
                     className="company-form-group"
                     defaultValue = {this.state.links}
                     value={this.state.links}
@@ -255,7 +262,9 @@ class CreateUserProfile extends Component {
                   ({ base64 }) => setPostData({ ...postData, selectedFile: base64 }) }*/
                   onDone={this.onDoneBackgroundImage} />
               </div>
-              <Button variant="contained" color="primary" type="submit" align="center" classname="">Update Company Profile</Button>
+              <Button style={{marginTop: "20px", marginLeft: "40%"}} variant="contained" color="primary" type="submit">
+                Create My User Profile
+              </Button>
             </form>
           </Container>
         </Container>
