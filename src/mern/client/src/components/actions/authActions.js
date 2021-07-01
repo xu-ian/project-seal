@@ -47,12 +47,6 @@ export const loginUser = userData => dispatch => {
       alert("Login success!");
     })
     .catch(err => {
-
-    //   dispatch({
-    //     type: GET_ERRORS,
-    //     payload: err.response.data
-    //   });
-
       alert("Invalid username or password");
       }
 
