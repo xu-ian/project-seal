@@ -2,14 +2,14 @@ const express = require("express");
 const userProfilesRoutes = express.Router();
 //Connect to the database
 const dbo = require("../db/conn");
-
+const User = require('../models/user');
 
 /* The axois method */
 // Get User Profile List.
 userProfilesRoutes.route("/").get(function (req, res) {
   let db_connect = dbo.getDb("employees");
   db_connect
-    .collection("userProfiles")
+    .collection("users")
     .find({})
     .toArray(function (err, result) {
       if (err) throw err;
@@ -22,7 +22,7 @@ userProfilesRoutes.route("/view/:id").get(function (req, res) {
   let db_connect = dbo.getDb("employees");
   let myquery = { id: req.body.id };
   db_connect
-    .collection("userProfiles")
+    .collection("users")
     .find({myquery})
     .toArray(function (err, result) {
       if (err) throw err;
@@ -33,7 +33,7 @@ userProfilesRoutes.route("/view/:id").get(function (req, res) {
 
 // Create User Profile.
 userProfilesRoutes.route("/create").post(function (req, res) {
-    let db_connect = dbo.getDb("userProfiles");
+    let db_connect = dbo.getDb("users");
     let myobj = {
       user_id: req.body.user_id,
       username: req.body.username,
@@ -47,7 +47,7 @@ userProfilesRoutes.route("/create").post(function (req, res) {
       backgroundImage: req.body.backgroundImage,
 
     };
-    db_connect.collection("userProfiles").insertOne(myobj, function (err, res) {
+    db_connect.collection("users").insertOne(myobj, function (err, res) {
       if (err) throw err;
     });
 });
@@ -72,7 +72,7 @@ userProfilesRoutes.route("/update/:id").post(function (req, res) {
     },
   };
   db_connect
-    .collection("userProfiles")
+    .collection("users")
     .updateOne(myquery, newvalues, function (err, res) {
       if (err) throw err;
       console.log("1 document updated");
