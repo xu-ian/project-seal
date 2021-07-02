@@ -177,8 +177,7 @@ export default class SearchProfile extends Component {
         }
         else if (this.filter === "users") {
             
-            URL="http://localhost:5000/search/listusers"
-            axios.get(URL)
+            axios.get("http://localhost:5000/search/listusers/"+ this.state.search)
                 .then((response) => {
                     this.setState({ rawLists: response.data });
                     // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
@@ -193,7 +192,7 @@ export default class SearchProfile extends Component {
                 });
             
         }
-        this.componentDidMount();
+        // this.componentDidMount();
         // this.render();
     }
 
