@@ -79,7 +79,9 @@ export default class SearchProfile extends Component {
         this.handleFilterValue = this.handleFilterValue.bind(this);
         this.handleLoadingRequest = this.handleLoadingRequest.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.onChangeSearch = this.onChangeSearch.bind(this);
 
+        
         this.state = { 
             rawLists: [],
             rows: [],
@@ -90,44 +92,109 @@ export default class SearchProfile extends Component {
 
 
 
-    // This method will get the data from the database.
+    // This method will get  data from the database.
 
+
+    onChangeSearch(e){
+        this.setState({
+            search: e.target.value,
+        });
+    }
 
     componentDidMount() {
         if(this.filter === "companys"){
+            
             URL="http://localhost:5000/search/listcompanies"
-        }else URL="http://localhost:5000/search/listcompanies"
+            axios.get(URL)
+                .then((response) => {
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
+
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].logo, this.state.rawLists[key].company_title, this.state.rawLists[key].tagline );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("rows are: " + JSON.stringify(this.state.rows));
+                })
+                .catch(function (error) { console.log(error); 
+                });
+        }
+        else if (this.filter === "users") {
+            
+            URL="http://localhost:5000/search/listusers"
+            axios.get(URL)
+                .then((response) => {
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
+
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].profileImage, this.state.rawLists[key].username, this.state.rawLists[key].userbio );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("rows are: " + JSON.stringify(this.state.rows));
+                })
+                .catch(function (error) { console.log(error); 
+                });
+            
+        }
 
         //getting data from the database & storing in the local variable
-        axios.get(URL)
-        .then((response) => {
-            this.setState({ rawLists: response.data });
-            // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
-
-            for(let key in this.state.rawLists){
-                var insertData = createData( this.state.rawLists[key].logo, this.state.rawLists[key].company_title, this.state.rawLists[key].tagline );
-                this.state.rows.push(insertData);
-            }
-            console.log("rows are: " + JSON.stringify(this.state.rows));
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
         
     }
-        
+
+    
     //This handles searching between companys / users
     handleFilterValue = (event) => {
         this.filter = (event.target.value);
         console.log("The filter is: " + this.filter);
         this.componentDidMount();
-        
+        this.componentDidMount();
+        this.render();
     }
     handleLoadingRequest=() =>{
         this.reloadData = true;
     }
-    handleSearch=() =>{
+    handleSearch=(e) =>{
+        e.preventDefault();
+        this.onChangeSearch(e);
+        if(this.filter === "companys"){
+            console.log("search key is : " + this.state.search);
+            
+            axios.get("http://localhost:5000/search/listcompanies/"+ this.state.search)
+                .then((response) => {
+                    console.log("http://localhost:5000/search/listcompanies/"+ this.props.match.params.search);
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
 
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].logo, this.state.rawLists[key].company_title, this.state.rawLists[key].tagline );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("searching rows are: " + JSON.stringify(this.state.rows));
+                })
+                .catch(function (error) { console.log(error); 
+                });
+        }
+        else if (this.filter === "users") {
+            
+            URL="http://localhost:5000/search/listusers"
+            axios.get(URL)
+                .then((response) => {
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
+
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].profileImage, this.state.rawLists[key].username, this.state.rawLists[key].userbio );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("rows are: " + JSON.stringify(this.state.rows));
+                })
+                .catch(function (error) { console.log(error); 
+                });
+            
+        }
+        this.componentDidMount();
+        // this.render();
     }
 
 
@@ -139,16 +206,20 @@ export default class SearchProfile extends Component {
             <div className ="root">
                 <CssBaseline />
                 <Container maxWidth="lg">
-                    <Paper component="form" className="search-bar" style ={styling.searchBar}>
-                        <IconButton type="submit" className={styling.iconButton} aria-label="search">
+                    <form onSubmit={this.handleSearch}>
+                    <Paper className="search-bar" style ={styling.searchBar} >
+                        <IconButton type="submit" className={styling.iconButton} aria-label="search" >
                             <SearchIcon />
                         </IconButton>
                         <InputBase
                             className={styling.input}
                             placeholder="Search..."
-                            inputProps={{ }} 
+                            style={{width: "500px"}}
+                            value={this.state.search}
+                            onchange={this.onChangeSearch}
                         />
                     </Paper>
+                    </form>
                     <Grid className="filter-container" style={styling.filterContainer}>
                         <FormControl component="fieldset">
                             <RadioGroup row aria-label="filter" name="filter" value={this.filter} defaultValue="companys" onChange={this.handleFilterValue}> 
@@ -186,11 +257,11 @@ export default class SearchProfile extends Component {
                     </TableContainer>
                     <div className="loading-more" style={{marginTop: '30px'}}>
                         {
-                            this.isEnd 
+                            !this.isEnd 
                             ? <Typography 
                                 variant='h6' 
                                 style={{textAlign: 'center'}} > 
-                                    No more result can be found
+                                    No result can be found
                                 </Typography> 
                             : <Button
                                 variant="contained" color="primary" style={styling.loadingButton} onClick={this.handleLoadingRequest}
@@ -201,7 +272,6 @@ export default class SearchProfile extends Component {
                     </div>
                 </Container>
                 {this.state.rows=[]}
-
             </div>
         );
     }
