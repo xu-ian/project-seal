@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 // This will require to npm install axios
 import axios from 'axios';  //this communicates with backend
-import { Paper, Avatar, Typography, Container } from '@material-ui/core';
+import { Paper, Avatar, Typography, Container, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import './my-company-profile-style.css';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 export default class MyCompanyProfile extends Component{
 
@@ -51,51 +52,59 @@ export default class MyCompanyProfile extends Component{
             padding: theme.spacing(1),
             textAlign: 'left',
             color: theme.palette.text.secondary,
+            padding: "20px",
         }));
+        const imageContainer = {
+            // position: 'relative',
+            backgroundImage: 'url(https://upload.wikimedia.org/wikipedia/commons/2/21/Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg)',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            height: "400px",
+        }
+
         return(
             <div className="container">
                 <div className="banner-wrapper">
-                    <Container  disableGutters maxWidth="md" component="main" sx={{ pt: 8 }}>
-                        <Typography
-                            variant="h4"
-                            align="left"
-                            color="text.primary"
-                            gutterBottom
-                            style={{marginBottom: "5%"}}
-                        > Company Profile </Typography>
+                    <div style={imageContainer} > </div>
+                    
+                </div>
+                {/* Profile Content */}
+                <Container  maxWidth="md">
+                    <Item className="block-group">
                         <Typography gutterBottom>
-                            <div id="logo-grid" className="grid-wrapper"> 
-                                <Avatar sx={{ width: 80, height: 80 }} >L</Avatar>
+                            <div id="logo-grid" className="grid-wrapper"  style={{position:"relative"}, {top: "-100px"}}> 
+                                <Avatar sx={{ width: 140, height: 140 }} style={ {position:"relative"}, {top:"-100px"}}> M </Avatar>
                                 <div>
-                                    <div className = "company-title"> {this.state.company_title} </div>
-                                    <div className = "tagline"> {this.state.tagline} </div>
+                                    <Grid container spacing={2} xs={12}> 
+                                        <Grid item xs={4}>
+                                            <Typography className="company-title" variant="h2"> {this.state.company_title} </Typography>
+                                            <MailOutlineIcon fontSize="large" />
+                                        </Grid>
+                                        <Grid item xs={8}>
+                                            <Typography variant="body1"> {this.state.description} </Typography>
+                                            <Typography variant="body2">   {this.state.tagline} </Typography>
+                                        </Grid>
+                                    </Grid>
                                 </div>
                             </div>
                         </Typography>
-                    </Container>
-                </div>
-                {/* Profile Content */}
-                <div spacing={2} className="profile-wrapper">                         
-                    <Item className="block-group" style={{padding: "20px"}}>
-                        <Typography className="text-title" variant="h5" > About: </Typography>
-                        <Typography className="text-wrapper" variant="h6" style={{marginLeft: "5%"}}> {this.state.description} </Typography>
+                        <Typography className="text-wrapper" variant="h6" style={{marginLeft: "2%"}}> {this.state.description} </Typography>
                     </Item>
-                    <Item className="block-group" style={{padding: "20px"}}> 
+                    <Item className="block-group" > 
                         <div className="grid-wrapper"> 
                             <Typography style={{margin: "10px"}} gutterBottom>
                                 <Typography variant="h6" > Email: </Typography>
                                 <Typography variant="subtitle1" style={{marginLeft: "10%"}}> {this.state.emailAddress} </Typography>
-                                 
                             </Typography>
                             <Typography style={{margin: "10px"}} gutterBottom>
                                 <Typography variant="h6"> Links: </Typography>
                                 <Typography variant="subtitle1" style={{marginLeft: "10%"}}> {this.state.links} </Typography>
                             </Typography>
-                            
                         </div>
                     </Item>
-                    <Item className="block-group" style={{padding: "20px"}} > Teams </Item>
-                </div>
+                    <Item className="block-group" style={{padding: "20px"}} >  </Item>
+                </Container>
             </div>
         )
     }

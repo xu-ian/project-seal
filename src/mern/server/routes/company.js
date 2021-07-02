@@ -7,7 +7,7 @@ const dbo = require("../db/conn");
 // const { ObjectID } = require('bson');
 // const { json } = require('express');
 // const mongoose = require('mongoose');
-// const Company = require('../models/company'); 
+// const Company = require('../models/Company'); 
 
 
 /* The axois method */

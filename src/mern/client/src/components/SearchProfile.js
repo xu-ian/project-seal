@@ -216,7 +216,8 @@ export default class SearchProfile extends Component {
                             placeholder="Search..."
                             style={{width: "500px"}}
                             value={this.state.search}
-                            onchange={this.onChangeSearch}
+                            onChange={this.onChangeSearch}
+
                         />
                     </Paper>
                     </form>
