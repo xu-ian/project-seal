@@ -5,23 +5,26 @@ const fs = require('fs');
 const path = require('path');
 const Deliverable = require('../models/Deliverable'); 
 const deliverableRoutes = express.Router();
+const dirLocation = path.join(__dirname, '..', 'uploads', 'deliverables');
 
 const deliverableStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, './uploads/deliverables');
+      if (!fs.existsSync(dirLocation)) {
+        fs.mkdir(dirLocation, { recursive: true }, err => {
+            if (err) {
+                console.log(err);
+            } else {
+                cb(null, dirLocation);
+            }
+        })
+      } else {
+          cb(null, dirLocation);
+      }
     },
     filename: (req, file, cb) => {
       cb(null, Date.now() + "-" + file.originalname);
     }
 });
-
-/* const deliverableFilter = (req, file, cb) => {
-    if (file.mimetype.split("/")[1] == "pdf") {
-        cb(null, true);
-    } else {
-        cb (new Error("The uploaded file is not a PDF file."), false);
-    }
-} */
 
 const deliverableUpload = multer({ storage: deliverableStorage });
 
@@ -67,13 +70,9 @@ deliverableRoutes.route('/upload/single').post(deliverableUpload.single('deliver
 });
 
 // POST: Upload multiple files
-// Note: Need to fix bug where there is an error when sending a response  
-//       The uploaded files are sent to the database and into local storage,
-//       But there is an issue when creating the Postman request, where a response
-//       Was unable to be received.  
 deliverableRoutes.route('/upload/multiple').post(deliverableUpload.array('deliverables'), (req, res) => {
     var newDeliverable;
-    req.files.map(file => {
+    req.files.forEach(file => {
         newDeliverable = new Deliverable({
             name: file.filename,
             course: req.body.course,
@@ -81,14 +80,15 @@ deliverableRoutes.route('/upload/multiple').post(deliverableUpload.array('delive
             path: file.path
         });
 
-        newDeliverable.save();
-    }, err => {
-        if (err) {
-            res.status(400).json({ msg: err.msg });
-        } else {
-            res.json({ msg: 'Deliverables have been successfully uploaded.' });
-        }
-    })
+        Deliverable.create(newDeliverable, err => {
+            if (err) {
+                res.status(400).json({ msg: err.msg });
+                return;
+            }
+        });
+    });
+
+    res.json({ msg: 'Deliverables successfully uploaded.' });
 });
 
 // DELETE: A file using the file's name
