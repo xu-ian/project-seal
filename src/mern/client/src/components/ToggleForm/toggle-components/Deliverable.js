@@ -1,8 +1,8 @@
 const Deliverable = ({ content }) => {
 	return (
-		<div className='contentStream'>
+		<div className='stream-item'>
 			<h3>{content.name}</h3>
-			<p>{content.duedate}</p>
+			<p>Due Date: {content.duedate}</p>
 			<p>{content.description}</p>
 		</div>
 	)

@@ -9,7 +9,7 @@ function App(){
 	const [deliverables, setDeliverables] = useState([])
 
 	useEffect(()=>{
-		axios.get("http://localhost:5000/contentStream/").then(res => {
+		axios.get("http://localhost:5000/content/").then(res => {
       setDeliverables(res.data)
       });
 	}, [])
@@ -17,7 +17,6 @@ function App(){
 
 	const handleClick = () =>{
 		const form = document.querySelector('.form')
-		console.log(form)
 		setState(1-state);
 		if(state === 0){
 			form.style.display="none";
@@ -27,7 +26,8 @@ function App(){
 	}
 	function AssignDeliverable(deliverable) {
 		console.log(deliverable)
-		axios.post("http://localhost:5000/content/add", JSON.stringify(deliverable))
+		axios.post("http://localhost:5000/content/add/", deliverable)
+		window.location.reload();
 	}
   return (
 		<div className = 'btn-container'>

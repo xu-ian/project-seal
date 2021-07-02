@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DeliverableSchema = mongoose.Schema({
+const DeliverableSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		required: true
@@ -18,4 +18,4 @@ const DeliverableSchema = mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model('contentStream', DeliverableSchema);
+module.exports = mongoose.model('Content', DeliverableSchema, 'content');

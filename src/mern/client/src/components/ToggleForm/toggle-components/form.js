@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Form= ({Deliverable, AssignDeliverable}) =>{
+const Form= ({AssignDeliverable}) =>{
 	const [name, setName] = useState('')
 	const [duedate, setDate] = useState('')
 	const [description, setDesc] = useState('')

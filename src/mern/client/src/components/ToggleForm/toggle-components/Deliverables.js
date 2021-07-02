@@ -1,9 +1,9 @@
 import Deliverable from './Deliverable'
 const DeliverablesStream = ({ deliverables }) => {
 	return (
-		<div className="content-stream">
+		<div className="deliverable-stream">
 			{deliverables.map((content) => (
-				<Deliverable key={content.id} content={content}></Deliverable>
+				<Deliverable key={content._id} content={content}></Deliverable>
 			))}
 		</div>
 	)
