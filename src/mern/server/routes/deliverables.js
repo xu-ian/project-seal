@@ -67,9 +67,28 @@ deliverableRoutes.route('/upload/single').post(deliverableUpload.single('deliver
 });
 
 // POST: Upload multiple files
-// Note: Need to modify so that files get added to the actual database
+// Note: Need to fix bug where there is an error when sending a response  
+//       The uploaded files are sent to the database and into local storage,
+//       But there is an issue when creating the Postman request, where a response
+//       Was unable to be received.  
 deliverableRoutes.route('/upload/multiple').post(deliverableUpload.array('deliverables'), (req, res) => {
-    res.json('Deliverable successfully uploaded.');
+    var newDeliverable;
+    req.files.map(file => {
+        newDeliverable = new Deliverable({
+            name: file.filename,
+            course: req.body.course,
+            assignment: req.body.assignment,
+            path: file.path
+        });
+
+        newDeliverable.save();
+    }, err => {
+        if (err) {
+            res.status(400).json({ msg: err.msg });
+        } else {
+            res.json({ msg: 'Deliverables have been successfully uploaded.' });
+        }
+    })
 });
 
 // DELETE: A file using the file's name
