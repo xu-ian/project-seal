@@ -36,11 +36,6 @@ export default class MyCompanyProfile extends Component{
             links: currentCompany.links,
             members: currentCompany.members,
             });
-            // console.log("edit is fetching: " + JSON.stringify(response.data));
-            // console.log("edit is fetching: " + response.status);
-            // console.log("the id is: " + this.props.match.params.id);
-            console.log("the desired is: " + JSON.stringify(currentCompany));
-            // console.log("company title: ", this.state.company_title);
         })
         .catch(function (error) {
             console.log(error);

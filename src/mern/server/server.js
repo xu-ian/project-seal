@@ -1,28 +1,33 @@
 const express = require("express");
-var bodyParser = require('body-parser')
+const passport = require("passport");
+const bodyParser = require('body-parser')
 const cors = require("cors");
 var mongoose = require("mongoose");
 var multer = require("multer");
-require("dotenv").config({ path: "./config.env" });
-require("dotenv").config({ path: "./config/config.env" });
 const port = process.env.PORT || 5000;
+const dotenv = require("dotenv")
+dotenv.config({ path: "./config.env" });
+dotenv.config({ path: "./config/config.env" });
+const applyRoutes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
+const usersRouter = require('./routes/users')
+const postsRouter = require('./routes/posts');
+
+const port = process.env.PORT || 5000;
 const app = express();
+
+
+
 app.use(cors());
-
-const passport = require("passport");
-
-var usersRouter = require("./routes/users");
+applyRoutes(app);
 
 // create application/json parser
- 
 // create application/x-www-form-urlencoded parser
 app.use(express.urlencoded({extended: true})); 
-
 app.use(express.json());
 
 // Importing routes for posts
-const postsRouter = require('./routes/posts');
+
 app.use('/posts', postsRouter);
 
 var uri = process.env.ATLAS_URI;
@@ -51,16 +56,10 @@ const commentsRoutes = require("./routes/comments");
 
 app.get('/', (req, res)=> res.send('Hello World!'));
 app.use('/users', usersRouter);
-// app.use(require("./routes/record")); //the example one
-// const mongoose = require("mongoose");
-// const MongoClient = require('mongodb').MongoClient;
 
 // Importing routes for posts
 const companyRouter = require('./routes/company');  
 app.use('/company-profile', companyRouter);
-
-// get driver connection
-//const dbo = require("./db/conn");
 
 //SEAL-3
 require("dotenv").config({ path: "./config.env" });
@@ -85,13 +84,3 @@ app.listen(port, () => {
   });
   console.log(`Server is running on port: ${port}`);
 });
-
-// app.listen(port, () => {
-//   // perform a database connection when server starts
-//   dbo.connectToServer(function (err) {
-//     if (err) console.error(err);
-
-//   });
-//   console.log(`Server is running on port: ${port}`);
-// });
-
