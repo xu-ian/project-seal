@@ -12,11 +12,7 @@ const applyRoutes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
 const usersRouter = require('./routes/users')
 const postsRouter = require('./routes/posts');
-
-const port = process.env.PORT || 5000;
 const app = express();
-
-
 
 app.use(cors());
 applyRoutes(app);
