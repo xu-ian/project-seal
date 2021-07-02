@@ -27,6 +27,10 @@ app.use(express.json());
 
 app.use('/posts', postsRouter);
 
+// Importing routes for course - content stream
+const contentRouter = require('./routes/content')
+app.use('/content', contentRouter);
+
 var uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
