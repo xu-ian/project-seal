@@ -28,7 +28,13 @@ router.post("/register", [
         { 
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password 
+            password: req.body.password ,
+            user_id: User.countDocuments({}) + 1,
+            userbio: "",
+            gender: "",
+            links: [],
+            belongingCompany: "",
+            position: "",
         }
     )
     var pw = req.body.password;
@@ -97,7 +103,7 @@ router.post("/login", (req, res) => {
     if (!user) {
       return res.status(404).json({ emailnotfound: "Incorrect info" });
     }
-    
+
     
     // Check password
     bcrypt.compare(password, user.password).then(isMatch => {

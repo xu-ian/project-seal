@@ -123,7 +123,7 @@ class EditCompanyProfile extends Component {
       .catch(function (error) {
       });
 
-    this.props.history.push("/list");
+    this.props.history.push("/company-profile/list");
   }
 
   // This following section will display the update-form that takes the input from the user to update the data.
@@ -133,9 +133,7 @@ class EditCompanyProfile extends Component {
         <Container component="main" maxWidth="md"> 
           <CssBaseline />
           <div className="">
-            <Avatar className="">
-              <BusinessIcon />
-            </Avatar>
+            <BusinessIcon style={{ fontSize: 50 }} color="primary"/>            
             <Typography component="h1" variant="h5" gutterBottom >
               Update Company Profile
             </Typography>
@@ -165,6 +163,7 @@ class EditCompanyProfile extends Component {
                 id="company-form-description" 
                 className="company-form-group" 
                 variant="outlined" 
+                multiline
                 defaultValue = {this.state.description}
                 InputLabelProps={{shrink: true,}}
                 value={this.state.description}
@@ -189,6 +188,7 @@ class EditCompanyProfile extends Component {
                     margin= "normal" 
                     helperText="Company Website or social media" 
                     className="company-form-group"
+                    multiline
                     defaultValue = {this.state.links}
                     value={this.state.links}
                     onChange={this.onChangeLinks}

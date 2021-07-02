@@ -8,6 +8,16 @@ var UserSchema = new Schema(
     password:{type: String, required: true},
     role:[{type: String, required: true}],
     date_joined: {type: Date},
+
+    user_id:  {type: String},
+    userbio: {type: String},
+    gender:  {type: String},
+    links:  [{type: String}],
+    belongingCompany:  {type: String},
+    position:  {type: String},
+    //profileImage: req.body.profileImage,
+    //backgroundImage: req.body.backgroundImage,
+    
   }
 );
 

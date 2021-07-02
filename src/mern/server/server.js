@@ -60,11 +60,21 @@ app.use('/users', usersRouter);
 // Importing routes for posts
 const companyRouter = require('./routes/company');  
 app.use('/company-profile', companyRouter);
+app.use(express.json({limit: '50mb', extended: true }));
+app.use(express.urlencoded({limit: '50mb', extended: true }));
+const userProfilesRoute = require('./routes/userProfile'); 
+app.use('/user-profile', userProfilesRoute);
 
 //SEAL-3
 require("dotenv").config({ path: "./config.env" });
 const dbo = require("./db/conn"); 
 const companyRoutes = require("./routes/company");
+
+
+// SEAL-16
+const searchRouter = require('./routes/search');  
+app.use('/search', searchRouter);
+
 
 // SEAL-12: Setting storage for file uploads
 
@@ -73,8 +83,6 @@ app.use('/deliverables', deliverableRouter);
 
 var deliverableRoutes = require('./routes/deliverables');
 
-
-//
 
 app.listen(port, () => {
   // perform a database connection when server starts

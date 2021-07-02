@@ -8,6 +8,16 @@ import CreateCompanyProfile from "./components/companyProfile/createCompanyProfi
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
 import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 
+
+import ProfilePage from "./components/ProfilePage";
+import UserProfileList from "./components/UserProfile/UserProfile";
+import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
+import EditUserProfile from "./components/UserProfile/EditUserProfile";
+import MyUserProfile from "./components/UserProfile/MyUserProfile";
+import SearchProfile from "./components/SearchProfile";
+// import RoleSelection from "./components/roleSelection"
+
+
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
@@ -113,16 +123,25 @@ export default function App(){
             <Route path="/create">
               <CreateCompanyProfile />
             </Route>
-            <Route path="/company-profile/list" component={CompanyProfileList} />
-            <Route path="/company-profile/create" component={CreateCompanyProfile} />
-            <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
-            <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-            <Route path = "/friendlist/">
+
+              <Route path = "/profile/create" component={ProfilePage} /> 
+              <Route path = "/profile/search" component={SearchProfile} />
+              <Route path="/user-profile/list" component={UserProfileList} />
+              <Route path="/user-profile/create" component={CreateUserProfile} />
+              <Route path = "/user-profile/edit/:id" component={EditUserProfile} /> 
+              <Route path= "/user-profile/view/:id" component={MyUserProfile} />
+
+              <Route path="/company-profile/list" component={CompanyProfileList} />
+              <Route path="/company-profile/create" component={CreateCompanyProfile} />
+              <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
+              <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
+              <Route path = "/friendlist/">
               <FriendList/>
             </Route>
             <Route path = "/submit">
               <Submit/>
             </Route>
+
           </Switch>
           </div>
         </Router>  

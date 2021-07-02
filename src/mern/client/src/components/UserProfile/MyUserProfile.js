@@ -6,43 +6,55 @@ import { styled } from '@material-ui/core/styles';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
-export default class MyCompanyProfile extends Component{
+export default class MyUserProfile extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            company_title: "",
-            tagline: "", 
-            description: "", 
-            emailAddress: "",   
-            logo: "",           //image to be uploaded
-            links: [],          //to be developed (detacting the link)
-            members: "",         //to (search feature needed)
+            user_id: "",            //user id in the "users" collection (hidden to user)
+            username: "",           //precollected
+            userbio: "",            
+            gender: "",
+            email: "",              //precollected
+            links: "",              //social media
+            belongingCompany: "",   
+            position: "",
+      
+            profileImage: "",          //image to be uploaded: user profile image
+            backgroundImage: "",    //image to be uploaded 
         };
     }
 
   // This will get the record based on the id from the database.
-    componentDidMount() {
-        axios.get("http://localhost:5000/company-profile/?_id:" + this.props.match.params.id)
-        .then((response) => {
-            const companyLists = response.data;
-            const currentCompany = companyLists.find(person => person._id === this.props.match.params.id);
+  componentDidMount() {
+    axios.get("http://localhost:5000/user-profile/?_id:" + this.props.match.params.id)
+      .then((response) => {
+        const userLists = response.data;
+        const currentUser = userLists.find(person => person._id === this.props.match.params.id);
 
-            this.setState({
-            company_title: currentCompany.company_title,
-            tagline: currentCompany.tagline,
-            description: currentCompany.description,
-            emailAddress: currentCompany.emailAddress,
-            logo: currentCompany.logo,
-            links: currentCompany.links,
-            members: currentCompany.members,
-            });
-        })
-        .catch(function (error) {
-            console.log(error);
+        this.setState({
+          user_id: currentUser.user_id,
+          username: currentUser.username,
+          userbio: currentUser.userbio,
+          gender: currentUser.gender,
+          email: currentUser.email,
+          links: currentUser.links,
+          belongingCompany: currentUser.belongingCompany,
+          position: currentUser.position,
+
+          profileImage: currentUser.profileImage,
+          backgroundImage: currentUser.backgroundImage,
         });
-    }
-    
+        // console.log("edit is fetching: " + JSON.stringify(response.data));
+        // console.log("edit is fetching: " + response.status);
+        // console.log("the id is: " + this.props.match.params.id);
+        console.log("the desired is: " + JSON.stringify(currentUser));
+        // console.log("company title: ", this.state.company_title);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }    
 
 
     render(){
@@ -73,29 +85,30 @@ export default class MyCompanyProfile extends Component{
                 <Container  maxWidth="md">
                     <Item className="block-group">
                         <Typography gutterBottom>
-                            <div id="logo-grid" className="grid-wrapper"  style={{position:"relative"}, {top: "-100px"}}> 
+                            <div id="logo-grid" className="grid-wrapper"> 
                                 <Avatar sx={{ width: 140, height: 140 }} style={ {position:"relative"}, {top:"-100px"}}> M </Avatar>
                                 <div>
+                                    <div className = "company-title"> {this.state.username} </div>
                                     <Grid container spacing={2} xs={12}> 
                                         <Grid item xs={4}>
-                                            <Typography className="company-title" variant="h2"> {this.state.company_title} </Typography>
                                             <MailOutlineIcon fontSize="large" />
+                                            <PersonAddIcon fontSize="large" />
                                         </Grid>
                                         <Grid item xs={8}>
-                                            <Typography variant="body1"> {this.state.description} </Typography>
-                                            <Typography variant="body2">   {this.state.tagline} </Typography>
+                                            <Typography variant="body1"> {this.state.belongingCompany} </Typography>
+                                            <Typography variant="body2">   {this.state.position} </Typography>
                                         </Grid>
                                     </Grid>
                                 </div>
                             </div>
                         </Typography>
-                        <Typography className="text-wrapper" variant="h6" style={{marginLeft: "2%"}}> {this.state.description} </Typography>
+                        <Typography className="text-wrapper" variant="h6" style={{marginLeft: "2%"}}> {this.state.userbio} </Typography>
                     </Item>
                     <Item className="block-group" > 
                         <div className="grid-wrapper"> 
                             <Typography style={{margin: "10px"}} gutterBottom>
                                 <Typography variant="h6" > Email: </Typography>
-                                <Typography variant="subtitle1" style={{marginLeft: "10%"}}> {this.state.emailAddress} </Typography>
+                                <Typography variant="subtitle1" style={{marginLeft: "10%"}}> {this.state.email} </Typography>
                             </Typography>
                             <Typography style={{margin: "10px"}} gutterBottom>
                                 <Typography variant="h6"> Links: </Typography>
