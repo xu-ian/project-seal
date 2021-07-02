@@ -198,8 +198,8 @@ export default class SearchProfile extends Component {
                 });
             
         }
-        // this.componentDidMount();
-        // this.render();
+        this.componentDidMount();
+        this.render();
     }
 
 
@@ -284,15 +284,3 @@ export default class SearchProfile extends Component {
 
 }
 
-
-
-
-// function SearchProfile (){
-//     const classes = useStyles2();
-//     const [page, setPage] = React.useState(0);
-//     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    
-//     // const [row, setRow] = useState(0);  //{ name: '', bio: '', avatar: '' }
-
-    
-// }
