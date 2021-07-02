@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {Component } from "react";
 import { Container, Paper, RadioGroup, Radio, FormLabel, 
     FormControlLabel, FormControl, Grid, Typography, 
     Avatar, CssBaseline, List, ListItemText, ListItemAvatar, 
@@ -24,7 +24,6 @@ import { makeStyles, withStyles } from '@material-ui/styles';
 
 // to be deleted upon finish of backend
 function createData(avatar, name, bio) { return { avatar, name, bio }; }
-let rows = [];
 
 
 //styling
@@ -58,152 +57,236 @@ const styling = {
     
 }
 
-const useStyles2 = makeStyles({
-    table: { minWidth: 500,},
-})
 
 const StyledTableRow = withStyles({
     root:{ margin: "100px",}
 })(TableRow);
 
 
+export default class SearchProfile extends Component {
 
-export default function SearchProfile (){
-    const classes = useStyles2();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [filter, setFilter] = useState(0);
-    let isEnd = false;             //if we have hit the end of data
-    let reloadData = false;       //will be true if the user hit on 'Load More Result' button
-    
-    // const [row, setRow] = useState(0);  //{ name: '', bio: '', avatar: '' }
-    const [rawLists, setRawLists] = useState(0);
+    isEnd = false;             //if we have hit the end of data
+    reloadData = false;       //will be true if the user hit on 'Load More Result' button
+    rowsPerPage = 15;
+    page = 0;
+    filter = "";
 
 
-    //This handles searching between companys / users
-    const handleFilterValue = (event) => {
-        setFilter(event.target.value);
-        console.log("the filter is: " + filter)
+
+    constructor(props) {
+        super(props);
+
+        this.handleFilterValue = this.handleFilterValue.bind(this);
+        this.handleLoadingRequest = this.handleLoadingRequest.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.onChangeSearch = this.onChangeSearch.bind(this);
+
+        
+        this.state = { 
+            rawLists: [],
+            rows: [],
+            search: '',
+        };
     }
-    const handleLoadingRequest=() =>{
-        reloadData = true;
+
+
+
+
+    // This method will get  data from the database.
+
+
+    onChangeSearch(e){
+        this.setState({
+            search: e.target.value,
+        });
     }
 
-    
-
-
-    //Initialization: get data from the database
-    useEffect(
-        ()=>{
+    componentDidMount() {
+        if(this.filter === "companys"){
             
-            setRowsPerPage(15);
-        },[]
-    );
-
-
-    useEffect(
-        ()=>{
-            rows = [];
-            if(filter==="companys"){
-                console.log("companys here");
-                //getting data from the database & storing in the local variable
-                axios.get("http://localhost:5000/search/listcompanies")
+            URL="http://localhost:5000/search/listcompanies"
+            axios.get(URL)
                 .then((response) => {
-                    setRawLists(response.data)
-                    // console.log("Initialization is fetching: " + JSON.stringify(rawLists));
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
+
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].logo, this.state.rawLists[key].company_title, this.state.rawLists[key].tagline );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("rows are: " + JSON.stringify(this.state.rows));
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch(function (error) { console.log(error); 
                 });
-            } else if(filter==="users"){console.log("users needs to be implement");
-            } else {console.log("error");}
+        }
+        else if (this.filter === "users") {
+            
+            URL="http://localhost:5000/search/listusers"
+            axios.get(URL)
+                .then((response) => {
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
+
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].profileImage, this.state.rawLists[key].username, this.state.rawLists[key].userbio );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("rows are: " + JSON.stringify(this.state.rows));
+                })
+                .catch(function (error) { console.log(error); 
+                });
+            
+        }
+
+        //getting data from the database & storing in the local variable
+        
+    }
+
+    
+    //This handles searching between companys / users
+    handleFilterValue = (event) => {
+        this.filter = (event.target.value);
+        console.log("The filter is: " + this.filter);
+        this.componentDidMount();
+        this.componentDidMount();
+        this.render();
+    }
+    handleLoadingRequest=() =>{
+        this.reloadData = true;
+    }
+    handleSearch=(e) =>{
+        e.preventDefault();
+        this.onChangeSearch(e);
+        if(this.filter === "companys"){
+            console.log("search key is : " + this.state.search);
+            
+            axios.get("http://localhost:5000/search/listcompanies/"+ this.state.search)
+                .then((response) => {
+                    console.log("http://localhost:5000/search/listcompanies/"+ this.props.match.params.search);
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
+
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].logo, this.state.rawLists[key].company_title, this.state.rawLists[key].tagline );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("searching rows are: " + JSON.stringify(this.state.rows));
+                })
+                .catch(function (error) { console.log(error); 
+                });
+        }
+        else if (this.filter === "users") {
+            
+            URL="http://localhost:5000/search/listusers"
+            axios.get(URL)
+                .then((response) => {
+                    this.setState({ rawLists: response.data });
+                    // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
+
+                    for(let key in this.state.rawLists){
+                        var insertData = createData( this.state.rawLists[key].profileImage, this.state.rawLists[key].username, this.state.rawLists[key].userbio );
+                        this.state.rows.push(insertData);
+                    }
+                    console.log("rows are: " + JSON.stringify(this.state.rows));
+                })
+                .catch(function (error) { console.log(error); 
+                });
+            
+        }
+        this.componentDidMount();
+        // this.render();
+    }
 
 
-            for(let key in rawLists){
-                var insertData = createData( rawLists[key].logo, rawLists[key].company_title, rawLists[key].tagline );
-                rows.push(insertData);
-            }
-            console.log("rows are: " + JSON.stringify(rows));
-
-        },[filter]
-    )
-
-    useEffect(
-        ()=>{
-            //handle loading more data
-        },[reloadData]
-    )
-
+    
 
     //path: /profile/search
-    return(
-        <div className ="root">
-            <CssBaseline />
-            <Container maxWidth="lg">
-                <Paper component="form" className="search-bar" style ={styling.searchBar}>
-                    <IconButton type="submit" className={styling.iconButton} aria-label="search">
-                        <SearchIcon />
-                    </IconButton>
-                    <InputBase
-                        className={styling.input}
-                        placeholder="Search..."
-                        inputProps={{ }} 
-                    />
-                </Paper>
-                <Grid className="filter-container" style={styling.filterContainer}>
-                    <FormControl component="fieldset">
-                        <RadioGroup row aria-label="filter" name="filter" value={filter} onChange={handleFilterValue}> 
-                            <FormLabel component="legend" style={styling.formLabel}>Filter</FormLabel>
-                            <FormControlLabel value="companys" control={<Radio />} label="Companys" />
-                            <FormControlLabel value="users" control={<Radio />} label="Users" />
-                        </RadioGroup>
-                    </FormControl>
-                </Grid>
-
-                <TableContainer component={Paper} style={{width: "90%"}}>
-                    <Table className={classes.table} aria-label="custom pagination table"> 
-                        <TableBody className={classes.tableRows}> 
-                            {(rowsPerPage > 0
-                                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                : rows
-                            ).map((row) => (
-                                <StyledTableRow key={row.avatar}>
-                                    <TableCell className="avatar" style={{width:"10%"}}>
-                                        <Avatar> {row.name} </Avatar>
-                                    </TableCell>
-                                    <TableCell>
-                                        <List >
-                                            <ListItemText
-                                                primary={row.name}
-                                                secondary={row.bio}
-                                            >
-                                            </ListItemText>
-                                        </List>
-                                    </TableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <div className="loading-more" style={{marginTop: '30px'}}>
-                    {
-                        isEnd 
-                        ? <Typography 
-                            variant='h6' 
-                            style={{textAlign: 'center'}} > 
-                                No more result can be found
-                            </Typography> 
-                        : <Button
-                            variant="contained" color="primary" style={styling.loadingButton} onClick={handleLoadingRequest}
-                            >
-                                Load More Result
-                            </Button>
-                    }
-                </div>
-
-
-            </Container>
-        </div>
-    );
+    render() {
+        return(
+            <div className ="root">
+                <CssBaseline />
+                <Container maxWidth="lg">
+                    <form onSubmit={this.handleSearch}>
+                    <Paper className="search-bar" style ={styling.searchBar} >
+                        <IconButton type="submit" className={styling.iconButton} aria-label="search" >
+                            <SearchIcon />
+                        </IconButton>
+                        <InputBase
+                            className={styling.input}
+                            placeholder="Search..."
+                            style={{width: "500px"}}
+                            value={this.state.search}
+                            onchange={this.onChangeSearch}
+                        />
+                    </Paper>
+                    </form>
+                    <Grid className="filter-container" style={styling.filterContainer}>
+                        <FormControl component="fieldset">
+                            <RadioGroup row aria-label="filter" name="filter" value={this.filter} defaultValue="companys" onChange={this.handleFilterValue}> 
+                                <FormLabel component="legend" style={styling.formLabel}>Filter</FormLabel>
+                                <FormControlLabel value="companys" control={<Radio />} label="Companys" />
+                                <FormControlLabel value="users" control={<Radio />} label="Users" />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
     
+                    <TableContainer component={Paper} style={{width: "90%"}}>
+                        <Table className="{this.classes.table}" aria-label="custom pagination table"> 
+                            <TableBody className="{this.classes.tableRows}"> 
+                                {(this.rowsPerPage > 0
+                                    ? this.state.rows.slice(this.page * this.rowsPerPage, this.page * this.rowsPerPage + this.rowsPerPage)
+                                    : this.state.rows
+                                ).map((row) => (
+                                    <StyledTableRow key={row.avatar}>
+                                        <TableCell className="avatar" style={{width:"10%"}}>
+                                            <Avatar> {row.name} </Avatar>
+                                        </TableCell>
+                                        <TableCell>
+                                            <List >
+                                                <ListItemText
+                                                    primary={row.name}
+                                                    secondary={row.bio}
+                                                >
+                                                </ListItemText>
+                                            </List>
+                                        </TableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <div className="loading-more" style={{marginTop: '30px'}}>
+                        {
+                            !this.isEnd 
+                            ? <Typography 
+                                variant='h6' 
+                                style={{textAlign: 'center'}} > 
+                                    No result can be found
+                                </Typography> 
+                            : <Button
+                                variant="contained" color="primary" style={styling.loadingButton} onClick={this.handleLoadingRequest}
+                                >
+                                    Load More Result
+                                </Button>
+                        }
+                    </div>
+                </Container>
+                {this.state.rows=[]}
+            </div>
+        );
+    }
+
 }
+
+
+
+
+// function SearchProfile (){
+//     const classes = useStyles2();
+//     const [page, setPage] = React.useState(0);
+//     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    
+//     // const [row, setRow] = useState(0);  //{ name: '', bio: '', avatar: '' }
+
+    
+// }

@@ -67,6 +67,11 @@ require("dotenv").config({ path: "./config.env" });
 const dbo = require("./db/conn"); 
 const companyRoutes = require("./routes/company");
 
+// SEAL-16
+const searchRouter = require('./routes/search');  
+app.use('/search', searchRouter);
+
+
 app.listen(port, () => {
   // perform a database connection when server starts
   dbo.connectToServer(function (err) {
