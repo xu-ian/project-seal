@@ -14,6 +14,20 @@ Output:
 	contacts: [userID, userID, userID,...]
 }
 ```
+## `/addContact`
+Input:
+```
+{
+    recieverID: userID,
+    newContactID: userID
+}
+```
+Output:
+```
+{
+    status: statusCode
+}
+```
 ## `/sendMessage`
 Input:
 ```
