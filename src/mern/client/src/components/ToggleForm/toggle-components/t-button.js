@@ -3,7 +3,7 @@ const ToggleButton= ({value1, value2, color, state, onClick}) =>{
 	return (
 		//Front-end for Form which assigns deliverables (SEAL-8 Component)
 		<div>
-			<button className='toggle-btn' onClick = {onClick} style={{backgroundColor:color}}>{state==1 ? value1:value2}</button>
+			<button className='toggle-btn' onClick = {onClick} style={{backgroundColor:color}}>{state===1 ? value1:value2}</button>
 		</div>
   );
 }
