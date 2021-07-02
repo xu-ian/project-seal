@@ -18,6 +18,10 @@ dotenv.config({ path: "./config/config.env" });
 app.use(cors());
 applyRoutes(app);
 
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 // create application/json parser
 // create application/x-www-form-urlencoded parser
 app.use(express.urlencoded({extended: true})); 
