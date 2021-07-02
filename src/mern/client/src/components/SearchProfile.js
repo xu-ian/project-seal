@@ -23,14 +23,8 @@ import { makeStyles, withStyles } from '@material-ui/styles';
 */
 
 // to be deleted upon finish of backend
-function createData(avatar, name, bio) {
-    return { avatar, name, bio };
-}
-const rows = [
-    createData('Avatar', 'Nasa', 'we explore the space'),
-    createData('Avatar', 'Google', 'Comprehensive search'),
-    createData('Avatar', 'Twitter', 'Connet to the world'),
-]
+function createData(avatar, name, bio) { return { avatar, name, bio }; }
+let rows = [];
 
 
 //styling
@@ -55,7 +49,6 @@ const styling = {
         width: '100%',
         maxWidth: '36ch',
         border: "1px solid #0B345C",
-        // backgroundColor: theme.palette.background.paper,
       },
     inline: { display: 'inline', },
     loadingButton: {
@@ -66,15 +59,11 @@ const styling = {
 }
 
 const useStyles2 = makeStyles({
-    table: {
-        minWidth: 500,
-    },
+    table: { minWidth: 500,},
 })
 
 const StyledTableRow = withStyles({
-    root:{
-        margin: "100px",
-    }
+    root:{ margin: "100px",}
 })(TableRow);
 
 
@@ -87,28 +76,57 @@ export default function SearchProfile (){
     let isEnd = false;             //if we have hit the end of data
     let reloadData = false;       //will be true if the user hit on 'Load More Result' button
     
-    const [companyProfile, setCompanyProfile] = useState(0);
-    
+    // const [row, setRow] = useState(0);  //{ name: '', bio: '', avatar: '' }
+    const [rawLists, setRawLists] = useState(0);
+
 
     //This handles searching between companys / users
-    const handleFilterValue =(event) => {
+    const handleFilterValue = (event) => {
         setFilter(event.target.value);
+        console.log("the filter is: " + filter)
     }
     const handleLoadingRequest=() =>{
         reloadData = true;
     }
 
     
-    
-    //gets called first
+
+
+    //Initialization: get data from the database
     useEffect(
         ()=>{
+            
             setRowsPerPage(15);
-            setFilter("companys");
-            //getting data from the database
-            //storing in the local variable
         },[]
     );
+
+
+    useEffect(
+        ()=>{
+            rows = [];
+            if(filter==="companys"){
+                console.log("companys here");
+                //getting data from the database & storing in the local variable
+                axios.get("http://localhost:5000/search/listcompanies")
+                .then((response) => {
+                    setRawLists(response.data)
+                    // console.log("Initialization is fetching: " + JSON.stringify(rawLists));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            } else if(filter==="users"){console.log("users needs to be implement");
+            } else {console.log("error");}
+
+
+            for(let key in rawLists){
+                var insertData = createData( rawLists[key].logo, rawLists[key].company_title, rawLists[key].tagline );
+                rows.push(insertData);
+            }
+            console.log("rows are: " + JSON.stringify(rows));
+
+        },[filter]
+    )
 
     useEffect(
         ()=>{
@@ -134,7 +152,7 @@ export default function SearchProfile (){
                 </Paper>
                 <Grid className="filter-container" style={styling.filterContainer}>
                     <FormControl component="fieldset">
-                        <RadioGroup row aria-label="filter" name="filter" value={filter} defaultValue="companys" onChange={handleFilterValue}> 
+                        <RadioGroup row aria-label="filter" name="filter" value={filter} onChange={handleFilterValue}> 
                             <FormLabel component="legend" style={styling.formLabel}>Filter</FormLabel>
                             <FormControlLabel value="companys" control={<Radio />} label="Companys" />
                             <FormControlLabel value="users" control={<Radio />} label="Users" />
@@ -151,7 +169,7 @@ export default function SearchProfile (){
                             ).map((row) => (
                                 <StyledTableRow key={row.avatar}>
                                     <TableCell className="avatar" style={{width:"10%"}}>
-                                        Avatar
+                                        <Avatar> {row.name} </Avatar>
                                     </TableCell>
                                     <TableCell>
                                         <List >
