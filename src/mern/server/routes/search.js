@@ -19,7 +19,7 @@ searchRoutes.route('/listcompanies').get((req, res) => {
 
 
 // For search input by name
-searchRoutes.route('/:name').get((req, res) => {
+searchRoutes.route('/listcompanies/:name').get((req, res) => {
   let name = new RegExp(req.params.name, 'i');
   // Get maximum 15 companies which company_title contains "name" as substring.
   Company.find({company_title : name}, {company_title:1, tagline:1, logo:1}, {limit: 15}).then(companies => {
