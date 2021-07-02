@@ -10,7 +10,6 @@ import IconButton from "@material-ui/core/IconButton";
 import axios from 'axios';
 import { makeStyles, withStyles } from '@material-ui/styles';
 
-
 /* Initial state ––
  *  Info required: Name, Avatar(Logo Image), Tagline
  *  Displayed the first 15 company or less 
@@ -86,6 +85,7 @@ export default class SearchProfile extends Component {
             rawLists: [],
             rows: [],
             search: '',
+            prevsearch: '',
         };
     }
 
@@ -96,8 +96,10 @@ export default class SearchProfile extends Component {
 
 
     onChangeSearch(e){
-        this.setState({
-            search: e.target.value,
+        if (typeof e.target.value != 'undefined')
+            this.setState({
+                search: e.target.value,
+                prevsearch: e.target.value
         });
     }
 
@@ -157,6 +159,10 @@ export default class SearchProfile extends Component {
     handleSearch=(e) =>{
         e.preventDefault();
         this.onChangeSearch(e);
+        if (typeof this.state.search == 'undefined') {
+            //do nothing
+            this.state.search = this.state.prevsearch;
+        }
         if(this.filter === "companys"){
             console.log("search key is : " + this.state.search);
             
@@ -207,7 +213,7 @@ export default class SearchProfile extends Component {
                 <Container maxWidth="lg">
                     <form onSubmit={this.handleSearch}>
                     <Paper className="search-bar" style ={styling.searchBar} >
-                        <IconButton type="submit" className={styling.iconButton} aria-label="search" >
+                        <IconButton type="submit" className={styling.iconButton} aria-label="search">
                             <SearchIcon />
                         </IconButton>
                         <InputBase

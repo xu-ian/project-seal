@@ -45,10 +45,10 @@ searchRoutes.route('/listusers').get((req, res) => {
 
 
 // For search company input by name
-searchRoutes.route('/users/:name').get((req, res) => {
+searchRoutes.route('/listusers/:name').get((req, res) => {
   let name = new RegExp(req.params.name, 'i');
   // Get maximum 15 companies which company_title contains "name" as substring.
-  User.find({username : name}, {username:1, userbio:1, email1}, {limit: 15}).then(users => {
+  User.find({username : name}, {username:1, userbio:1, email:1}, {limit: 15}).then(users => {
     res.json(users);
 
   }).catch(err => {
