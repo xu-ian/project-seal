@@ -2,8 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import MessageBox from './MessageBox.js';
 import MessageInput from './MessageInput.js';
-import {Paper, TextField, Button, CardHeader, Avatar} from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import {Paper, Button, CardHeader, Avatar} from '@material-ui/core';
 import './MessageList.css';
 import {Link} from 'react-router-dom';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -12,73 +11,49 @@ export default class MessageList extends React.Component {
 
     constructor(props){
         super(props);
-        if(!window.localStorage.getItem("uid")){
-            window.localStorage.setItem("uid", this.props.contact.name);
+        if(this.props.contact){
+            window.localStorage.setItem("uid", this.props.contact.id);
+            window.localStorage.setItem("uname", this.props.contact.name);
         }
         const date = new Date();
         this.state = {
-            user:window.localStorage.getItem("uid") || this.props.contact.name,
+            name:window.localStorage.getItem("uname"),
+            user:window.localStorage.getItem("uid"),
             messages:[{body:"Hello", date:"09/01/2021", change:"false", mine:"true"},
             {body:"Hello", date:"09/01/2021", change:"false", mine:"false"}],
             value:"",
+            time:date,
             timer:date.valueOf(),
             rendered:"false"
         };
-        this.addMessage = this.addMessage.bind(this);
         this.showMessage = this.showMessage.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount(){
-        axios.post("http://localhost:5000/messages/getMessages", 
-        {mid:"60bf7c66da6e78b534ed1a8e"/*window.localStorage.getItem("userId")||*/,
-         uid:this.state.user}/*window.getItem("MessageUserID")*/).then(res => {
-            this.setState({messages:res.data.conversation});
+        this.interval = setInterval(() => {axios.get("http://localhost:5000/messages/getMessages/" 
+        +"60deb4b6e4ecc906340671a6"+ "/" + this.state.user).then(res => {
+            this.setState({messages:res.data.conversation || res.data});
             this.setState({rendered:"true"});
-        });
+        });}, 1000);
+        
     }
-
-    addMessage(){
-        if(this.date.valueOf() >= parseInt(this.state.timer) + 20000){
-            new Notification(this.date.valueOf());
-            this.setState({timer:parseInt(this.state.timer) + 20000});
-            axios.post("http://localhost:5000/messages/getMessages", 
-        {mid:"60bf7c66da6e78b534ed1a8e"/*window.localStorage.getItem("userId")||*/,
-         uid:this.state.user}/*window.getItem("MessageUserID")*/).then(res => {
-            this.setState({messages:res.data.conversation});
-            this.setState({rendered:"true"});
-        });
-        }
-        if(this.state.value !== ""){
-            let temp = {body:this.state.value, date:"09/01/2021", change:"true", mine:"true"}
-            let x = this.state.messages;
-            x.push(temp);
-            this.setState({messages:x});
-            this.setState({value:""});
-            //Replace code above with below once implemented.
-            /*
-              axios.post("/MessagingBackend/sendMessage", {messageText:this.state.value, 
-                recieverID:this.state.user, senderID: window.getItem("userID")});
-            */
-        }
-        else{
-            alert("Write a message before sending");
-        }
-    }
+      componentWillUnmount() {
+        clearInterval(this.interval);
+      }
 
     showMessage(){
         let messages = [];
         let mes = "";
         if(this.state.rendered === "true"){
         for(let i = 0; i < this.state.messages.length; i++){
-            if(this.state.messages[i].author === "60bf7c66da6e78b534ed1a8e"){
+            if(this.state.messages[i].author === "60deb4b6e4ecc906340671a6"){
                 mes = this.state.messages[i];
                 messages.push(
                     <div style={{width:"45%", left:"54%", position:"relative", margin:"2px"}}>
                         <MessageBox body={mes.content}  
                           date={mes.updatedAt} 
                           change={mes.createdAt !== mes.updatedAt} 
-                          mine={mes.author === "60bf7c66da6e78b534ed1a8e"}
+                          mine={mes.author === "60deb4b6e4ecc906340671a6"}
                           id={mes._id}/>
                     </div>
                 );
@@ -90,7 +65,7 @@ export default class MessageList extends React.Component {
                         <MessageBox body={mes.content}  
                           date={mes.updatedAt} 
                           change={mes.createdAt !== mes.updatedAt} 
-                          mine={mes.author === "60bf7c66da6e78b534ed1a8e"}
+                          mine={mes.author === "60deb4b6e4ecc906340671a6"}
                           id={mes._id}/>
                     </div>
                 );
@@ -98,10 +73,6 @@ export default class MessageList extends React.Component {
         }
         }
         return messages;
-    }
-
-    handleChange(event){
-        this.setState({value:event.target.value});
     }
 
     render(){
@@ -114,8 +85,8 @@ export default class MessageList extends React.Component {
                     <Paper style={{width:"90%", left:"4%", position:"relative", 
                       "font-size":"35px", margin:"10px"}}>
                         <CardHeader 
-                          avatar={<Avatar>{this.state.user[0]}</Avatar>}
-                          title={this.state.user}
+                          avatar={<Avatar>{this.state.name[0]}</Avatar>}
+                          title={this.state.name}
                           action={
                             <Link style={{ textDecoration: 'none', color:'Black' }} 
                               to={{pathname:"home"}}>

@@ -31,3 +31,46 @@
 
 ## Back End:
 
+# SEAL-5 (Messaging Backend)
+
+## Models
+
+### Message.js(server/models/Message)
+
+Stores all messages that are sent between users
+
+Structure for a Message
+- String: Contents of message
+- ObjectID: User who sent message
+
+### Relation.js(server/models/Relation)
+
+Stores all contact pairs and their Conversations as a List of Messages
+
+Structure for a Relation
+- Array-ObjectID-Size=2: Pair of users who are contacts
+- Array-ObjectID: Conversation between the users as a list of Messages
+
+## Endpoints
+
+### conversations.js(server/routes/conversaions)
+
+/messages/getContacts/:id
+- Gets all Relations where :id is one of the users
+
+### messages.js(server/routes/messages)
+
+/messages/getMessages/:mid/:uid
+- Gets a conversation by the two participants of the conversation :mid and :uid
+
+/messages/username/:id
+- Gets the name of a user from their :id
+
+/messages/specific/:id
+- Gets the message with :id
+
+/messages/addMessage/:body/:mid/:uid
+- Adds a message with contents :body to a conversation with participants :mid, :uid
+
+/messages/updateMessage/:id/:body
+- Updates the message :id with the new body :body

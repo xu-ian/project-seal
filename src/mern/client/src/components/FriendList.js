@@ -24,8 +24,8 @@ export default class FriendList extends React.Component{
   componentDidMount(){
     //Calls axios to get a list of all contacts for this user
     axios.get("http://localhost:5000/messages/getContacts/" 
-       +/*window.localStorage.getItem("userId")||*/"60bf7c66da6e78b534ed1a8e").then(res => {
-      this.setState({contacts:res.data, rendered:true});
+       +/*window.localStorage.getItem("userId")||*/"60deb4b6e4ecc906340671a6").then(res => {
+      this.setState({rendered:true});
       this.formatContacts(res.data);
     });
   }
@@ -33,14 +33,23 @@ export default class FriendList extends React.Component{
   formatContacts(data){
     let contactArray = [];
     for(let i = 0; i < data.length; i++){
-      if(data[i].relation[0] === "60bf7c66da6e78b534ed1a8e"/*window.localStorage.getItem("userId")||*/) {
-        contactArray.push({name:data[i].relation[1]});
+      if(data[i].relation[0] === "60deb4b6e4ecc906340671a6"/*window.localStorage.getItem("userId")||*/) {
+        axios.get("http://localhost:5000/messages/username/"+data[i].relation[1])
+          .then(res => {
+            contactArray.push({name:res.data, id:data[i].relation[1]});
+            this.setState({contacts:contactArray});
+          })
+          .catch(err =>{alert(err)});
       }
       else{
-        contactArray.push({name:data[i].relation[0]});
+        axios.get("http://localhost:5000/messages/username/"+data[i].relation[1])
+          .then(res => {
+            contactArray.push({name:res.data, id:data[i].relation[0]});
+            this.setState({contacts:contactArray});
+          })
+          .catch(err =>{alert(err)});
       }
     }
-    this.setState({contacts:contactArray});
   }
 
   handleChange(event){
@@ -58,7 +67,7 @@ export default class FriendList extends React.Component{
             <Link style={{ textDecoration: 'none', color:'Black' }} 
              to={{pathname:"friendId"}}>
               <CardHeader
-               avatar={<Avatar>{/*this.state.contacts[i].name[0]*/"?"}</Avatar>}
+               avatar={<Avatar>{this.state.contacts[i].name[0]}</Avatar>}
                title={this.state.contacts[i].name}
               />
             </Link>

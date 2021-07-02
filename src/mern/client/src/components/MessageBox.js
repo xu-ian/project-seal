@@ -67,9 +67,9 @@ export default class MessageBox extends React.Component {
 
     sendChange(){
         this.setState({modifying:"false", changed:"true"});
-        axios.post("http://localhost:5000/messages/editMessage", 
-          {messageText:this.state.body, messageID: this.state.id}).then().catch(
-            () => {alert("Server Failure, please try again")}
+        axios.post("http://localhost:5000/messages/updateMessage/"+this.state.id 
+        + "/" + this.state.body).then().catch(
+            (err) => {alert(err)}
           );
     }
 

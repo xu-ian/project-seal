@@ -16,11 +16,12 @@ export default class MessageInput extends React.Component {
     }
 
     sendMessage(){
-        axios.post("http://localhost:5000/messages/addMessage", 
-        {body:this.state.value, mid:"60bf7c66da6e78b534ed1a8e", uid:window.localStorage.getItem("uid")}).
+        axios.post("http://localhost:5000/messages/addMessage/" + this.state.value + 
+        "/" + "60deb4b6e4ecc906340671a6" + "/" + window.localStorage.getItem("uid")).
         then().catch(
           () => {alert("Server Error please try again.")}
         );
+        this.setState({value:""});
     }
 
     handleChange(event){
@@ -38,7 +39,6 @@ export default class MessageInput extends React.Component {
                         <Button size="large" variant="contained"
                           style={{margin:"8px", right:"7px", position:"relative", float:"right"}}
                           onClick={this.sendMessage}>
-                          
                             <SendIcon />
                         </Button>
                     </div>

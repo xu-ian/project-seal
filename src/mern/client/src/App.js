@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import './App.css';
 import PostViewer from './components/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
-//component for the part
+
 import CompanyProfileList from "./components/companyProfile/companyProfile";
 import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
@@ -17,23 +17,36 @@ import FriendList from "./components/FriendList"
 // import RoleSelection from "./components/roleSelection"
 
 // import Navbar from "./components/navbar"
+import Courses from "./components/Courses"
+import CoursePage from "./components/CoursePage"
 
 // We use Route in order to define the different routes of our application
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
   } from "react-router-dom";
+
+function hideSideBar(){
+  //include the URL to disclude Sidebar
+  if (['/profile/create','/signin'].includes(window.location.pathname)) return null;
+  return <Sidebar />;
+}
 
 export default function App(){
     return(
       <Router>
         <div>
-          <Sidebar />
+          {hideSideBar()}
         </div>
         <div class="content">
         <Switch>
+          <Route path="/courses">
+            <Courses />
+          </Route>
+          <Route path="/coursepage">
+            <CoursePage />
+          </Route>
           <Route path="/posts/">
             <PostViewer />
           </Route>
@@ -58,8 +71,10 @@ export default function App(){
           <Route path = "/friendlist/">
             <FriendList/>
           </Route>
-          <Route path= "/view/:id" component={MyCompanyProfile} />
-          <Route path="/edit/:id" component={EditCompanyProfile} />
+          <Route path="/company-profile/list" component={CompanyProfileList} />
+          <Route path="/company-profile/create" component={CreateCompanyProfile} />
+          <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
+          <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
         </Switch>
       </div>
       </Router>  
