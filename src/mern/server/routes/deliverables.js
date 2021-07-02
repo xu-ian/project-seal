@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const Deliverable = require('../models/Deliverable'); 
+const Deliverable = require('../models/Submission'); 
 const deliverableRoutes = express.Router();
 const dirLocation = path.join(__dirname, '..', 'uploads', 'deliverables');
 
