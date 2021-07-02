@@ -22,8 +22,10 @@ import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
 import Authenticated from "./components/Authentication/Authenticated";
-import AssignTest from "./components/ToggleForm"
+import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
+import FriendList from "./components/FriendList";
+import Submit from './components/Submit';
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -45,7 +47,7 @@ import store from "./components/store";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
+    Route
   } from "react-router-dom";
 
 
@@ -121,10 +123,6 @@ export default function App(){
             <Route path="/create">
               <CreateCompanyProfile />
             </Route>
-              <Route path="/company-profile/list" component={CompanyProfileList} />
-              <Route path="/company-profile/create" component={CreateCompanyProfile} />
-              <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
-              <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
 
               <Route path = "/profile/create" component={ProfilePage} /> 
               <Route path = "/profile/search" component={SearchProfile} />
@@ -132,6 +130,18 @@ export default function App(){
               <Route path="/user-profile/create" component={CreateUserProfile} />
               <Route path = "/user-profile/edit/:id" component={EditUserProfile} /> 
               <Route path= "/user-profile/view/:id" component={MyUserProfile} />
+
+              <Route path="/company-profile/list" component={CompanyProfileList} />
+              <Route path="/company-profile/create" component={CreateCompanyProfile} />
+              <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
+              <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
+              <Route path = "/friendlist/">
+              <FriendList/>
+            </Route>
+            <Route path = "/submit">
+              <Submit/>
+            </Route>
+
           </Switch>
           </div>
         </Router>  

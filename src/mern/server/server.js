@@ -2,18 +2,17 @@ const express = require("express");
 const passport = require("passport");
 const bodyParser = require('body-parser')
 const cors = require("cors");
-const mongoose = require("mongoose");
+var mongoose = require("mongoose");
+var multer = require("multer");
+const port = process.env.PORT || 5000;
 const dotenv = require("dotenv")
+dotenv.config({ path: "./config.env" });
+dotenv.config({ path: "./config/config.env" });
 const applyRoutes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
 const usersRouter = require('./routes/users')
 const postsRouter = require('./routes/posts');
-
-const port = process.env.PORT || 5000;
 const app = express();
-
-dotenv.config({ path: "./config.env" });
-dotenv.config({ path: "./config/config.env" });
 
 app.use(cors());
 applyRoutes(app);
@@ -71,9 +70,18 @@ require("dotenv").config({ path: "./config.env" });
 const dbo = require("./db/conn"); 
 const companyRoutes = require("./routes/company");
 
+
 // SEAL-16
 const searchRouter = require('./routes/search');  
 app.use('/search', searchRouter);
+
+
+// SEAL-12: Setting storage for file uploads
+
+var deliverableRouter = require('./routes/deliverables');
+app.use('/deliverables', deliverableRouter);
+
+var deliverableRoutes = require('./routes/deliverables');
 
 
 app.listen(port, () => {
