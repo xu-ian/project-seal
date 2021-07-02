@@ -7,11 +7,12 @@ import CompanyProfileList from "./components/companyProfile/companyProfile";
 import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
 import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
+
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
 import Authenticated from "./components/Authentication/Authenticated";
-
+import AssignTest from "./components/ToggleForm"
 import VideoPlayer from "./components/VideoPlayer";
 
 // for redux
@@ -101,6 +102,9 @@ export default function App(){
             <Route exact path="/player">
               <VideoPlayer />
             </Route>
+            <Route exact path="/assigntest">
+						  <AssignTest />
+					  </Route>
             <Route path="/list"> 
               <CompanyProfileList />
             </Route>
@@ -115,7 +119,6 @@ export default function App(){
           </div>
         </Router>  
       </Provider>
-
     );
 };
 
