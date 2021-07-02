@@ -11,6 +11,8 @@ class Sidebar extends React.Component {
                 <a href="/company-profile/list">Companies</a>
                 <a href="/profile/search">People Search</a>
                 <a href="/player">(Debug)VideoPlayer</a>
+                <a href="/friendlist/home">Contacts</a>
+                <a href="/submit">Submit</a>
                 <a href="/courses">Courses</a>
             </div>
         );
