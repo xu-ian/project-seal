@@ -13,3 +13,4 @@ command: `npm i axios classnames jwt-decode react-redux react-router-dom redux r
 - Redirect to a welcome page (Authenticated.js) after user login, that page contains a log out button
 - Moves Login.js, registration.js, select.js to Authentication folder under component
 - Added actions, reducers and authUtils folders and store.js 
+- Endpoint requests moved to `components/actions/authActions.js`
