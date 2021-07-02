@@ -9,6 +9,7 @@ class Sidebar extends React.Component {
                 <a href="/">Home</a>
                 <a href="/posts/1">Posts</a>
                 <a href="/company-profile/list">Companies</a>
+                <a href="/profile/search">People Search</a>
                 <a href="/player">(Debug)VideoPlayer</a>
                 <a href="/friendlist/home">Contacts</a>
                 <a href="/courses">Courses</a>
