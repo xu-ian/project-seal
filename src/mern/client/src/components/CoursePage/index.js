@@ -1,24 +1,21 @@
 import React, {Component} from 'react';
-import Sidebar from '../SideBar';
-import axios from 'axios';
 import qs from 'qs';
+import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 
-// const getCourseData = axios.get('localhost:3000/courses')
-const getCourseData = new Promise((resolve, reject) => resolve({
-    status: 200,
-    payload: [
-        { name: 'Course1', desc: 'Course1 description here' },
-        { name: 'Course2', desc: 'Course2 description here' }
-    ]
-}));
-
+const getCoursesData = fetch('http://127.0.0.1:5000/courses').then(res => res.json())
 const courseNameExists = (payload, courseName) => payload.map(course => course.name).includes(courseName);
 const getCourseObjectIfExists = (payload, courseName) => payload.filter(course => (course.name === courseName))[0];
 
 class CoursePage extends Component {
     constructor(props){
         super();
-        const defaultName = qs.parse(props.location.search, { ignoreQueryPrefix: true }).name;
+        const pageURL = String(window.location.href)
+        const URLObject = qs.parse(pageURL);
+        const values = Object.values(URLObject)
+        const defaultName = values[0];
         this.state = {
             courseName: defaultName,
             desc: ""
@@ -27,9 +24,9 @@ class CoursePage extends Component {
     }
 
     componentDidMount() {
-        getCourseData.then(result => {
-            const payload = result.payload
-            if(courseNameExists(payload, this.state.courseName)) {
+        getCoursesData.then(result => {
+            const payload = result.payload;
+            if(payload !== undefined && courseNameExists(payload, this.state.courseName)) {
                 this.setState({ validCourse: true });
                 const courseObject = getCourseObjectIfExists(payload, this.state.courseName);
                 this.setState({ desc: courseObject.desc });
@@ -41,19 +38,32 @@ class CoursePage extends Component {
 
     render() {
         return (
-            <Sidebar>
+            <div>
+                <Link to="/courses"><Button variant="contained">Back</Button></Link>
                 {this.state.validCourse ? (
                     <div>
                         <h1>{this.state.courseName}</h1>
-                        {this.state.desc}
+                        <Container maxWidth="sm" style={{padding: "25px"}}>
+                            <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '25vh' }}>
+                                <div style={{padding: "25px"}}>
+                                    {this.state.desc}
+                                </div>
+                            </Typography>
+                        </Container>
                     </div>
                 ) : (
                     <div>
                         <h1>Course not found</h1>
-                        That course name does not exist
+                        <Container maxWidth="sm" style={{padding: "25px"}}>
+                            <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '25vh' }}>
+                                <div style={{padding: "25px"}}>
+                                    That course name does not exist
+                                </div>
+                            </Typography>
+                        </Container>
                     </div>
                 )}
-            </Sidebar>
+            </div>
         );
     }
 }

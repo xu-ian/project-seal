@@ -17,6 +17,7 @@ router.post("/register", [
   body('email', 'Email required').trim().isLength({ min: 4}).normalizeEmail().isEmail().not().isEmpty().withMessage("The email field is mandatory"),
   body('password', 'Password required').trim().isLength({ min: 8}).not().isEmpty().withMessage("The password field is mandatory")
   ], (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*')
 
     //sanitize and conform data with express-validator functions
 
@@ -27,7 +28,13 @@ router.post("/register", [
         { 
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password 
+            password: req.body.password ,
+            user_id: User.countDocuments({}) + 1,
+            userbio: "",
+            gender: "",
+            links: [],
+            belongingCompany: "",
+            position: "",
         }
     )
     var pw = req.body.password;
@@ -88,6 +95,7 @@ router.post("/register", [
 
 //Post for login 
 router.post("/login", (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*')
   var username = req.body.username;
   const password = req.body.password;// Find user by email
   User.findOne({$or: [{username: req.body.email}, {username: req.body.username}] }).then(user => {
@@ -95,11 +103,7 @@ router.post("/login", (req, res) => {
     if (!user) {
       return res.status(404).json({ emailnotfound: "Incorrect info" });
     }
-    else{
-      res.json(user);
-    }
-    
-    
+
     
     // Check password
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -108,7 +112,9 @@ router.post("/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.name,
+          role: user.role,
+          datejoined: user.date_joined,
         };// Sign token
         jwt.sign(payload,keys.secret,
           {
