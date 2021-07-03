@@ -8,3 +8,4 @@ package-lock.json
 
 #not needed
 /src/mern/server/node_modules
+/src/mern/client/package-lock.json

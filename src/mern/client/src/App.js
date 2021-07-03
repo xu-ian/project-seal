@@ -7,13 +7,26 @@ import CompanyProfileList from "./components/companyProfile/companyProfile";
 import CreateCompanyProfile from "./components/companyProfile/createCompanyProfile";
 import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
 import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
+
+
+import ProfilePage from "./components/ProfilePage";
+import UserProfileList from "./components/UserProfile/UserProfile";
+import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
+import EditUserProfile from "./components/UserProfile/EditUserProfile";
+import MyUserProfile from "./components/UserProfile/MyUserProfile";
+import SearchProfile from "./components/SearchProfile";
+// import RoleSelection from "./components/roleSelection"
+
+
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
 import FriendList from "./components/FriendList"
 import Authenticated from "./components/Authentication/Authenticated";
-
+import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
+import FriendList from "./components/FriendList";
+import Submit from './components/Submit';
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -35,7 +48,7 @@ import store from "./components/store";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
+    Route
   } from "react-router-dom";
 
 
@@ -71,52 +84,69 @@ function hideSideBar(){
 } 
 export default function App(){
     return(
-      <Router>
-        <div>
-          {hideSideBar()}
-        </div>
-        <div class="content">
-        <Switch>
-          <Route path="/courses">
-            <Courses />
-          </Route>
-          <Route path="/coursepage">
-            <CoursePage />
-          </Route>
-          <Route path="/posts/">
-            <PostViewer />
-          </Route>
-          <Route exact path="/">
-            <Select />
-          </Route>
-          <Route exact path="/signin">
-            <Login />
-          </Route>
-          <Route exact path="/signup">
-            <Registration />
-          </Route>
-          <Route exact path="/player">
-            <VideoPlayer />
-          </Route>
-          <Route exact path="/authenticated">
+      <Provider store={store}>
+        <Router>
+          <div>
+            {hideSideBar()}
+          </div>
+          <div class="content">
+          <Switch>
+            <Route path="/courses">
+              <Courses />
+            </Route>
+            <Route path="/coursepage">
+              <CoursePage />
+            </Route>
+            <Route path="/posts/">
+              <PostViewer />
+            </Route>
+            <Route exact path="/">
+              <Select />
+            </Route>
+            <Route exact path="/signin">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Registration />
+            </Route>
+            <Route exact path="/authenticated">
               <Authenticated />
             </Route>
-          <Route path="/list"> 
-            <CompanyProfileList />
-          </Route>
-          <Route path="/create">
-            <CreateCompanyProfile />
-          </Route>
-          <Route path = "/friendlist/">
-            <FriendList/>
-          </Route>
-          <Route path="/company-profile/list" component={CompanyProfileList} />
-          <Route path="/company-profile/create" component={CreateCompanyProfile} />
-          <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
-          <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-        </Switch>
-      </div>
-      </Router>  
+            <Route exact path="/player">
+              <VideoPlayer />
+            </Route>
+            <Route exact path="/assigntest">
+						  <AssignTest />
+					  </Route>
+            <Route path="/list"> 
+              <CompanyProfileList />
+            </Route>
+            <Route path="/create">
+              <CreateCompanyProfile />
+            </Route>
+
+              <Route path = "/profile/create" component={ProfilePage} /> 
+              <Route path = "/profile/search" component={SearchProfile} />
+              <Route path="/user-profile/list" component={UserProfileList} />
+              <Route path="/user-profile/create" component={CreateUserProfile} />
+              <Route path = "/user-profile/edit/:id" component={EditUserProfile} /> 
+              <Route path= "/user-profile/view/:id" component={MyUserProfile} />
+
+              <Route path="/company-profile/list" component={CompanyProfileList} />
+              <Route path="/company-profile/create" component={CreateCompanyProfile} />
+              <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
+              <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
+              <Route path = "/friendlist/">
+              <FriendList/>
+            </Route>
+            <Route path = "/submit">
+              <Submit/>
+            </Route>
+
+          </Switch>
+          </div>
+        </Router>  
+      </Provider>
     );
 };
 
