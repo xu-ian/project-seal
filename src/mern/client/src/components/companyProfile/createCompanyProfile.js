@@ -3,8 +3,11 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline } from '@material-ui/core';
 import BusinessIcon from '@material-ui/icons/Business';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+
 import FileBase from 'react-file-base64';
 import './company-profile-style.css';
+
 
 export default class CreateCompanyProfile extends Component{
   //Constructor that stores the data
@@ -100,23 +103,27 @@ export default class CreateCompanyProfile extends Component{
       links: '',          
       members: ''
     });
-    // this.props.history.push("/list");
+    window.location.href = "/company-profile/list";
   }
 
   //render on the page
   render(){
     return(
-      <div className="root"style={{backgroundColor: "white"}, {marginTop:"30px"}}>    
-        <Container component="main" maxWidth="md"> 
+      <div className="" style={{backgroundColor: "white"} , {marginTop:"30px"}}> 
+        <div> 
+          <KeyboardBackspaceIcon style={{ fontSize: 50 }} onClick={() =>  window.location.href='/profile/create'}  />
+        </div>
+        <Container component="main" maxWidth="lg"> 
           <CssBaseline />
-          <div className="">
-            <Avatar className="">
-              <BusinessIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5" gutterBottom>
-              Create Company Profile
-            </Typography>
-            <form id="company-form" className="form" onSubmit={this.handleSubmit}>
+          <Container maxWidth="lg">
+            <div style={{marginBottom:"10px"}}>
+              <BusinessIcon style={{ fontSize: 50 }} color="primary"/>
+              <Typography variant="h4">
+                Create Company Profile
+              </Typography>
+            </div>
+
+            <form id="company-form" className="form" style={{marginTop:"20px"}} onSubmit={this.handleSubmit}>
               <TextField required fullWidth 
                 label="Company Title" 
                 className="company-form-group"
@@ -139,6 +146,7 @@ export default class CreateCompanyProfile extends Component{
                 id="company-form-description" 
                 className="company-form-group" 
                 variant="outlined" 
+                multiline
                 InputLabelProps={{shrink: true,}}
                 value={this.state.description}
                 onChange={this.onChangeDescription}
@@ -161,6 +169,7 @@ export default class CreateCompanyProfile extends Component{
                     margin= "normal" 
                     helperText="Company Website or social media" 
                     className="company-form-group"
+                    multiline
                     value={this.state.links}
                     onChange={this.onChangeLinks}
                   >
@@ -168,8 +177,9 @@ export default class CreateCompanyProfile extends Component{
                 </Grid>
               </Grid>
               <TextField fullWidth 
-                label="Search members" 
+                label="Members" 
                 className="company-form-group"
+                multiline
                 style={{marginBottom:"20px"}}
                 value={this.state.members}
                 onChange={this.onChangeMembers}
@@ -189,7 +199,7 @@ export default class CreateCompanyProfile extends Component{
               <br />
               <Button variant="contained" color="primary" type="submit" align="center" classname="submit">Create Company Profile</Button>
             </form>
-          </div>
+          </Container>
         </Container>
       </div>
     )

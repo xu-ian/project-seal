@@ -44,6 +44,7 @@ postsRoutes.route('/:id').get((req, res) => {
 
 // Create a post.
 postsRoutes.route("/add").post((req, res) => {
+    console.log(req.body);
     let newPost = new Post({
         author: req.body.author,
         title: req.body.title,

@@ -1,11 +1,12 @@
 const coursesRouter = require('./courses');
-const recordRouter = require('./record');
+const messagesRouter = require('./messages');
 
 const endpoints = {
-    courses: '/courses/'
+    courses: '/courses/',
+    messages: '/messages/'
 }
 
 module.exports = (app) => {
     app.use(endpoints.courses, coursesRouter);
-    app.use(recordRouter);
+    app.use(endpoints.messages, messagesRouter);
 }
