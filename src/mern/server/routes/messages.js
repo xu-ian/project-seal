@@ -15,11 +15,30 @@ messagesRoutes.route("/messages/getMessages/:mid/:uid").get((req, res) => {
         .populate("conversation")
         .select("-content -_id -__v")
         .then(comments => {
+            if(comments.length > 0){
             if(comments.length == 0){
                 res.json(comments);
             }
             else{
                 res.json(comments[0]);
+            }
+            }
+            else {
+                Relation.find({relation:[req.params.uid, req.params.mid]})
+        .populate("conversation")
+        .select("-content -_id -__v")
+        .then(comments => {
+            if(comments.length == 0){
+                res.json(comments);
+            }
+            else{
+                res.json(comments[0]);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json({ msg: err.msg });
+        });
             }
         })
         .catch(err => {
@@ -61,9 +80,24 @@ messagesRoutes.route("/messages/addMessage/:body/:mid/:uid").post((req, res) => 
               .then(() => {
                 Relation.find({relation:[req.params.mid, req.params.uid]})
                     .then(post => {
-                        post[0].conversation.push(newComment);
-                        post[0].save();
-                        res.json({ msg: "New message has been added." });
+                        if(post.length > 0){
+                            post[0].conversation.push(newComment);
+                            post[0].save();
+                            res.json({ msg: "New message has been added." });
+                        }
+                        else{
+                            Relation.find({relation:[req.params.uid, req.params.mid]})
+                                .then(post => {
+                                    console.log(post);
+                                    post[0].conversation.push(newComment);
+                                    post[0].save();
+                                    res.json({ msg: "New message has been added." });
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    res.status(404).json({msg:err.msg});
+                                });
+                        }
                     })
                     .catch(err => {
                         console.log(err);

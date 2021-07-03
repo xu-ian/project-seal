@@ -11,6 +11,7 @@ conversationRoutes.route('/messages/getContacts/:id').get((req, res) => {
     Relation.find({relation:req.params.id})
         .populate('records', 'conversation')
         .then(post => {
+            console.log(post);
             res.json(post);
         })
         .catch(err => {

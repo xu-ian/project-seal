@@ -11,10 +11,10 @@ export default class FriendList extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      contacts:[{name:"Bob"},{name:"Sally"}],//Placeholder names
+      contacts:[],
       contactnum:"",
       value:"",
-      rendered:true//Set to false after componentDidMount finishes.
+      rendered:false
     }
     this.formatContacts = this.formatContacts.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -42,7 +42,7 @@ export default class FriendList extends React.Component{
           .catch(err =>{alert(err)});
       }
       else{
-        axios.get("http://localhost:5000/messages/username/"+data[i].relation[1])
+        axios.get("http://localhost:5000/messages/username/"+data[i].relation[0])
           .then(res => {
             contactArray.push({name:res.data, id:data[i].relation[0]});
             this.setState({contacts:contactArray});

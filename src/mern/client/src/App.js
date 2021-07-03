@@ -25,7 +25,6 @@ import FriendList from "./components/FriendList"
 import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
-import FriendList from "./components/FriendList";
 import Submit from './components/Submit';
 
 // for redux
