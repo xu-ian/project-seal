@@ -3,9 +3,7 @@ const coursesModel = require('./courses.model');
 const mongoose = require('mongoose');
 
 const defaultRes = (req, res, next) => {
-
     coursesModel.find({}).then(payload => {
-        res.set('Access-Control-Allow-Origin', '*')
         res.json({
             status: 200,
             payload: payload

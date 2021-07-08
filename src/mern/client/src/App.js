@@ -21,10 +21,10 @@ import SearchProfile from "./components/SearchProfile";
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
+import FriendList from "./components/FriendList"
 import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
-import FriendList from "./components/FriendList";
 import Submit from './components/Submit';
 
 // for redux

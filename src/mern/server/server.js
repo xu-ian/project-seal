@@ -10,12 +10,23 @@ dotenv.config({ path: "./config.env" });
 dotenv.config({ path: "./config/config.env" });
 const applyRoutes = require('./routes');
 const MongoClient = require('mongodb').MongoClient;
-const usersRouter = require('./routes/users')
+const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
+const messageRouter = require('./routes/conversations');
+const conversationRouter = require('./routes/messages');
+
 const app = express();
 
 app.use(cors());
 applyRoutes(app);
+
+app.use("/", messageRouter);
+app.use("/", conversationRouter);
+
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({
+//  extended: true
+//}));
 
 // create application/json parser
 // create application/x-www-form-urlencoded parser
