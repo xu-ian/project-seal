@@ -28,6 +28,7 @@ export default class Post extends React.Component {
         this.renderTags = this.renderTags.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.deletable = this.deletable.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.edits = this.edits.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -42,9 +43,6 @@ export default class Post extends React.Component {
       .then((response) => {
         const userLists = response.data;
         const currentUser = userLists.find(person => person._id === this.state.aid);
-        new Notification(currentUser.username + " " + currentUser.userbio + " "
-        + currentUser.email + " " + currentUser.links + " " + currentUser.belongingCompany
-        + currentUser.position);
         this.setState({
           username: currentUser.username,
           email: currentUser.email,
@@ -52,16 +50,8 @@ export default class Post extends React.Component {
           belongingCompany: currentUser.belongingCompany,
           position: currentUser.position
         });
-        // console.log("edit is fetching: " + JSON.stringify(response.data));
-        // console.log("edit is fetching: " + response.status);
-        // console.log("the id is: " + this.props.match.params.id);
-        console.log("the desired is: " + JSON.stringify(currentUser));
-        // console.log("company title: ", this.state.company_title);
       })
-      .catch(function (error) {
-        new Notification(error);
-        console.log(error);
-      });
+      .catch(function (error) {});
     }
 
     renderPopup(){
@@ -127,7 +117,7 @@ export default class Post extends React.Component {
             );
         }
         else{
-            return(<p readonly="true" style={{margin:"10px"}}>{this.state.content}</p>);
+            return(<p class = "body" readonly="true" style={{margin:"10px"}}>{this.state.content}</p>);
         }
     }
 
@@ -161,7 +151,7 @@ export default class Post extends React.Component {
                 </div>
                 </a>
                 <hr/>
-                <div className="Body">
+                <div>
                     {/* Body of post */}
                     {this.edits()}
                 </div>

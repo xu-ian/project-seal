@@ -11,6 +11,8 @@ class PostViewerSpecific extends React.Component {
       super(posts); 
       this.state = {
         pagenum:0,
+        comments:[{author:{username:"default"}},{author:{username:"default"}},
+        {author:{username:"default"}},{author:{username:"default"}},{author:{username:"default"}}],
         loaded:false,
         loaded2:false
       }
@@ -71,7 +73,7 @@ class PostViewerSpecific extends React.Component {
       for(let i = 0; i < 5; i++){
         if(this.state.comments.length >= this.state.pagenum*5 + i + 1){
           CommentsList.push(<div class="post"><Comment author={this.state.comments[parseInt(i)
-                            + this.state.pagenum*5].author} 
+                            + this.state.pagenum*5].author.username} 
           content={this.state.comments[parseInt(i) + this.state.pagenum*5].content}
           id={this.state.comments[parseInt(i) + this.state.pagenum*5]._id}/></div>);
         }
@@ -132,7 +134,6 @@ class PostViewerSpecific extends React.Component {
      * Renders the html page.
      */
     render () {
-      {/* Displays loading until the database queries from componentDidMount are completed */}
       if(this.state.loaded === false || this.state.loaded2 === false){
         return <p>Loading...</p>
       }

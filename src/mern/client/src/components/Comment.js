@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import {Typography} from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './Post.css';
 
 class Comment extends React.Component {
@@ -42,7 +45,7 @@ class Comment extends React.Component {
             );
         }
         else{
-            return(<p readonly="true">{this.state.content}</p>);
+            return(<p class="body" readonly="true" style={{margin:"10px"}}>{this.state.content}</p>);
         }
     }
 
@@ -55,15 +58,17 @@ class Comment extends React.Component {
             <div class="Post">
                 <div className="User">
                     {/* Name of user */}
-                    <h1 dangerouslySetInnerHTML={{__html:this.state["author"]}}/>
+                    <Typography variant="h3" style={{"font-size":"200%", margin:"10px"}}>
+                        {this.state.author}
+                    </Typography>
                 </div>
                 <hr/>
-                <div className="Body">
+                <div>
                     {/* Content of comment */}
                     {this.edits()}
                 </div>
                 {/* Button to delete this comment */}
-                <button class="delete" type="button" onClick={this.deleteComment}>Delete</button>
+                <button class="delete" type="button" onClick={this.deleteComment}><DeleteIcon/></button>
                 <button class="modify" type="button" onClick={() =>{
                 if(this.state.edit){
                     this.setState({edit:false});
@@ -73,7 +78,7 @@ class Comment extends React.Component {
                 else{
                     this.setState({edit:true});
                 }
-            }}>Modify</button>
+            }}><EditIcon/></button>
             </div>
         );
     }

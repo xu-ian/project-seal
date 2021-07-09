@@ -28,7 +28,7 @@ class CommentWrite extends React.Component {
      * @param {*} event Used to prevent the default actions from being performed.
      */
     handleSubmit(event) {
-        axios.post("http://localhost:5000/posts/"+this.state.post_id.toString()+"/comments/add/",
+        axios.post("http://localhost:5000/posts/"+this.state.post_id.toString()+"/comments/add/" + window.localStorage.getItem("userId").toString(),
                    this.state).then(
             res => {
             }

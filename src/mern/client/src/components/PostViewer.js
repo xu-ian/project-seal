@@ -47,7 +47,7 @@ import {Link, Switch,
     axios.get("http://localhost:5000/posts/").then(res => {
       this.setState({posts:res.data});
       this.setState({loaded:true});
-      }).catch(err => {new Notification(err); this.setState({loaded:"Load Failed"})});
+      }).catch(err => {this.setState({loaded:"Load Failed"})});
   }
 
   /**

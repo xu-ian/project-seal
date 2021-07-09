@@ -53,7 +53,8 @@ class PostWrite extends React.Component {
      * @param {*} event Input from the form submission.
      */
     handleSubmit(event) {
-        axios.post("http://localhost:5000/posts/add/", this.state).then(
+        axios.post("http://localhost:5000/posts/add/" 
+                   + window.localStorage.getItem("userId").toString(), this.state).then(
             res => {
             }
         ).catch();
@@ -75,12 +76,24 @@ class PostWrite extends React.Component {
                 </label>
                 {/* Tags to select. */}
                 <label class="switch">
-                    <input type="checkbox" value="tag1" onChange={this.handleTags}/>
-                    <span class="slider"><div class = 'center' >Tag1</div></span>
+                    <input type="checkbox" value="E-Commerce" onChange={this.handleTags}/>
+                    <span class="slider"><div class = 'center' >E-Commerce</div></span>
                 </label>
                 <label class="switch">
-                    <input type="checkbox" value="tag2" onChange={this.handleTags}/>
-                    <span class="slider"><div class = 'center'>Tag2</div></span>
+                    <input type="checkbox" value="Networking" onChange={this.handleTags}/>
+                    <span class="slider"><div class = 'center'>Networking</div></span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" value="News" onChange={this.handleTags}/>
+                    <span class="slider"><div class = 'center'>News</div></span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" value="Administrative Post" onChange={this.handleTags}/>
+                    <span class="slider"><div class = 'center'>Administrative Post</div></span>
+                </label>
+                <label class="switch">
+                    <input type="checkbox" value="Events" onChange={this.handleTags}/>
+                    <span class="slider"><div class = 'center'>Events</div></span>
                 </label>
                 <input class="addButton" type="submit" value="Create Post" />
             </form>

@@ -42,10 +42,10 @@ commentsRoutes.route("/posts/:postId/comments/:commentId").get((req, res) => {
 });
 
 // Adding a comment
-commentsRoutes.route("/posts/:id/comments/add").post((req, res) => {
+commentsRoutes.route("/posts/:id/comments/add/:aid").post((req, res) => {
 
     let newComment = new Comment({
-        author: ObjectId(req.body.user._id),
+        author: ObjectID(req.params.aid),
         content: req.body.content
     });
 
@@ -69,7 +69,7 @@ commentsRoutes.route("/posts/:id/comments/add").post((req, res) => {
 
 // Updating a comment
 commentsRoutes.route("/posts/:postId/comments/update/:commentId").patch((req, res) => {
-    if (Comment.findById(req.params.commentId).author == req.user._id) {
+    if (Comment.findById(req.params.commentId)) {
         Post.findById(req.params.postId)
             .then(
                 Comment.updateOne({ _id: ObjectId(req.params.commentId) }, {
@@ -92,7 +92,7 @@ commentsRoutes.route("/posts/:postId/comments/update/:commentId").patch((req, re
 
 // Deleting a comment
 commentsRoutes.route("/posts/:postId/comments/delete/:commentId").delete((req, res) => {
-    if (Comment.findById(req.params.commentId).author == req.user._id) {
+    if (Comment.findById(req.params.commentId)) {
         Comment.deleteOne({ _id: ObjectId(req.params.commentId) })
             .then(() => {
                 res.json({ msg: "Comment has been deleted." });

@@ -62,9 +62,9 @@ postsRoutes.route('/:id').get((req, res) => {
 });
 
 // Create a post.
-postsRoutes.route("/add").post((req, res) => {
+postsRoutes.route("/add/:id").post((req, res) => {
     let newPost = new Post({
-        author: ObjectID(req.user._id),
+        author: ObjectID(req.params.id),
         title: req.body.title,
         content: req.body.content,
         tags: req.body.tags
@@ -81,7 +81,7 @@ postsRoutes.route("/add").post((req, res) => {
 
 // Update a specific post by ID.
 postsRoutes.route("/update/:id").patch((req, res) => {
-    if (Post.findById(req.params.id).author == req.user._id) {
+    if (Post.findById(req.params.id)) {
         Post.updateOne({ _id: ObjectID(req.params.id) }, {
             $set: {
                 content: req.body.content,
@@ -99,7 +99,7 @@ postsRoutes.route("/update/:id").patch((req, res) => {
 
 // Deleting a specific post by ID.
 postsRoutes.route("/delete/:id").delete((req, res) => {
-    if (Post.findById(req.params.id).author == req.user._id) {
+    if (Post.findById(req.params.id)) {
         Post.deleteOne({ _id: ObjectID(req.params.id) })
             .then(() => {
                 res.json({ msg: "Post has been deleted." });
