@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import {Paper, Typography} from '@material-ui/core';
 import './PostWrite.css';
 
 class PostWrite extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            author: window.localStorage.getItem("username"),
+            author: this.props.id,
             title : 'dummy_title',
             content: 'Content',
             tags:[]
@@ -65,6 +66,7 @@ class PostWrite extends React.Component {
      * @returns The html code for a PostWrite interface.
      */
     render (){
+        if(window.localStorage.getItem("userId")) {
         return (
             <form onSubmit={this.handleSubmit} >
                 <label>
@@ -83,6 +85,16 @@ class PostWrite extends React.Component {
                 <input class="addButton" type="submit" value="Create Post" />
             </form>
         );
+        }
+        else{
+            return(
+                <Paper>
+                    <Typography style={{margin:"25px", "text-align":"center","font-size":"150%"}}>
+                        Please sign in to add posts
+                    </Typography>
+                </Paper>
+            );
+        }
     }
 }
 

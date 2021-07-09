@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Paper, Typography} from '@material-ui/core';
 import './CommentWrite.css';
 
 class CommentWrite extends React.Component {
@@ -37,6 +38,7 @@ class CommentWrite extends React.Component {
     }
 
     render (){
+        if(window.localStorage.getItem("userId")) {
         return (
             <form onSubmit={this.handleSubmit} >
                 <label>
@@ -45,7 +47,16 @@ class CommentWrite extends React.Component {
                 </label>
                 <input class="addButton" type="submit" value="Create Comment" />
             </form>
-        );
+        );}
+        else{
+            return(
+                <Paper>
+                    <Typography style={{margin:"25px", "text-align":"center","font-size":"150%"}}>
+                        Please sign in to add comments
+                    </Typography>
+                </Paper>
+            );
+        }
     }
 }
 

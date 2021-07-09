@@ -23,8 +23,10 @@ import {Link, Switch,
     this.displayButton = this.displayButton.bind(this);
     this.changePage = this.changePage.bind(this);
     this.state = {
+      author:window.localStorage.getItem("userId")||"None",
       loaded:false,
-      posts:[],
+      posts:[{author:{username:"default"}},{author:{username:"default"}},
+      {author:{username:"default"}},{author:{username:"default"}},{author:{username:"default"}}],
       postnum:0,
       pg:0
     }
@@ -45,7 +47,7 @@ import {Link, Switch,
     axios.get("http://localhost:5000/posts/").then(res => {
       this.setState({posts:res.data});
       this.setState({loaded:true});
-      });
+      }).catch(err => {new Notification(err); this.setState({loaded:"Load Failed"})});
   }
 
   /**
@@ -127,13 +129,16 @@ import {Link, Switch,
           window.localStorage.setItem("id", this.state.posts[
             this.state.pg*window.localStorage.getItem("epp")+i]._id)}}>
           <div class="post">
-            <Post author = {this.state.posts[i+this.state.pg*
-                            window.localStorage.getItem("epp")].author} 
+            <Post post = {this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]}
+              author = {this.state.posts[i+this.state.pg*
+                            window.localStorage.getItem("epp")].author.username}
+              aid = {this.state.posts[i+this.state.pg*
+                            window.localStorage.getItem("epp")].author._id}  
               content={this.state.posts[i+this.state.pg*
                        window.localStorage.getItem("epp")].content} 
               tags={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
               id={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]._id}
-              del="false"/>
+              deletable={false}/>
           </div>
         </Link>);
       }
@@ -150,6 +155,9 @@ import {Link, Switch,
     if(this.state.loaded === false){
       return <p>Loading...</p>
     }
+    else if(this.state.loaded === "Load Failed"){
+      return <p>Load Failed. Please Reload.</p>
+    }
     return (
       <Router>
         <Switch>
@@ -158,7 +166,7 @@ import {Link, Switch,
             <div>
               <div class="PostWrite">
                 {/* The interface for adding posts */}
-                <PostWrite />
+                <PostWrite id={this.state.author} />
               </div>
               <hr/>
               <div className="Posts">

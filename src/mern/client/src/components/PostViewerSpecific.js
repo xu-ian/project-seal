@@ -142,8 +142,10 @@ class PostViewerSpecific extends React.Component {
             <nav>
               {this.getInitialState}
               {/* The main post being displayed */}
-              <ul><Post author = {this.state.author} content={this.state.content} 
-                   tags={this.state.tags} del="true" id={window.localStorage.getItem('id')}/>
+              <ul><Post author = {this.state.author.username} aid={this.state.author._id}
+                   content={this.state.content} 
+                   tags={this.state.tags} id={window.localStorage.getItem('id')}
+                   deletable={this.state.author._id === window.localStorage.getItem("userId")}/>
                   {/* The comment adding interface */}
                   <CommentWrite id={this.state.id} />
                   {/* The comments associated with the posts*/}
