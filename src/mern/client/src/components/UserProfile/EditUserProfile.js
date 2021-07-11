@@ -7,7 +7,6 @@ import FileBase from 'react-file-base64';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
-let currentUserID= localStorage.getItem('userId');
 
 /* This class update/create an existing user profile through id */
 class EditUserProfile extends Component {
@@ -45,6 +44,7 @@ class EditUserProfile extends Component {
 
   // This will get the record based on the id from the database.
   componentDidMount() {
+    let currentUserID= localStorage.getItem('userId');
     axios.get("http://localhost:5000/user-profile/?_id:" + currentUserID)
       .then((response) => {
         const userLists = response.data;
@@ -125,6 +125,7 @@ class EditUserProfile extends Component {
 
   // This function will handle the submission.
   handleSubmit(e) {
+    let currentUserID= localStorage.getItem('userId');
     e.preventDefault();
     const newEditedUserProfile = {
       user_id: this.state.user_id,
