@@ -5,6 +5,10 @@ import { Paper, Avatar, Typography, Container, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+
+
+let currentUserID= localStorage.getItem('userId');
 
 export default class MyUserProfile extends Component{
 
@@ -54,7 +58,17 @@ export default class MyUserProfile extends Component{
       .catch(function (error) {
         console.log(error);
       });
-  }    
+  }
+
+  handleAddFriend(){
+        if(this.props.match.params.id===currentUserID){
+
+        }else{
+            
+
+
+        }
+  }
 
 
     render(){
@@ -65,6 +79,7 @@ export default class MyUserProfile extends Component{
             textAlign: 'left',
             color: theme.palette.text.secondary,
             padding: "20px",
+            marginBottom: "15px"
         }));
         const imageContainer = {
             // position: 'relative',
@@ -79,24 +94,35 @@ export default class MyUserProfile extends Component{
             <div className="container">
                 <div className="banner-wrapper">
                     <div style={imageContainer} > </div>
-                    
                 </div>
                 {/* Profile Content */}
-                <Container  maxWidth="md">
+                <Container  maxWidth="md" spacing={2}>
                     <Item className="block-group">
                         <Typography gutterBottom>
                             <div id="logo-grid" className="grid-wrapper"> 
-                                <Avatar sx={{ width: 140, height: 140 }} style={ {position:"relative"}, {top:"-100px"}}> M </Avatar>
                                 <div>
-                                    <div className = "company-title"> {this.state.username} </div>
                                     <Grid container spacing={2} xs={12}> 
-                                        <Grid item xs={4}>
-                                            <MailOutlineIcon fontSize="large" />
-                                            <PersonAddIcon fontSize="large" />
+                                        <Grid item xs={3}> 
+                                            <Avatar sx={{ width: 140, height: 140 }} > M </Avatar>
                                         </Grid>
-                                        <Grid item xs={8}>
-                                            <Typography variant="body1"> {this.state.belongingCompany} </Typography>
-                                            <Typography variant="body2">   {this.state.position} </Typography>
+                                        <Grid item xs={9} style={{marginTop: "30px"}}> 
+                                            <Typography className = "company-title" variant="h2"> {this.state.username} </Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container xs={12} style={{marginTop: "30px"}}> 
+                                        <Grid item xs={3}>
+                                            <MailOutlineIcon style={{ fontSize: 60 }} onClick={() => {window.location.href='/friendlist/home'}} />
+                                            <PersonAddIcon style={{ fontSize: 60 }}  />
+                                        </Grid>
+                                        <Grid item xs={9}>
+                                            <div></div>
+                                            <Typography variant="h5"> 
+                                                <LocationOnIcon/> 
+                                                Working at: {this.state.belongingCompany} 
+                                            </Typography>
+                                            <Typography variant="h6" style={{marginLeft: "50px"}}>
+                                                As: {this.state.position}     
+                                            </Typography>
                                         </Grid>
                                     </Grid>
                                 </div>
@@ -118,6 +144,7 @@ export default class MyUserProfile extends Component{
                     </Item>
                     <Item className="block-group" style={{padding: "20px"}} >  </Item>
                 </Container>
+
             </div>
         )
     }

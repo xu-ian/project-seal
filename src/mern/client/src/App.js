@@ -15,6 +15,7 @@ import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
 import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
+import FriendRequest from "./components/FriendRequest";
 // import RoleSelection from "./components/roleSelection"
 
 
@@ -135,6 +136,8 @@ export default function App(){
               <Route path="/company-profile/create" component={CreateCompanyProfile} />
               <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
+              <Route path="/friend" component={FriendRequest} />
+
               <Route path = "/friendlist/">
               <FriendList/>
             </Route>
