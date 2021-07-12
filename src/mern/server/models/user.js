@@ -18,7 +18,7 @@ var UserSchema = new Schema(
     //profileImage: req.body.profileImage,
     //backgroundImage: req.body.backgroundImage,
     //friendsmodel: [ [friends: ], [friendrequestsent: ], [friendrequestreceived: ] ]
-    friendsmodel:[{type: String}, {type: String}, {type: String}],
+    friends:{type: Schema.Types.ObjectId, ref: 'friends'},
   }
 );
 
