@@ -12,10 +12,11 @@ class Sidebar extends React.Component {
         let searchbar;
         let username;
         let edituserprofile;
+        let currentUserID= localStorage.getItem('userId');
         if (this.props.auth.isAuthenticated){
             userprofile = <a href="/user-profile/list">User Profiles</a>;
             searchbar = <a href="/profile/search">Search</a>;
-            edituserprofile = <a href="/user-profile/edit/:id"> Edit My User Profile </a>; 
+            edituserprofile = <a href={"/user-profile/edit/" + currentUserID}> Edit My User Profile </a>; 
         }
         return (
             <div class="sidebar">

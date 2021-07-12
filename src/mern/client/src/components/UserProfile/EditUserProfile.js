@@ -45,7 +45,7 @@ class EditUserProfile extends Component {
   // This will get the record based on the id from the database.
   componentDidMount() {
     let currentUserID= localStorage.getItem('userId');
-    axios.get("http://localhost:5000/user-profile/?_id:" + currentUserID)
+    axios.get("http://localhost:5000/user-profile/?_id:" + this.props.match.params.id)
       .then((response) => {
         const userLists = response.data;
         const currentUser = userLists.find(person => person._id === currentUserID);
@@ -144,7 +144,7 @@ class EditUserProfile extends Component {
     // This will send a post request to update the data in the database.
     axios
       .post(
-        "http://localhost:5000/user-profile/update/" + currentUserID,
+        "http://localhost:5000/user-profile/update/" + this.props.match.params.id,
         newEditedUserProfile
       )
       .then((res) => console.log(res.data))
@@ -152,6 +152,7 @@ class EditUserProfile extends Component {
       });
     
     console.log("update id: " + currentUserID);
+    alert("User Profile Updated!");
     window.location.href = "/user-profile/list";
   }
 
