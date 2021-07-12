@@ -7,6 +7,7 @@ const { body ,validationResult } = require('express-validator');
 
 const mongoose = require("mongoose");
 const User = require('../models/user');
+const Friend = require('../models/friends');
 
 
 // POST for register
@@ -24,6 +25,14 @@ router.post("/register", [
     const errors = validationResult(req);
 
     //create a user object with parsed and sanitized data
+    var friendlist = new Friend(
+      {
+        friends:  [],
+        friendrequestsent: [],
+        friendrequestrecieved:  [],
+      }
+    )
+
     var user = new User(
         { 
             username: req.body.username,
@@ -35,6 +44,7 @@ router.post("/register", [
             links: [],
             belongingCompany: "",
             position: "",
+            friends: friendlist,
         }
     )
     var pw = req.body.password;
