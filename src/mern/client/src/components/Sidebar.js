@@ -27,6 +27,7 @@ class Sidebar extends React.Component {
                 <a href="/submit">Submit</a>
                 <a href="/courses">Courses</a>
                 {userprofile}
+                <a href="/offers/1">Offers</a>
             </div>
         );
     }

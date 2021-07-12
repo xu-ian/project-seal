@@ -15,7 +15,6 @@ import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
 import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
-// import RoleSelection from "./components/roleSelection"
 
 
 import Registration from "./components/Authentication/registration";
@@ -26,6 +25,9 @@ import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
+
+// offer
+import OfferViewer from "./components/Offers/OfferViewer";
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -140,6 +142,10 @@ export default function App(){
             </Route>
             <Route path = "/submit">
               <Submit/>
+            </Route>
+
+            <Route path="/offers/1"> 
+              <OfferViewer />
             </Route>
 
           </Switch>
