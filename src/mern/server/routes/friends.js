@@ -96,6 +96,58 @@ friendsRoutes.route("/accept/:id").post(function (req, res) {
   //I want to do many things:
   // add the friend to both user's friend lists
   // remove both requests from their respective lists
+  User.findById(req.params.id)
+  .then(user =>{
+       Friends.findById(user.friends)
+        .then(friends=>{
+          //update user's friend request list with outgoing to user B
+          Friends.updateOne({_id: ObjectId(user.friends)}, {
+            $addToSet: {
+              friends: req.body.user_id
+            },
+            $pull:{
+              friendrequestsent: req.body.user_id
+            }
+          })
+          //sent info is here, 
+            .then(() => {
+              //sent friend requests B->A
+              User.findById(req.body.user_id)
+                .then(user =>{
+                    Friends.findById(user.friends)
+                      .then(friends=>{
+                        //update user's friend request list with outgoing to user B
+                        Friends.updateOne({_id: ObjectId(user.friends)}, {
+                          $addToSet: {
+                            friends: req.params.id,
+                            },
+                          $pull:{
+                            friendrequestrecieved: req.params.id,
+                          }
+                        })
+                        //sent info is here, 
+                          .then(() => {
+                            res.json({
+                              msg: " Friend accepted"
+                            })
+                          })
+                        })
+                })
+                .catch(err => {
+                    res.status(400).json({ msg: err.msg });
+                });
+            })
+        })
+        .catch(err => {
+          console.log("caught here2")
+          res.status(400).json({ msg: err.msg });
+        });
+  })
+  .catch(err => {
+      res.status(400).json({ msg: err.msg });
+  });
+
+
 });
 
 
