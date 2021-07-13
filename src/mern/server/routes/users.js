@@ -87,6 +87,9 @@ router.post("/register", [
             }
               else {
                   // User does not exist, save to database
+                friendlist.save(function (err){
+                  if (err) { return next(err); }
+                });
                 user.save(function (err) {
                   if (err) { return res.status(400).json({username: "failed to register"}); }
                   console.log("successfully registered");

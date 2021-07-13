@@ -14,6 +14,7 @@ const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const messageRouter = require('./routes/conversations');
 const conversationRouter = require('./routes/messages');
+const friendsRouter = require('./routes/friends');
 
 const app = express();
 
@@ -67,6 +68,7 @@ const commentsRoutes = require("./routes/comments");
 
 app.get('/', (req, res)=> res.send('Hello World!'));
 app.use('/users', usersRouter);
+app.use('/friends', friendsRouter);
 
 // Importing routes for posts
 const companyRouter = require('./routes/company');  
