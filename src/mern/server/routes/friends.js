@@ -4,88 +4,104 @@ const friendsRoutes = express.Router();
 const dbo = require("../db/conn");
 const Friends = require("../models/friends");
 const User = require('../models/user');
-
+const { ObjectId } = require('bson');
 /* This page is the page for requesting the friends, friend requests sent, and friend requests recieved  */
 
 
 /* The axois method */
 // Get User friends List by id.
 friendsRoutes.route("/view/:id").get((req, res) => {
+  //I'll grab both user's friend lists
   var friendlist = [];
   var friendrequestsent = [];
   var friendrequestrecieved = [];
-    User.findById(req.params.id)
-    .then(user =>{
-        Friends.findById(user.friends)
-        .then(friends=>{
-          friendlist = friends.friends;
-          friendrequestsent = friends.friendrequestsent;
-          friendrequestrecieved = friends.friendrequestrecieved;
+  User.findById(req.params.id)
+  .then(user =>{
+      Friends.findById(user.friends)
+      .then(friends=>{
+        friendlist = friends.friends;
+        friendrequestsent = friends.friendrequestsent;
+        friendrequestrecieved = friends.friendrequestrecieved;
 
-          //sent info is here, 
-          res.json({
-            friends: friendlist, 
-            friendrequestsent: friendrequestsent,
-            friendrequestrecieved: friendrequestrecieved
-          })
+        //sent info is here, 
+        res.json({
+          friends: friendlist, 
+          friendrequestsent: friendrequestsent,
+          friendrequestrecieved: friendrequestrecieved
         })
-    })
-    .catch(err => {
-        res.status(400).json({ msg: err.msg });
-    });
+      })
+  })
+  .catch(err => {
+      res.status(400).json({ msg: err.msg });
+  });
 });
 
 
 // send friend request
 friendsRoutes.route("/add/:id").post(function (req, res) {
-  let db_connect = dbo.getDb("employees");
-  let myquery = { id: req.body.id };
-  let newvalues = {
-    $set: {
-
-    },
-  };
-  db_connect
-    .collection("users")
-    .updateOne(myquery, newvalues, function (err, res) {
-      if (err) throw err;
-      console.log("1 document updated");
+  //I want to do two things: 
+  // add the request to the sender's sent box, and 
+  // add the request to the reciever's received box
+  console.log(req.params.id)
+  console.log(req.body.user_id)
+  User.findById(req.params.id)
+    .then(user =>{
+         Friends.findById(user.friends)
+          .then(friends=>{
+            //update user's friend request list with outgoing to user B
+            Friends.updateOne({_id: ObjectId(user.friends)}, {
+              $addToSet: {
+                friendrequestsent: req.body.user_id
+              }
+            })
+            //sent info is here, 
+              .then(() => {
+                //sent friend requests B->A
+                User.findById(req.body.user_id)
+                  .then(user =>{
+                      Friends.findById(user.friends)
+                        .then(friends=>{
+                          //update user's friend request list with outgoing to user B
+                          Friends.updateOne({_id: ObjectId(user.friends)}, {
+                            $addToSet: 
+                              {friendrequestrecieved: req.params.id,}
+                          })
+                          //sent info is here, 
+                            .then(() => {
+                              res.json({
+                                msg: " Friend request added A->B +Friend request recieved A->B"
+                              })
+                            })
+                          })
+                  })
+                  .catch(err => {
+                      res.status(400).json({ msg: err.msg });
+                  });
+              })
+          })
+          .catch(err => {
+            console.log("caught here2")
+            res.status(400).json({ msg: err.msg });
+          });
+    })
+    .catch(err => {
+        res.status(400).json({ msg: err.msg });
     });
+
+
 });
 
 // accept friend request
 friendsRoutes.route("/accept/:id").post(function (req, res) {
-  let db_connect = dbo.getDb("employees");
-  let myquery = { id: req.body.id };
-  let newvalues = {
-    $set: {
-
-    },
-  };
-  db_connect
-    .collection("users")
-    .updateOne(myquery, newvalues, function (err, res) {
-      if (err) throw err;
-      console.log("1 document updated");
-    });
+  //I want to do many things:
+  // add the friend to both user's friend lists
+  // remove both requests from their respective lists
 });
 
 
 // remove friends
 friendsRoutes.route("/remove/:id").post(function (req, res) {
-  let db_connect = dbo.getDb("employees");
-  let myquery = { id: req.body.id };
-  let newvalues = {
-    $set: {
-
-    },
-  };
-  db_connect
-    .collection("users")
-    .updateOne(myquery, newvalues, function (err, res) {
-      if (err) throw err;
-      console.log("1 document updated");
-    });
+  //I want to remove friend from both user's friend lists
 });
 
 
