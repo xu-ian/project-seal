@@ -42,8 +42,6 @@ friendsRoutes.route("/add/:id").post(function (req, res) {
   //I want to do two things: 
   // add the request to the sender's sent box, and 
   // add the request to the reciever's received box
-  console.log(req.params.id)
-  console.log(req.body.user_id)
   User.findById(req.params.id)
     .then(user =>{
          Friends.findById(user.friends)
@@ -100,7 +98,7 @@ friendsRoutes.route("/accept/:id").post(function (req, res) {
   .then(user =>{
        Friends.findById(user.friends)
         .then(friends=>{
-          //update user's friend request list with outgoing to user B
+          //update user's friend  list with outgoing to user B
           Friends.updateOne({_id: ObjectId(user.friends)}, {
             $addToSet: {
               friends: req.body.user_id
@@ -111,7 +109,7 @@ friendsRoutes.route("/accept/:id").post(function (req, res) {
           })
           //sent info is here, 
             .then(() => {
-              //sent friend requests B->A
+              //accept requests B->A
               User.findById(req.body.user_id)
                 .then(user =>{
                     Friends.findById(user.friends)
@@ -139,7 +137,6 @@ friendsRoutes.route("/accept/:id").post(function (req, res) {
             })
         })
         .catch(err => {
-          console.log("caught here2")
           res.status(400).json({ msg: err.msg });
         });
   })
@@ -151,9 +148,103 @@ friendsRoutes.route("/accept/:id").post(function (req, res) {
 });
 
 
+// reject friend request
+friendsRoutes.route("/reject/:id").post(function (req, res) {
+  //I want to do:
+  // remove both requests from their respective lists
+  User.findById(req.params.id)
+  .then(user =>{
+       Friends.findById(user.friends)
+        .then(friends=>{
+          //update user's friend  list with outgoing to user B
+          Friends.updateOne({_id: ObjectId(user.friends)}, {
+            $pull:{
+              friendrequestsent: req.body.user_id
+            }
+          })
+          //sent info is here, 
+            .then(() => {
+              //reject requests B->A
+              User.findById(req.body.user_id)
+                .then(user =>{
+                    Friends.findById(user.friends)
+                      .then(friends=>{
+                        //update user's friend request list with outgoing to user B
+                        Friends.updateOne({_id: ObjectId(user.friends)}, {
+                          $pull:{
+                            friendrequestrecieved: req.params.id,
+                          }
+                        })
+                        //sent info is here, 
+                          .then(() => {
+                            res.json({
+                              msg: " Friend rejected"
+                            })
+                          })
+                        })
+                })
+                .catch(err => {
+                    res.status(400).json({ msg: err.msg });
+                });
+            })
+        })
+        .catch(err => {
+          res.status(400).json({ msg: err.msg });
+        });
+  })
+  .catch(err => {
+      res.status(400).json({ msg: err.msg });
+  });
+
+
+});
+
 // remove friends
 friendsRoutes.route("/remove/:id").post(function (req, res) {
   //I want to remove friend from both user's friend lists
+  User.findById(req.params.id)
+  .then(user =>{
+       Friends.findById(user.friends)
+        .then(friends=>{
+          //update user's friend  list with outgoing to user B
+          Friends.updateOne({_id: ObjectId(user.friends)}, {
+            $pull: {
+              friends: req.body.user_id
+            },
+          })
+          //sent info is here, 
+            .then(() => {
+              //remove friend B->A
+              User.findById(req.body.user_id)
+                .then(user =>{
+                    Friends.findById(user.friends)
+                      .then(friends=>{
+                        //remove the other way
+                        Friends.updateOne({_id: ObjectId(user.friends)}, {
+                          $pull: {
+                            friends: req.params.id,
+                            },
+                        })
+                        //sent info is here, 
+                          .then(() => {
+                            res.json({
+                              msg: " Friend removed"
+                            })
+                          })
+                        })
+                })
+                .catch(err => {
+                    res.status(400).json({ msg: err.msg });
+                });
+            })
+        })
+        .catch(err => {
+          res.status(400).json({ msg: err.msg });
+        });
+  })
+  .catch(err => {
+      res.status(400).json({ msg: err.msg });
+  });
 });
 
 
