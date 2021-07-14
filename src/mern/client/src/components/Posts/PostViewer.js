@@ -4,6 +4,10 @@ import axios from 'axios';
 import Post from './Post.js';
 import PostViewerSpecific from './PostViewerSpecific.js';
 import './PostViewer.css';
+import { Button } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {Link, Switch,
   Route, BrowserRouter as Router} from 'react-router-dom';
 
@@ -75,18 +79,18 @@ import {Link, Switch,
   displayButton(){
     var buttons = [];
     if(this.state.pg > 0){
-      buttons.push(<button class="button" type="button"  
-                   onClick={this.decreasePage}>{"<"}</button>);
+      buttons.push(<Button  type="button"  
+                   onClick={this.decreasePage}><NavigateBeforeIcon/></Button>);
     }
     buttons.push(<div class="pagenum">Page: {parseInt(this.state.pg) + 1}</div>);
-    if(Math.floor(this.state.posts.length / 5) !== 0){
-      buttons.push(<button class="button" type="button" onClick={this.changePage}>
-        {"#"}</button>)
+    if(Math.floor((this.state.posts.length - 1) / 5) !== 0){
+      buttons.push(<Button  type="button" onClick={this.changePage}>
+        <MoreHorizIcon/></Button>)
     }
     if(parseInt(this.state.pg) + 1 < Math.ceil(this.state.posts.length / 
       window.localStorage.getItem("epp"))){
-      buttons.push(<button class="button" type="button" 
-                   onClick={this.increasePage}>{">"}</button>);
+      buttons.push(<Button type="button" 
+                   onClick={this.increasePage}><NavigateNextIcon/></Button>);
     }
     
     return buttons;

@@ -41,7 +41,6 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
-      new Notification(decoded.name);
       window.localStorage.setItem("username", decoded.name);
       window.localStorage.setItem("userId", decoded.id);
       alert("Login success!");

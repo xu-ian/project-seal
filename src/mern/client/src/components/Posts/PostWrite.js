@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import {Paper, Typography} from '@material-ui/core';
-import './PostWrite.css';
+import {Paper, Typography, Button} from '@material-ui/core';
+
 
 class PostWrite extends React.Component {
     constructor(props) {
@@ -9,25 +9,32 @@ class PostWrite extends React.Component {
         this.state = {
             author: this.props.id,
             title : 'dummy_title',
-            content: 'Content',
-            tags:[]
+            content: '',
+            tags:[],
+            availableTags:[{tag:["E-commerce","lightgray"]}, {tag:["Networking","lightgray"]},
+            {tag:["Administrative Post","lightgray"]}, {tag:["News","lightgray"]}, 
+            {tag:["Events","lightgray"]}, {tag:["General","lightgray"]}],
         };
-
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTags = this.handleTags.bind(this);
+        this.renderAvailableTags = this.renderAvailableTags.bind(this);
     }
 
     /**
      * Adds or removes tags from the array of tags based on input.
      * @param {*} event The input from the checkbox.
      */
-    handleTags(event){
+    handleTags = (event) => {
+        let intval = event.currentTarget.value[0];
+        let strval = event.currentTarget.value.slice(1);
         let newArray = [];
         let inArray = false;
+        let availableTags = this.state.availableTags;
+        availableTags[intval].tag[1] = "lightgrey";
         for(let i = 0; i < this.state.tags.length; i++){
-            if(this.state.tags[i] === event.target.value){
+            if(this.state.tags[i] === strval){
                 inArray = true;
             }
             else{
@@ -35,7 +42,8 @@ class PostWrite extends React.Component {
             }
         }
         if(!inArray){
-            newArray.push(event.target.value);
+            newArray.push(strval);
+            availableTags[intval].tag[1] = "blue";
         }
         this.setState({tags:newArray});
     }
@@ -53,6 +61,10 @@ class PostWrite extends React.Component {
      * @param {*} event Input from the form submission.
      */
     handleSubmit(event) {
+        if(this.state.content === ""){
+            alert("Write something before posting!");
+            return;
+        }
         axios.post("http://localhost:5000/posts/add/" 
                    + window.localStorage.getItem("userId").toString(), this.state).then(
             res => {
@@ -60,6 +72,18 @@ class PostWrite extends React.Component {
         ).catch();
         event.preventDefault();
         window.location.reload();
+    }
+
+    renderAvailableTags(){
+        let tagsList = [];
+        for(let i = 0; i < this.state.availableTags.length; i++){
+            tagsList.push(<Button variant="contained" size="large"
+            value={i+this.state.availableTags[i].tag[0]} onClick={this.handleTags}
+            style={{"background-color":this.state.availableTags[i].tag[1]}} >
+              {this.state.availableTags[i].tag[0]}
+          </Button>);
+        }
+        return tagsList;
     }
 
     /**
@@ -72,30 +96,10 @@ class PostWrite extends React.Component {
             <form onSubmit={this.handleSubmit} >
                 <label>
                     {/* Textarea to write post in */}
-                    <textarea placeholder = "Make a post" value={this.state.value} onChange={this.handleChange} />
+                    <textarea placeholder = "Write a post" value={this.state.value} onChange={this.handleChange} />
                 </label>
-                {/* Tags to select. */}
-                <label class="switch">
-                    <input type="checkbox" value="E-Commerce" onChange={this.handleTags}/>
-                    <span class="slider"><div class = 'center' >E-Commerce</div></span>
-                </label>
-                <label class="switch">
-                    <input type="checkbox" value="Networking" onChange={this.handleTags}/>
-                    <span class="slider"><div class = 'center'>Networking</div></span>
-                </label>
-                <label class="switch">
-                    <input type="checkbox" value="News" onChange={this.handleTags}/>
-                    <span class="slider"><div class = 'center'>News</div></span>
-                </label>
-                <label class="switch">
-                    <input type="checkbox" value="Administrative Post" onChange={this.handleTags}/>
-                    <span class="slider"><div class = 'center'>Administrative Post</div></span>
-                </label>
-                <label class="switch">
-                    <input type="checkbox" value="Events" onChange={this.handleTags}/>
-                    <span class="slider"><div class = 'center'>Events</div></span>
-                </label>
-                <input class="addButton" type="submit" value="Create Post" />
+                {this.renderAvailableTags()}
+                <input class="addButton" style={{"font-size":"18px"}} type="submit" value="Create Post" />
             </form>
         );
         }

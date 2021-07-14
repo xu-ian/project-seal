@@ -1,8 +1,9 @@
 import React from 'react';
 import './Post.css';
-import {Typography, Paper} from '@material-ui/core';
+import {Typography, Paper, Card} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PostPopup from './PostPopup.js';
 import axios from 'axios';
 
 export default class Post extends React.Component {
@@ -24,7 +25,6 @@ export default class Post extends React.Component {
             belongingCompany: "N/A",
             position: "N/A"
         }
-        this.renderPopup = this.renderPopup.bind(this);
         this.renderTags = this.renderTags.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.deletable = this.deletable.bind(this);
@@ -52,17 +52,6 @@ export default class Post extends React.Component {
         });
       })
       .catch(function (error) {});
-    }
-
-    renderPopup(){
-        return(<div>
-            <Typography>Username: {this.state.username}</Typography>
-            <Typography>Company: {this.state.belongingCompany}</Typography>
-            <Typography>Position: {this.state.position}</Typography>
-            <Typography>Email: {this.state.email}</Typography>
-            <Typography>Other Links: {this.state.links}</Typography>
-            <Typography>Contact Code: {this.state.aid}</Typography>
-        </div>);
     }
 
     /**
@@ -132,37 +121,23 @@ export default class Post extends React.Component {
     /* Displays the page */
     render () {
         return (
-            <div class="Encapsulator">
-                    <Paper style={{visibility:this.state.Open, position:"absolute",
-                                "z-index":"10", overflow:"visible", left:"80%"}}>
-                        {this.renderPopup()}
-                    </Paper>
-            <div class="Post clickable">
-            <a style={{color:"black", "text-decoration":"none"}}href={"/user-profile/view/"+this.state.aid}>
-                <div class="User">
-                    {/* Author of post */}
-                    <Typography aria-owns={"popover"}
-                     variant="h3" aria-haspopup="true"
-                     style={{"font-size":"200%", margin:"10px"}}
-                     onMouseEnter={this.handleOpen}
-                     onMouseLeave={this.handleClose}>
-                        {this.state.author}
-                    </Typography>
-                </div>
-                </a>
+            <Card border={1} style={{border:"1px solid darkgray", 
+              "border-radius": "7px"}} class="clickable">
+              <PostPopup author={this.state.author} aid={this.state.aid} id={this.state.id}/>
+              <div style={{margin: "auto", display: "block", overflow:"hidden", 
+               "text-decoration": "none"}}>
                 <hr/>
                 <div>
-                    {/* Body of post */}
-                    {this.edits()}
+                  {/* Body of post */}
+                  {this.edits()}
                 </div>
-                <hr/>
                 <div>
-                    {/* Tags of post */}
-                    {this.renderTags()}
-                    {this.deletable()}
+                  {/* Tags of post */}
+                  {this.renderTags()}
+                  {this.deletable()}
                 </div>
-            </div>
-            </div>
+              </div>
+            </Card>
         );
     }
 }

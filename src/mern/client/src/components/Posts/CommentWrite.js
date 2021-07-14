@@ -28,6 +28,10 @@ class CommentWrite extends React.Component {
      * @param {*} event Used to prevent the default actions from being performed.
      */
     handleSubmit(event) {
+        if(this.state.content === ''){
+            alert("Please write something before submitting!");
+            return;
+        }
         axios.post("http://localhost:5000/posts/"+this.state.post_id.toString()+"/comments/add/" + window.localStorage.getItem("userId").toString(),
                    this.state).then(
             res => {
@@ -45,7 +49,7 @@ class CommentWrite extends React.Component {
                     {/* The textarea to type in your comment. */}
                     <textarea placeholder = "Make a comment" value={this.state.content} onChange={this.handleChange} />
                 </label>
-                <input class="addButton" type="submit" value="Create Comment" />
+                <input style={{"font-size":"18px"}}class="addButton" type="submit" value="Create Comment" />
             </form>
         );}
         else{

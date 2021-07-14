@@ -1,6 +1,6 @@
 import React from "react";
 import './App.css';
-import PostViewer from './components/PostViewer.js';
+import PostViewer from './components/Posts/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
 
 import CompanyProfileList from "./components/companyProfile/companyProfile";
@@ -21,7 +21,7 @@ import SearchProfile from "./components/SearchProfile";
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
-import FriendList from "./components/FriendList"
+import FriendList from "./components/DMs/FriendList"
 import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
