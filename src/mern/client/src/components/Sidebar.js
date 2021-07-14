@@ -10,9 +10,10 @@ class Sidebar extends React.Component {
     render(){
         let userprofile;
         let searchbar;
+        let username;
         if (this.props.auth.isAuthenticated){
             userprofile = <a href="/user-profile/list">User Profiles</a>;
-            searchbar = <a href="/profile/search">Search</a>
+            searchbar = <a href="/profile/search">Search</a>;
         }
         return (
             <div class="sidebar">
