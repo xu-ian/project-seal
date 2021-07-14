@@ -26,6 +26,7 @@ import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
+import Calendar from './components/Calendar'
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -113,6 +114,9 @@ export default function App(){
             </Route>
             <Route exact path="/player">
               <VideoPlayer />
+            </Route>
+            <Route exact path="/calendar">
+              <Calendar />
             </Route>
             <Route exact path="/assigntest">
 						  <AssignTest />
