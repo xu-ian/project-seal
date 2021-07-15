@@ -158,7 +158,7 @@ class EditUserProfile extends Component {
 
 
 
-  //render on the page: "/company-profile/edit/:id"
+  //render on the page: "/user-profile/edit/:id"
   render() {
     return (
       <div className="" style={{backgroundColor: "white"} , {marginTop:"30px"}}> 

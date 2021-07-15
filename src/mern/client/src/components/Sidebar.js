@@ -11,12 +11,12 @@ class Sidebar extends React.Component {
         let userprofile;
         let searchbar;
         let username;
-        let edituserprofile;
+        let viewuserprofile;
         let currentUserID= localStorage.getItem('userId');
         if (this.props.auth.isAuthenticated){
             userprofile = <a href="/user-profile/list">User Profiles</a>;
             searchbar = <a href="/profile/search">Search</a>;
-            edituserprofile = <a href={"/user-profile/edit/" + currentUserID}> Edit My User Profile </a>; 
+            viewuserprofile = <a href={"/user-profile/view/" + currentUserID}> My User Profile </a>; 
         }
         return (
             <div class="sidebar">
@@ -27,11 +27,11 @@ class Sidebar extends React.Component {
                 {searchbar}
                 <a href="/player">(Debug)VideoPlayer</a>
                 <a href="/friendlist/home">Contacts</a>
-                <a href="/friend/">Friend Requests</a>
+                <a href={"/friend/view/" + currentUserID}>Friend Requests</a>
                 <a href="/submit">Submit</a>
                 <a href="/courses">Courses</a>
                 {userprofile}
-                {edituserprofile}
+                {viewuserprofile}
             </div>
         );
     }

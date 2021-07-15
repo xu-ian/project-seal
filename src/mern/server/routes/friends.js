@@ -49,7 +49,7 @@ friendsRoutes.route("/add/:id").post(function (req, res) {
             //update user's friend request list with outgoing to user B
             Friends.updateOne({_id: ObjectId(user.friends)}, {
               $addToSet: {
-                friendrequestsent: req.body.user_id
+                friendrequestrecieved: req.body.user_id
               }
             })
             //sent info is here, 
@@ -62,12 +62,12 @@ friendsRoutes.route("/add/:id").post(function (req, res) {
                           //update user's friend request list with outgoing to user B
                           Friends.updateOne({_id: ObjectId(user.friends)}, {
                             $addToSet: 
-                              {friendrequestrecieved: req.params.id,}
+                              {friendrequestsent: req.params.id,}
                           })
                           //sent info is here, 
                             .then(() => {
                               res.json({
-                                msg: " Friend request added A->B +Friend request recieved A->B"
+                                msg: " Friend request added A->B + Friend request recieved A->B"
                               })
                             })
                           })

@@ -136,7 +136,8 @@ export default function App(){
               <Route path="/company-profile/create" component={CreateCompanyProfile} />
               <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
-              <Route path="/friend" component={FriendRequest} />
+              <Route path="/friend/view/:id" component={FriendRequest} />
+
 
               <Route path = "/friendlist/">
               <FriendList/>
