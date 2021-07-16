@@ -69,8 +69,6 @@ function Calendar(){
 	//Handles clicks on dates
 	//@param: event object e
 	function changeDate(e){
-		console.log(1,localStorage);
-		console.log(2,localStorage.getItem('userId'));
 		//Checks for clicks that are on dates (i.e. not edges and no dragging)
 		let temp_date = e.target.firstChild.data;
 		if(temp_date != null){
