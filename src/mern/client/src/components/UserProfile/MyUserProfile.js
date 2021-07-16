@@ -32,8 +32,8 @@ export default class MyUserProfile extends Component{
         this.handleAcceptRequest = this.handleAcceptRequest.bind(this);
         this.handleRejectRequest = this.handleRejectRequest.bind(this);
         this.handlefriendStatusIcon = this.handlefriendStatusIcon.bind(this);
-
-
+        this.handleUndoRequest = this.handleUndoRequest.bind(this);
+        
         this.state = {
             user_id: currentUserID,            //user id in the "users" collection (hidden to user)
             username: "",           //precollected
@@ -134,7 +134,7 @@ export default class MyUserProfile extends Component{
             )
         }
         else if(this.state.friendStatus===2){
-            return <TransferWithinAStationIcon style={{ fontSize: 60 }}  onClick={() => {window.location.href='/friend/view/' + currentUserID} } /> 
+            return <TransferWithinAStationIcon style={{ fontSize: 60 }}  onClick={this.handleUndoRequest} /> 
         }
         else if(this.state.friendStatus===3){
             return(
@@ -247,6 +247,27 @@ export default class MyUserProfile extends Component{
         // window.location.reload();
     }
     
+    //This function handles Undo Send Friend Request 
+    handleUndoRequest(){
+        //handle cancel friend request
+        const undoRequest = { user_id: currentUserID,};
+        console.log("the current user id is: "+ undoRequest);
+
+        // This will send a post request to update the data in the database.
+        axios
+        .post(
+            "http://localhost:5000/friends/nullify/" + this.props.match.params.id,
+            undoRequest
+        )
+        .then((res) => console.log(res.data))
+        .catch(function (error) {console.log(error);});
+        
+        console.log("undo request id: " + this.props.match.params.id);
+        this.setState({friendStatus: 0 })
+
+    }
+    
+
 
 
     

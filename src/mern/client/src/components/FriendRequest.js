@@ -1,8 +1,6 @@
-import React, {Component, PropTypes } from "react";
+import React, {Component } from "react";
 import axios from 'axios';
-import { Paper, Avatar, Typography, Container, Grid, AccordionSummary, Accordion, AccordionDetails, TableCell, Button  } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { Avatar, Typography, Container, Grid, AccordionSummary, Accordion, AccordionDetails  } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
@@ -13,13 +11,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 */ 
 
 
-let currentUserID= localStorage.getItem('userId');
 function createData(avatar, name, _id) { return { avatar, name, _id }; }
 
 
 export default class FriendRequest extends Component{
-    loadIn = true;
-
     constructor(props) {
         super(props);
 
@@ -46,13 +41,18 @@ export default class FriendRequest extends Component{
             var insertData = createData( currentUser.profileImage, currentUser.username, currentUser._id );
             // console.log("data is: " + JSON.stringify(insertData));
 
-            if(storingList==="friends"){ this.state.friends.push(insertData); }
-            else if(storingList==="friendrequestsent"){ this.state.friendrequestsent.push(insertData); }
-            else if(storingList==="friendrequestrecieved"){ this.state.friendrequestrecieved.push(insertData); }
+            if(storingList==="friends"){ 
+                this.setState({friends: this.state.friends.concat([insertData]) })
+            }
+            else if(storingList==="friendrequestsent"){ 
+                this.setState({ friendrequestsent: this.state.friendrequestsent.concat([insertData])})
+            }
+            else if(storingList==="friendrequestrecieved"){ 
+                this.setState({ friendrequestrecieved: this.state.friendrequestrecieved.concat([insertData])})
+            }
             else console.log("error in storing in friend[]");
           })
-          .catch(function (error) {
-            console.log(error);
+          .catch(function (error) {console.log(error);
         });
     }
 
@@ -73,7 +73,7 @@ export default class FriendRequest extends Component{
         })
         .catch(function (error) { console.log(error); });
 
-        console.log(this.state.friendrequestsent);
+        // console.log(this.state.friendrequestrecieved);
     }
 
     //Initialization
@@ -85,10 +85,6 @@ export default class FriendRequest extends Component{
 
 
     render(){
-        if(this.loadIn) {
-            this.getFriendStatus();
-            this.loadIn = false;
-        }
         return(
             <div>
                 <Container  maxWidth="lg" style={{marginTop:"50px"}}>
@@ -145,8 +141,35 @@ export default class FriendRequest extends Component{
                             </Grid>
                         </AccordionDetails>
                     </Accordion>
+                    <Accordion defaultExpanded>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography variant="h5">Friend Requests Sent</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Grid container spacing={3}> 
+                                {
+                                    this.state.friendrequestsent.length!==0                                
+                                    ? this.state.friendrequestsent.map((sent) => (
+                                        <Grid item xs={12} >
+                                            <Grid container onClick={() => {window.location.href='/user-profile/view/' + sent._id} }> 
+                                                <Grid item style={{marginRight: "2rem"}} > <Avatar > {sent.name} </Avatar></Grid>
+                                                <Grid item  > <Typography variant="h5" > {sent.name}  </Typography> </Grid>
+                                                <Grid item > </Grid> 
+                                            </Grid>
+                                        </Grid>
+                                    ))
+                                    : <Grid item xs={12}> <Typography variant="body1"> No result can be found  </Typography> </Grid>
+                                }
+                            </Grid>
+                        </AccordionDetails>
+                    </Accordion>
 
                 </Container>
+
             </div>
         )
     }

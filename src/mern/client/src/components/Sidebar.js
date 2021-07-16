@@ -30,7 +30,6 @@ class Sidebar extends React.Component {
                 <a href={"/friend/view/" + currentUserID}>Friend Requests</a>
                 <a href="/submit">Submit</a>
                 <a href="/courses">Courses</a>
-                {userprofile}
                 {viewuserprofile}
             </div>
         );

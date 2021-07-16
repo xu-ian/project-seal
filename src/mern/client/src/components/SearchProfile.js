@@ -1,14 +1,13 @@
 import React, {Component } from "react";
 import { Container, Paper, RadioGroup, Radio, FormLabel, 
     FormControlLabel, FormControl, Grid, Typography, 
-    Avatar, CssBaseline, List, ListItemText, ListItemAvatar, 
-    Divider, Table, TableContainer, TableBody, TableCell, TableHead, 
-    TablePagination, TableRow, TableFooter, Button } from '@material-ui/core';
+    Avatar, CssBaseline, List, ListItemText, Table, TableContainer, TableBody, 
+    TableCell, TableRow, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from "@material-ui/core/IconButton";
 import axios from 'axios';
-import { makeStyles, withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 
 /* Initial state ––
  *  Info required: Name, Avatar(Logo Image), Tagline

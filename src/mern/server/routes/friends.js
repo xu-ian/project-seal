@@ -230,7 +230,7 @@ friendsRoutes.route("/nullify/:id").post(function (req, res) {
                         //sent info is here, 
                           .then(() => {
                             res.json({
-                              msg: " Friend rejected"
+                              msg: " Undo Friend Request"
                             })
                           })
                         })

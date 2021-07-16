@@ -2,7 +2,7 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline, Select, MenuItem, InputLabel } from '@material-ui/core';
+import { Container ,TextField, Button, Grid, Typography, CssBaseline, Select, MenuItem, InputLabel } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
@@ -182,6 +182,7 @@ class EditUserProfile extends Component {
                     className="user-form-group"
                     style={{marginBottom:"20px"}}
                     required
+                    disabled
                     defaultValue = {this.state.username}
                     value={this.state.username}
                     onChange={this.onChangeUsername}
