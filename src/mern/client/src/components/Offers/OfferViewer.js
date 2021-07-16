@@ -85,7 +85,7 @@ export default class OfferViewer extends React.Component {
       buttons.push(<button class="button" type="button" 
                    onClick={this.increasePage}>{">"}</button>);
     }
-    
+
     return buttons;
   }
 
@@ -168,7 +168,7 @@ export default class OfferViewer extends React.Component {
                 <nav>
                   <ul>
                     {/* The posts being displayed */}
-                    {this.displayPosts()}
+                    {this.displayOffers()}
                   </ul>
                 </nav>
               </div>
