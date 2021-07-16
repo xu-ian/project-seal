@@ -1,14 +1,33 @@
 const express = require('express');
+const offersModel = require('./offer.model');
 
-const getOffers = (req, res, next) => {}
-const getContacts = (req, res, next) => {}
-const sendMessage = (req, res, next) => {}
-const editMessage = (req, res, next) => {}
+const getOffers = (req, res, next) => {
+  const userID = req.body.userID
+  if(userID !== undefined && userID === "") {
+    const query = {}
+  } else {
+    const query = { userID: userID }
+
+  }
+  offersModel.find(query).then(payload => {
+    const offers = payload
+    res.json({
+      status: 200,
+      offers: offers
+    })
+  })
+}
+
+const createOffer = (req, res, next) => {}
+const deleteOffer = (req, res, next) => {}
+const editOffer = (req, res, next) => {
+
+}
 
 const router = express.Router();
-router.post('/getOffers', getOffers);
-router.post('/createOffer', getContacts);
-router.post('/deleteOffer', sendMessage);
-router.post('/editOffer', editMessage);
+router.get('/getOffers', getOffers);
+router.post('/createOffer', createOffer);
+router.post('/deleteOffer', deleteOffer);
+router.post('/editOffer', editOffer);
 
 module.exports = router;
