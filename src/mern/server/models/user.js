@@ -9,6 +9,7 @@ var UserSchema = new Schema(
     role:[{type: String, required: true}],
     date_joined: {type: Date},
 
+		courses: [{type: String}],
     user_id:  {type: String},
     userbio: {type: String},
     gender:  {type: String},

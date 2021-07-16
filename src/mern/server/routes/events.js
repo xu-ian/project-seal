@@ -5,7 +5,7 @@ const EventRoutes = express.Router();
 EventRoutes.route("/").get((req,res) =>{
 	Event.find({"$and":[
 				{"date":{"$lt":req.query.b_date, "$gte":req.query.a_date}}
-				, {"user_id":req.query.user_id}
+				, {"$or":[{"user_id":req.query.user_id},{"course":req.query.courses_list}]}
 			]})
 			.sort({date:1})
 			.then(events => {

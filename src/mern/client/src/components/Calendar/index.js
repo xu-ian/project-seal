@@ -26,14 +26,17 @@ function Calendar(){
 	]
 
 	useEffect(()=>{
-		let user_id = localStorage.getItem('userId');
+		let id = localStorage.getItem('userId');
 		//Before this date
 		let b_date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1);
 		//After this date
 		let a_date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-		axios.get("http://localhost:5000/events/", {params: {user_id, b_date, a_date}}).then(res => {
-      setEvents(res.data);
-		});
+		axios.get("http://localhost:5000/user-profile/", {params: {id}}).then(courses => {
+			let courses_list = courses.data.courses;
+			axios.get("http://localhost:5000/events/", {params: {id, courses_list, b_date, a_date}}).then(res => {
+				setEvents(res.data);
+			});
+		})
 		const lastDay = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
 		const lastDayIndex = new Date(date.getFullYear(), date.getMonth()+1, 0).getDay();
 		const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
