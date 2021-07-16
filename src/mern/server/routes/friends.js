@@ -199,6 +199,58 @@ friendsRoutes.route("/reject/:id").post(function (req, res) {
 
 });
 
+
+// nullify outgoing friend request
+friendsRoutes.route("/nullify/:id").post(function (req, res) {
+  //I want to do:
+  // remove both requests from their respective lists
+  User.findById(req.body.user_id)
+  .then(user =>{
+       Friends.findById(user.friends)
+        .then(friends=>{
+          //update user's friend  list with outgoing to user B
+          Friends.updateOne({_id: ObjectId(user.friends)}, {
+            $pull:{
+              friendrequestsent: req.params.id
+            }
+          })
+          //sent info is here, 
+            .then(() => {
+              //reject requests B->A
+              User.findById(req.params.id)
+                .then(user =>{
+                    Friends.findById(user.friends)
+                      .then(friends=>{
+                        //update user's friend request list with outgoing to user B
+                        Friends.updateOne({_id: ObjectId(user.friends)}, {
+                          $pull:{
+                            friendrequestrecieved: req.body.user_id,
+                          }
+                        })
+                        //sent info is here, 
+                          .then(() => {
+                            res.json({
+                              msg: " Friend rejected"
+                            })
+                          })
+                        })
+                })
+                .catch(err => {
+                    res.status(400).json({ msg: err.msg });
+                });
+            })
+        })
+        .catch(err => {
+          res.status(400).json({ msg: err.msg });
+        });
+  })
+  .catch(err => {
+      res.status(400).json({ msg: err.msg });
+  });
+
+
+});
+
 // remove friends
 friendsRoutes.route("/remove/:id").post(function (req, res) {
   //I want to remove friend from both user's friend lists
