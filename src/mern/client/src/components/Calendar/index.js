@@ -26,11 +26,12 @@ function Calendar(){
 	]
 
 	useEffect(()=>{
+		let user_id = localStorage.getItem('userId');
 		//Before this date
 		let b_date = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1);
 		//After this date
 		let a_date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-		axios.get("http://localhost:5000/events/", {params: {b_date, a_date}}).then(res => {
+		axios.get("http://localhost:5000/events/", {params: {user_id, b_date, a_date}}).then(res => {
       setEvents(res.data);
 		});
 		const lastDay = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate();
@@ -68,6 +69,8 @@ function Calendar(){
 	//Handles clicks on dates
 	//@param: event object e
 	function changeDate(e){
+		console.log(1,localStorage);
+		console.log(2,localStorage.getItem('userId'));
 		//Checks for clicks that are on dates (i.e. not edges and no dragging)
 		let temp_date = e.target.firstChild.data;
 		if(temp_date != null){
@@ -96,7 +99,8 @@ function Calendar(){
 	function addEvent(event){
 		let hours = event.time.split(':')[0];
 		let minutes = event.time.split(':')[1];
-		let newEvent = {"name":event.name, "date":new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes, 0,0), "course":event.course, "zoom_url":event.zoom_url}
+		let user_id = localStorage.getItem('userId');
+		let newEvent = {"user_id":user_id, "name":event.name, "date":new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes, 0,0), "course":event.course, "zoom_url":event.zoom_url}
 		console.log(newEvent);
 		axios.post("http://localhost:5000/events/add/", newEvent)
 		window.location.reload();

@@ -3,9 +3,11 @@ const Event = require('../models/Event');
 const EventRoutes = express.Router();
 
 EventRoutes.route("/").get((req,res) =>{
-	//user_id:req.params.user_id, 
-	//{date:{"$gte":req.params.b_date, "$lt":req.params.a_date}}).sort('-date')
-	Event.find({"date":{"$lt":req.query.b_date, "$gte":req.query.a_date}}).sort({date:1})
+	Event.find({"$and":[
+				{"date":{"$lt":req.query.b_date, "$gte":req.query.a_date}}
+				, {"user_id":req.query.user_id}
+			]})
+			.sort({date:1})
 			.then(events => {
 				res.json(events);
 			})
@@ -19,6 +21,7 @@ EventRoutes.route("/add").post((req, res) => {
 		name: req.body.name,
 		date: req.body.date,
 		course: req.body.course,
+		user_id: req.body.user_id,
 		zoom_url: req.body.zoom_url,
 	});
 	console.log(1,newEvent)

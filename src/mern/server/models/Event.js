@@ -13,6 +13,10 @@ const EventSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	user_id: {
+		type: String,
+		required: true
+	},
 		zoom_url: {
 		type: String,
 	}
