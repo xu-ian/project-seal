@@ -133,7 +133,7 @@ class CreateUserProfile extends Component {
 
 
 
-  // render on the page: "/company-profile/create"
+  // render on the page: "/user-profile/create"
   render() {
     return (
       <div className="" style={{backgroundColor: "white"} , {marginTop:"30px"}}> 

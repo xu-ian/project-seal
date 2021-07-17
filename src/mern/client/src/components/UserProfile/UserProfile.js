@@ -60,9 +60,11 @@ export default class UserProfileList extends Component {
     render() {
         return (
             <div>
+                <div> This page's "Edit" is now unavaliable</div>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                         <tr>
+                            <th>user_id</th>
                             <th>username</th>
                             <th>userbio</th>
                             <th>gender</th>
