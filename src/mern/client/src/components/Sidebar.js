@@ -24,12 +24,13 @@ class Sidebar extends React.Component {
                 <a href="/">Home</a>
                 <a href="/posts/1">Posts</a>
                 <a href="/company-profile/list">Companies</a>
-                {searchbar}
                 <a href="/player">(Debug)VideoPlayer</a>
                 <a href="/friendlist/home">Contacts</a>
                 <a href={"/friend/view/" + currentUserID}>Friend Requests</a>
                 <a href="/submit">Submit</a>
                 <a href="/courses">Courses</a>
+                {searchbar}
+                {userprofile}
                 {viewuserprofile}
             </div>
         );

@@ -44,12 +44,12 @@ div.Body {
     position: relative;
     left:2.5%;
     height:auto;
-    width: 100%;
+    max-width: 100%;
 }
 
-div.Body p {
+p.Body {
     left:2.5%;
-    width: 95%;
+    max-width: 95%;
     resize:none;
     height:auto;
     word-wrap:break-word;
