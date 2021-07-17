@@ -1,5 +1,9 @@
 import React from 'react';
 import './Post.css';
+import {Typography, Paper, Card} from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import PostPopup from './PostPopup.js';
 import axios from 'axios';
 
 export default class Post extends React.Component {
@@ -7,22 +11,47 @@ export default class Post extends React.Component {
         super(props);
         this.state = {
             author:this.props.author,
+            aid:this.props.aid,
             content:this.props.content,
             tags:[],
             comment:[this.props.comment],
             id:this.props.id,
             edit:false,
-            deletable:this.props.del
+            deletable:this.props.deletable,
+            Open:"hidden",
+            username:"N/A",
+            email:"N/A",
+            links: "N/A",
+            belongingCompany: "N/A",
+            position: "N/A"
         }
         this.renderTags = this.renderTags.bind(this);
         this.deletePost = this.deletePost.bind(this);
         this.deletable = this.deletable.bind(this);
-        this.edits = this.edits.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.edits = this.edits.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
         if(this.props.tags){
             this.state.tags=this.props.tags.toString().split(",");
         }
         
+    }
+
+    componentDidMount(){
+        axios.get("http://localhost:5000/user-profile/?_id:" + this.state.id)
+      .then((response) => {
+        const userLists = response.data;
+        const currentUser = userLists.find(person => person._id === this.state.aid);
+        this.setState({
+          username: currentUser.username,
+          email: currentUser.email,
+          links: currentUser.links,
+          belongingCompany: currentUser.belongingCompany,
+          position: currentUser.position
+        });
+      })
+      .catch(function (error) {});
     }
 
     /**
@@ -49,9 +78,9 @@ export default class Post extends React.Component {
     
     deletable(){
         let buttons = []
-        if(this.state.deletable === "true"){
+        if(this.state.deletable){
             buttons.push(<button class="delete" type="button" 
-                         onClick={this.deletePost}>Delete</button>);
+                         onClick={this.deletePost}><DeleteIcon/></button>);
             buttons.push(<button class="modify" type="button" onClick={() =>{
                 if(this.state.edit){
                     this.setState({edit:false});
@@ -60,7 +89,7 @@ export default class Post extends React.Component {
                 else{
                     this.setState({edit:true});
                 }
-            }}>Modify</button>)
+            }}><EditIcon/></button>)
             return buttons;
         }
     }
@@ -77,30 +106,38 @@ export default class Post extends React.Component {
             );
         }
         else{
-            return(<p readonly="true">{this.state.content}</p>);
+            return(<p class = "body" readonly="true" style={{margin:"10px"}}>{this.state.content}</p>);
         }
+    }
+
+    handleOpen(event){
+        this.setState({Open:"visible"});
+    }
+
+    handleClose(){
+        this.setState({Open:"hidden"});
     }
 
     /* Displays the page */
     render () {
         return (
-            <div class="Post clickable">
-                <div className="User">
-                    {/* Author of post */}
-                    <h1 dangerouslySetInnerHTML={{__html:this.state["author"]}}/>
-                </div>
-                <hr/>
-                <div className="Body">
-                    {/* Body of post */}
-                    {this.edits()}
-                </div>
+            <Card border={1} style={{border:"1px solid darkgray", 
+              "border-radius": "7px"}} class="clickable">
+              <PostPopup author={this.state.author} aid={this.state.aid} id={this.state.id}/>
+              <div style={{margin: "auto", display: "block", overflow:"hidden", 
+               "text-decoration": "none"}}>
                 <hr/>
                 <div>
-                    {/* Tags of post */}
-                    {this.renderTags()}
-                    {this.deletable()}
+                  {/* Body of post */}
+                  {this.edits()}
                 </div>
-            </div>
+                <div>
+                  {/* Tags of post */}
+                  {this.renderTags()}
+                  {this.deletable()}
+                </div>
+              </div>
+            </Card>
         );
     }
 }

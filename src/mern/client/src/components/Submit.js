@@ -48,11 +48,6 @@ export default class Submit extends React.Component {
           window.confirm("Are you sure you want to submit no files?") === false){
               return;
         }
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
-        reader.onLoad = () => {
-            new Notification(reader.result);
-        }
         for(let i = 0; i < files.length; i++){
             let formData = new FormData();
             formData.append("deliverable", files[i]);
@@ -82,8 +77,8 @@ export default class Submit extends React.Component {
             }
             downloadLinks.push(
             <Paper style={{left:"4%", margin:"10px", "max-width":"90%", position:"relative"}}>
-                <img src={fileIcon} alt="File Icon" style={{width:"5%", height:"5%"}}/>
-                <a href={this.state.files[i].data} style={{"font-size":"300%"}}
+                <img src={fileIcon} alt="File Icon" style={{width:"3.5%", height:"3.5%"}}/>
+                <a href={this.state.files[i].data} style={{"font-size":"200%"}}
                   download={this.state.files[i].name}>
                   {this.state.files[i].name}
                 </a>
