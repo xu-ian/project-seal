@@ -4,6 +4,10 @@ import axios from 'axios';
 import Post from './Post.js';
 import PostViewerSpecific from './PostViewerSpecific.js';
 import './PostViewer.css';
+import { Button } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {Link, Switch,
   Route, BrowserRouter as Router} from 'react-router-dom';
 
@@ -23,8 +27,10 @@ import {Link, Switch,
     this.displayButton = this.displayButton.bind(this);
     this.changePage = this.changePage.bind(this);
     this.state = {
+      author:window.localStorage.getItem("userId")||"None",
       loaded:false,
-      posts:[],
+      posts:[{author:{username:"default"}},{author:{username:"default"}},
+      {author:{username:"default"}},{author:{username:"default"}},{author:{username:"default"}}],
       postnum:0,
       pg:0
     }
@@ -45,7 +51,7 @@ import {Link, Switch,
     axios.get("http://localhost:5000/posts/").then(res => {
       this.setState({posts:res.data});
       this.setState({loaded:true});
-      });
+      }).catch(err => {this.setState({loaded:"Load Failed"})});
   }
 
   /**
@@ -73,18 +79,18 @@ import {Link, Switch,
   displayButton(){
     var buttons = [];
     if(this.state.pg > 0){
-      buttons.push(<button class="button" type="button"  
-                   onClick={this.decreasePage}>{"<"}</button>);
+      buttons.push(<Button  type="button"  
+                   onClick={this.decreasePage}><NavigateBeforeIcon/></Button>);
     }
     buttons.push(<div class="pagenum">Page: {parseInt(this.state.pg) + 1}</div>);
-    if(Math.floor(this.state.posts.length / 5) !== 0){
-      buttons.push(<button class="button" type="button" onClick={this.changePage}>
-        {"#"}</button>)
+    if(Math.floor((this.state.posts.length - 1) / 5) !== 0){
+      buttons.push(<Button  type="button" onClick={this.changePage}>
+        <MoreHorizIcon/></Button>)
     }
     if(parseInt(this.state.pg) + 1 < Math.ceil(this.state.posts.length / 
       window.localStorage.getItem("epp"))){
-      buttons.push(<button class="button" type="button" 
-                   onClick={this.increasePage}>{">"}</button>);
+      buttons.push(<Button type="button" 
+                   onClick={this.increasePage}><NavigateNextIcon/></Button>);
     }
     
     return buttons;
@@ -127,13 +133,16 @@ import {Link, Switch,
           window.localStorage.setItem("id", this.state.posts[
             this.state.pg*window.localStorage.getItem("epp")+i]._id)}}>
           <div class="post">
-            <Post author = {this.state.posts[i+this.state.pg*
-                            window.localStorage.getItem("epp")].author} 
+            <Post post = {this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]}
+              author = {this.state.posts[i+this.state.pg*
+                            window.localStorage.getItem("epp")].author.username}
+              aid = {this.state.posts[i+this.state.pg*
+                            window.localStorage.getItem("epp")].author._id}  
               content={this.state.posts[i+this.state.pg*
                        window.localStorage.getItem("epp")].content} 
               tags={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
               id={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]._id}
-              del="false"/>
+              deletable={false}/>
           </div>
         </Link>);
       }
@@ -150,6 +159,9 @@ import {Link, Switch,
     if(this.state.loaded === false){
       return <p>Loading...</p>
     }
+    else if(this.state.loaded === "Load Failed"){
+      return <p>Load Failed. Please Reload.</p>
+    }
     return (
       <Router>
         <Switch>
@@ -158,7 +170,7 @@ import {Link, Switch,
             <div>
               <div class="PostWrite">
                 {/* The interface for adding posts */}
-                <PostWrite />
+                <PostWrite id={this.state.author} />
               </div>
               <hr/>
               <div className="Posts">

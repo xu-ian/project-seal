@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Paper, Typography} from '@material-ui/core';
 import './CommentWrite.css';
 
 class CommentWrite extends React.Component {
@@ -27,7 +28,11 @@ class CommentWrite extends React.Component {
      * @param {*} event Used to prevent the default actions from being performed.
      */
     handleSubmit(event) {
-        axios.post("http://localhost:5000/posts/"+this.state.post_id.toString()+"/comments/add/",
+        if(this.state.content === ''){
+            alert("Please write something before submitting!");
+            return;
+        }
+        axios.post("http://localhost:5000/posts/"+this.state.post_id.toString()+"/comments/add/" + window.localStorage.getItem("userId").toString(),
                    this.state).then(
             res => {
             }
@@ -37,15 +42,25 @@ class CommentWrite extends React.Component {
     }
 
     render (){
+        if(window.localStorage.getItem("userId")) {
         return (
             <form onSubmit={this.handleSubmit} >
                 <label>
                     {/* The textarea to type in your comment. */}
                     <textarea placeholder = "Make a comment" value={this.state.content} onChange={this.handleChange} />
                 </label>
-                <input class="addButton" type="submit" value="Create Comment" />
+                <input style={{"font-size":"18px"}}class="addButton" type="submit" value="Create Comment" />
             </form>
-        );
+        );}
+        else{
+            return(
+                <Paper>
+                    <Typography style={{margin:"25px", "text-align":"center","font-size":"150%"}}>
+                        Please sign in to add comments
+                    </Typography>
+                </Paper>
+            );
+        }
     }
 }
 

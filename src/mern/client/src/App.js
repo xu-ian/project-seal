@@ -1,6 +1,6 @@
 import React from "react";
 import './App.css';
-import PostViewer from './components/PostViewer.js';
+import PostViewer from './components/Posts/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
 
 import CompanyProfileList from "./components/companyProfile/companyProfile";
@@ -15,17 +15,19 @@ import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
 import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
+import FriendRequest from "./components/FriendRequest";
 // import RoleSelection from "./components/roleSelection"
 
 
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
-import FriendList from "./components/FriendList"
+import FriendList from "./components/DMs/FriendList"
 import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
+import Calendar from './components/Calendar'
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -114,6 +116,9 @@ export default function App(){
             <Route exact path="/player">
               <VideoPlayer />
             </Route>
+            <Route exact path="/calendar">
+              <Calendar />
+            </Route>
             <Route exact path="/assigntest">
 						  <AssignTest />
 					  </Route>
@@ -135,6 +140,9 @@ export default function App(){
               <Route path="/company-profile/create" component={CreateCompanyProfile} />
               <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
+              <Route path="/friend/view/:id" component={FriendRequest} />
+
+
               <Route path = "/friendlist/">
               <FriendList/>
             </Route>

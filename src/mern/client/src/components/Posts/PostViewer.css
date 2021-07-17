@@ -5,7 +5,8 @@ Link {
  
 textarea {
     font-family: Arial;
-    width: 99%;
+    width: 100%;
+    left:1%;
     height: 80px;
     resize: none;
     font-size: 16px;
