@@ -58,7 +58,7 @@ const editOffer = (req, res, next) => {
   const query = { _id: offerID }
   const update = { "$set": { "messageText": messageText } }
   const options = { returnNewDocument: true }
-  offerModel.findOneAndUpdate(query, update, options).then(doc =>
+  offerModel.findOneAndUpdate(query, update, options).then(doc => {
     if(doc) {
       res.json({
         status: 200
@@ -67,7 +67,8 @@ const editOffer = (req, res, next) => {
       res.json({
         status: 404
       })
-    })
+    }}
+    )
 }
 
 const router = express.Router();
