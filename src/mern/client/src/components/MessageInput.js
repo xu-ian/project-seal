@@ -17,7 +17,8 @@ export default class MessageInput extends React.Component {
 
     sendMessage(){
         axios.post("http://localhost:5000/messages/addMessage/" + this.state.value + 
-        "/" + "60deb4b6e4ecc906340671a6" + "/" + window.localStorage.getItem("uid")).
+        "/" + (window.localStorage.getItem("userId") ||"60deb4b6e4ecc906340671a6") 
+        + "/" + window.localStorage.getItem("uid")).
         then().catch(
           () => {alert("Server Error please try again.")}
         );
