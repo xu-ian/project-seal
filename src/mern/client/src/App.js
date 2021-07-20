@@ -1,6 +1,6 @@
 import React from "react";
 import './App.css';
-import PostViewer from './components/PostViewer.js';
+import PostViewer from './components/Posts/PostViewer.js';
 import Sidebar from './components/Sidebar.js';
 
 import CompanyProfileList from "./components/companyProfile/companyProfile";
@@ -22,11 +22,12 @@ import FriendRequest from "./components/FriendRequest";
 import Registration from "./components/Authentication/registration";
 import Login from "./components/Authentication/Login";
 import Select from "./components/Authentication/select";
-import FriendList from "./components/FriendList"
+import FriendList from "./components/DMs/FriendList"
 import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
+import Calendar from './components/Calendar'
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -115,6 +116,9 @@ export default function App(){
             <Route exact path="/player">
               <VideoPlayer />
             </Route>
+            <Route exact path="/calendar">
+              <Calendar />
+            </Route>
             <Route exact path="/assigntest">
 						  <AssignTest />
 					  </Route>
@@ -142,10 +146,7 @@ export default function App(){
               <Route path = "/friendlist/">
               <FriendList/>
             </Route>
-            <Route path = "/submit">
-              <Submit/>
-            </Route>
-
+            <Route path = "/submit/:id" component={Submit}/>
           </Switch>
           </div>
         </Router>  

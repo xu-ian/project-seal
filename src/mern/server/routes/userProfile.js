@@ -8,14 +8,37 @@ var ObjectID = require('mongodb').ObjectID;
 /* The axois method */
 // Get User Profile List.
 userProfilesRoutes.route("/").get(function (req, res) {
-  let db_connect = dbo.getDb("employees");
-  db_connect
-    .collection("users")
-    .find({})
-    .toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
+	try{
+		if(req.query.id === undefined){
+			//Get list of users
+			let db_connect = dbo.getDb("employees");
+			db_connect
+			.collection("users")
+			.find({})
+			.toArray(function (err, result) {
+				if (err) throw err;
+				res.json(result);
+			});
+		}else{
+			//Find specifc user by id
+			//console.log(req.query.id);
+			User.findById(req.query.id).then(profile => {
+				res.json(profile);
+			}).catch(err => {
+				err.status(400).json({msg: err_msg})
+			})
+		}
+	}catch{
+		//Get list of users
+		let db_connect = dbo.getDb("employees");
+		db_connect
+			.collection("users")
+			.find({})
+			.toArray(function (err, result) {
+				if (err) throw err;
+				res.json(result);
+		});
+	}
 });
 
 // Get User Profile List by id.

@@ -3,6 +3,10 @@ import Comment from './Comment.js';
 import axios from 'axios';
 import Post from './Post.js'
 import CommentWrite from './CommentWrite';
+import { Button } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import './PostViewer.css';
 
 class PostViewerSpecific extends React.Component {
@@ -11,6 +15,8 @@ class PostViewerSpecific extends React.Component {
       super(posts); 
       this.state = {
         pagenum:0,
+        comments:[{author:{username:"default"}},{author:{username:"default"}},
+        {author:{username:"default"}},{author:{username:"default"}},{author:{username:"default"}}],
         loaded:false,
         loaded2:false
       }
@@ -71,9 +77,10 @@ class PostViewerSpecific extends React.Component {
       for(let i = 0; i < 5; i++){
         if(this.state.comments.length >= this.state.pagenum*5 + i + 1){
           CommentsList.push(<div class="post"><Comment author={this.state.comments[parseInt(i)
-                            + this.state.pagenum*5].author} 
-          content={this.state.comments[parseInt(i) + this.state.pagenum*5].content}
-          id={this.state.comments[parseInt(i) + this.state.pagenum*5]._id}/></div>);
+           + this.state.pagenum*5].author.username}
+           aid={this.state.comments[parseInt(i)+ this.state.pagenum*5].author._id} 
+           content={this.state.comments[parseInt(i) + this.state.pagenum*5].content}
+           id={this.state.comments[parseInt(i) + this.state.pagenum*5]._id}/></div>);
         }
         else{
           break;
@@ -112,17 +119,18 @@ class PostViewerSpecific extends React.Component {
     displayButton(){
       var buttons = [];
       if(this.state.pagenum > 0){
-        buttons.push(<button class="button" type="button" 
-                     onClick={this.decreasePage}>{"<"}</button>);
+        buttons.push(<Button type="button" 
+                     onClick={this.decreasePage}><NavigateBeforeIcon/></Button>);
       }
       buttons.push(<div role="button" class="pagenum">
                    Page: {parseInt(this.state.pagenum) + 1}</div>);
-      if(Math.floor(this.state.comments.length /5) !== 0){
-        buttons.push(<button class="button" type="button" onClick={this.changePage}>#</button>);
+      if(Math.floor((this.state.comments.length - 1) /5) !== 0){
+        buttons.push(<Button type="button" onClick={this.changePage}>
+          <MoreHorizIcon/></Button>);
       }
       if(parseInt(this.state.pagenum) + 1 < Math.ceil(this.state.comments.length / 5)){
-        buttons.push(<button class="button" type="button" 
-                     onClick={this.increasePage}>{">"}</button>);
+        buttons.push(<Button type="button" 
+                     onClick={this.increasePage}><NavigateNextIcon/></Button>);
       }
       
       return buttons;
@@ -132,7 +140,6 @@ class PostViewerSpecific extends React.Component {
      * Renders the html page.
      */
     render () {
-      {/* Displays loading until the database queries from componentDidMount are completed */}
       if(this.state.loaded === false || this.state.loaded2 === false){
         return <p>Loading...</p>
       }
@@ -142,8 +149,10 @@ class PostViewerSpecific extends React.Component {
             <nav>
               {this.getInitialState}
               {/* The main post being displayed */}
-              <ul><Post author = {this.state.author} content={this.state.content} 
-                   tags={this.state.tags} del="true" id={window.localStorage.getItem('id')}/>
+              <ul><Post author = {this.state.author.username} aid={this.state.author._id}
+                   content={this.state.content} 
+                   tags={this.state.tags} id={window.localStorage.getItem('id')}
+                   deletable={this.state.author._id === window.localStorage.getItem("userId")}/>
                   {/* The comment adding interface */}
                   <CommentWrite id={this.state.id} />
                   {/* The comments associated with the posts*/}

@@ -13,12 +13,22 @@ export default class Submit extends React.Component {
         super(props);
         this.state={
             files:[],
-            assignment:"Assignment", //Placeholder until Course creation is completed
-            course:"Course" //Placeholder until Course creation is completed
+            attachments:[],
+            name:"Assignment", 
+            description: "Description",
+            course:"Course",
         };
         this.onChange = this.onChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.displayFiles = this.displayFiles.bind(this);
+    }
+
+    componentDidMount(){
+        axios.get("http://localhost:5000/content/"+this.props.match.params.id).then(res =>{
+            let course = res.data;
+            this.setState({name:course.name, description:course.description});
+        })
+        .catch();
     }
 
     onChange(event){
@@ -47,11 +57,6 @@ export default class Submit extends React.Component {
         if(files.length === 0 && 
           window.confirm("Are you sure you want to submit no files?") === false){
               return;
-        }
-        let reader = new FileReader();
-        reader.readAsDataURL(files[0]);
-        reader.onLoad = () => {
-            new Notification(reader.result);
         }
         for(let i = 0; i < files.length; i++){
             let formData = new FormData();
@@ -82,8 +87,8 @@ export default class Submit extends React.Component {
             }
             downloadLinks.push(
             <Paper style={{left:"4%", margin:"10px", "max-width":"90%", position:"relative"}}>
-                <img src={fileIcon} alt="File Icon" style={{width:"5%", height:"5%"}}/>
-                <a href={this.state.files[i].data} style={{"font-size":"300%"}}
+                <img src={fileIcon} alt="File Icon" style={{width:"3.5%", height:"3.5%"}}/>
+                <a href={this.state.files[i].data} style={{"font-size":"200%"}}
                   download={this.state.files[i].name}>
                   {this.state.files[i].name}
                 </a>
@@ -99,15 +104,10 @@ export default class Submit extends React.Component {
         return(
             <Paper style={{width:"90%", left:"4%", margin:"10px", position:"relative"}}>
                 <Typography variant="h2">
-                    Assignment Title.
+                    {this.state.name}
                 </Typography>
                 <Typography variant="h6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-                culpa qui officia deserunt mollit anim id est laborum.
+                    {this.state.description}
                 </Typography>
                 <input style={{width:"90%"}} type ="file" id="myFile" name="filename" multiple
                   onChange={this.onChange}/>
