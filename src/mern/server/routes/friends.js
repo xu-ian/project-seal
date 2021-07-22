@@ -4,6 +4,7 @@ const friendsRoutes = express.Router();
 const dbo = require("../db/conn");
 const Friends = require("../models/friends");
 const User = require('../models/user');
+const Relation = require('../models/Relation'); 
 const { ObjectId } = require('bson');
 /* This page is the page for requesting the friends, friend requests sent, and friend requests recieved  */
 
@@ -91,9 +92,19 @@ friendsRoutes.route("/add/:id").post(function (req, res) {
 
 // accept friend request
 friendsRoutes.route("/accept/:id").post(function (req, res) {
+
   //I want to do many things:
   // add the friend to both user's friend lists
   // remove both requests from their respective lists
+  // add a new conversation in the contacts tab between the two users
+
+  //New Code: Creates a new Relation Object to house the new conversation between two people
+  let newRelation = new Relation({
+    relation:[req.params.id,req.body.user_id],
+    conversation:[]
+  });
+  //(End of)New Code
+
   User.findById(req.params.id)
   .then(user =>{
        Friends.findById(user.friends)
@@ -144,6 +155,9 @@ friendsRoutes.route("/accept/:id").post(function (req, res) {
       res.status(400).json({ msg: err.msg });
   });
 
+  //New Code: Links getting a friend to adding them as a contact on contacts page
+  newRelation.save().then().catch(err =>{res.status(400).json({msg:err.msg})});
+  //(End of)New Code
 
 });
 
@@ -297,6 +311,14 @@ friendsRoutes.route("/remove/:id").post(function (req, res) {
   .catch(err => {
       res.status(400).json({ msg: err.msg });
   });
+  //New Code: Deletes the contact when they are unfriended.
+  Relation.findOneAndDelete({relation:[req.params.id, req.body.user_id]}, 
+    (err, json) =>{console.log(err); console.log(json);}
+  );
+  Relation.findOneAndDelete({relation:[req.body.user_id, req.params.id]}, 
+    (err, json) =>{console.log(err); console.log(json)}
+  );
+  //(End of) New Code
 });
 
 
