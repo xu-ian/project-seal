@@ -101,6 +101,13 @@ var deliverableRoutes = require('./routes/deliverables');
 const courseRouter = require('./routes/courses/index');
 app.use('/', courseRouter);
 
+// SEAL-6: Setting storage for video uploads
+
+var videoRouter = require('./routes/videos');
+app.use('/videos', videoRouter);
+
+var videoRoutes = require('./routes/videos');
+
 app.listen(port, () => {
   // perform a database connection when server starts
   dbo.connectToServer(function (err) {
