@@ -42,8 +42,8 @@ export default class OfferViewer extends React.Component {
     }
 
     //Call to database to retrieve all posts.
-    axios.get("http://localhost:5000/offers/").then(res => {
-      this.setState({offers:res.data});
+    axios.get("http://localhost:5000/offers/getOffers").then(res => {
+      this.setState({offers:res.data.offers});
       this.setState({loaded:true});
     });
   }
@@ -119,6 +119,11 @@ export default class OfferViewer extends React.Component {
     let offersList = [];
     for(let i = 0; i < window.localStorage.getItem("epp"); i++){
 
+      // console.log(this.state.pg*window.localStorage.getItem("epp")+1);
+      // console.log(this.state.offers.length);
+      // console.log(this.state.offers);
+      console.log(this.state.offers[1].userID);
+
       if(this.state.offers.length >= this.state.pg*window.localStorage.getItem("epp") + i +1 &&
          this.state.offers.length !== 0) {
 
@@ -131,11 +136,11 @@ export default class OfferViewer extends React.Component {
                       this.state.pg*window.localStorage.getItem("epp")+i]._id)}}>
 
               <div class="post">
-                <Offer  author = {this.state.offers[i+this.state.pg*
-                                  window.localStorage.getItem("epp")].author} 
-                        content={this.state.offers[i+this.state.pg*
-                                  window.localStorage.getItem("epp")].content} 
-                        tags={this.state.offers[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
+                <Offer  userID = {this.state.offers[i+this.state.pg*
+                                  window.localStorage.getItem("epp")].userID} 
+                        messageText= {this.state.offers[i+this.state.pg*
+                                  window.localStorage.getItem("epp")].messageText} 
+                        // tags={this.state.offers[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
                         id={this.state.offers[i+this.state.pg*window.localStorage.getItem("epp")]._id}
                         del="false"/>
               </div>

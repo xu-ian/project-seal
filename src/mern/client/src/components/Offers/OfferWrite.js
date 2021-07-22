@@ -49,7 +49,7 @@ class OfferWrite extends React.Component {
         <form onSubmit={this.handleSubmit} >
             <label>
                 {/* Textarea to write offer in */}
-                <textarea placeholder = "Make a offer" value={this.state.value} onChange={this.handleChange} />
+                <textarea placeholder = "Make an offer or discount" value={this.state.value} onChange={this.handleChange} />
             </label>
             {/* Tags to select. */}
             {/* <label class="switch">
@@ -60,7 +60,7 @@ class OfferWrite extends React.Component {
                 <input type="checkbox" value="tag2" onChange={this.handleTags}/>
                 <span class="slider"><div class = 'center'>Tag2</div></span>
             </label> */}
-            <input class="addButton" type="submit" value="Create Post" />
+            <input class="addButton" type="submit" value="Create Offer or Discount" />
         </form>
     );
   }

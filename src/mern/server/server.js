@@ -94,6 +94,9 @@ app.use('/deliverables', deliverableRouter);
 
 var deliverableRoutes = require('./routes/deliverables');
 
+// SEAL-18
+const offerRouter = require('./routes/offers/index');  
+app.use('/offers', offerRouter);
 
 app.listen(port, () => {
   // perform a database connection when server starts

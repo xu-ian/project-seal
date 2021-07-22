@@ -7,10 +7,10 @@ export default class Offer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-        author:this.props.author,
-        content:this.props.content,
-        tags:[],
-        comment:[this.props.comment],
+        userID:this.props.userID,
+        messageText:this.props.messageText,
+        // tags:[],
+        // comment:[this.props.comment],
         id:this.props.id,
         edit:false,
         deletable:this.props.del
@@ -41,7 +41,7 @@ export default class Offer extends React.Component {
     //     // return(<p readonly="true">{this.state.content}</p>);
     // }
 
-    return(<p readonly="true">{this.state.content}</p>);
+    return(<p readonly="true">{this.state.messageText}</p>);
   }
 
   /* Displays the page */
@@ -50,7 +50,7 @@ export default class Offer extends React.Component {
       <div class="Post clickable">
           <div className="User">
               {/* Author of offer */}
-              <h1 dangerouslySetInnerHTML={{__html:this.state["author"]}}/>
+              <h1 dangerouslySetInnerHTML={{__html:this.state["userID"]}}/>
           </div>
           <hr/>
           <div className="Body">

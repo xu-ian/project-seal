@@ -3,15 +3,16 @@ const offerModel = require('./offer.model');
 const offersModel = require('./offer.model');
 
 const getOffers = (req, res, next) => {
-  const userID = req.body.userID
-  if(userID !== undefined && userID === "") {
-    const query = {}
-  } else {
-    const query = { userID: userID }
+  // const userID = req.body.userID
+  // if(userID === undefined && userID === "") {
+  //   const query = {}
+  // } else {
+  //   const query = { userID: userID }
 
-  }
-  offersModel.find(query).then(payload => {
-    const offers = payload
+  // }
+  // offersModel.find(query).then(payload => {
+  offersModel.find({}).then(payload => {
+      const offers = payload
     res.json({
       status: 200,
       offers: offers
