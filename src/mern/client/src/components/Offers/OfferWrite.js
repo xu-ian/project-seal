@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import '../PostWrite.css';
+// import '../Posts/PostWrite.css';
 
 class OfferWrite extends React.Component {
   constructor(props) {

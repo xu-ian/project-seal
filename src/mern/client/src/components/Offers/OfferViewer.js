@@ -1,8 +1,9 @@
 import React from "react";
 import axios from 'axios';
-import '../PostViewer.css';
+import '../Posts/PostViewer.css';
 import Offer from './Offer';
 import OfferWrite from './OfferWrite';
+import OfferViewerSpecific from './OfferViewerSpecific';
 import {Link, Switch,
   Route, BrowserRouter as Router} from 'react-router-dom';
   
@@ -122,7 +123,7 @@ export default class OfferViewer extends React.Component {
       // console.log(this.state.pg*window.localStorage.getItem("epp")+1);
       // console.log(this.state.offers.length);
       // console.log(this.state.offers);
-      console.log(this.state.offers[1].userID);
+      console.log(this.state.offers[1]);
 
       if(this.state.offers.length >= this.state.pg*window.localStorage.getItem("epp") + i +1 &&
          this.state.offers.length !== 0) {
@@ -142,7 +143,7 @@ export default class OfferViewer extends React.Component {
                                   window.localStorage.getItem("epp")].messageText} 
                         // tags={this.state.offers[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
                         id={this.state.offers[i+this.state.pg*window.localStorage.getItem("epp")]._id}
-                        del="false"/>
+                        deletable="false"/>
               </div>
             </Link>);
       }
@@ -184,9 +185,9 @@ export default class OfferViewer extends React.Component {
             </div>
           </Route>
           {/* Displays PostViewerSpecific Page */}
-          {/* <Route path="/offers/offer">
+          <Route path="/offers/offer">
             <OfferViewerSpecific offer={this.state.offers[this.state.offernum]}/>
-          </Route> */}
+          </Route>
         </Switch>
       </Router>
     );

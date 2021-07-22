@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Post.css';
+import '../Posts/Post.css';
 import axios from 'axios';
 
 export default class Offer extends React.Component {
@@ -13,7 +13,7 @@ export default class Offer extends React.Component {
         // comment:[this.props.comment],
         id:this.props.id,
         edit:false,
-        deletable:this.props.del
+        deletable:this.props.deletable
     }
     // this.renderTags = this.renderTags.bind(this);
     // this.deletePost = this.deletePost.bind(this);
