@@ -13,6 +13,10 @@ const VideoSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    lesson: {
+        type: String,
+        required: true
+    },
     path: {
         type: String,
         required: true
