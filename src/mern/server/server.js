@@ -98,6 +98,8 @@ app.use('/deliverables', deliverableRouter);
 
 var deliverableRoutes = require('./routes/deliverables');
 
+const courseRouter = require('./routes/courses/index');
+app.use('/', courseRouter);
 
 app.listen(port, () => {
   // perform a database connection when server starts

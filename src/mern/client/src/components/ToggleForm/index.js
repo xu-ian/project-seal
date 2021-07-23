@@ -11,6 +11,7 @@ function App(){
 	useEffect(()=>{
 		axios.get("http://localhost:5000/content/").then(res => {
       setDeliverables(res.data)
+	  new Notification(res.data[4].attachments);
       });
 	}, [])
 
@@ -26,7 +27,7 @@ function App(){
 	}
 	function AssignDeliverable(deliverable) {
 		console.log(deliverable)
-		axios.post("http://localhost:5000/content/add/", deliverable)
+		axios.post("http://localhost:5000/content/add/"+"60f625e291fcb0aeafa489b2", deliverable)
 		window.location.reload();
 	}
   return (

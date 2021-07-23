@@ -31,7 +31,8 @@ export default class MessageList extends React.Component {
 
     componentDidMount(){
         this.interval = setInterval(() => {axios.get("http://localhost:5000/messages/getMessages/" 
-        +"60deb4b6e4ecc906340671a6"+ "/" + this.state.user).then(res => {
+        +(window.localStorage.getItem("userId")||"60deb4b6e4ecc906340671a6")+ "/" 
+        + this.state.user).then(res => {
             this.setState({messages:res.data.conversation || res.data});
             this.setState({rendered:"true"});
         });}, 1000);
@@ -46,14 +47,14 @@ export default class MessageList extends React.Component {
         let mes = "";
         if(this.state.rendered === "true"){
         for(let i = 0; i < this.state.messages.length; i++){
-            if(this.state.messages[i].author === "60deb4b6e4ecc906340671a6"){
+            if(this.state.messages[i].author === window.localStorage.getItem("userId")){
                 mes = this.state.messages[i];
                 messages.push(
                     <div style={{width:"45%", left:"54%", position:"relative", margin:"2px"}}>
                         <MessageBox body={mes.content}  
                           date={mes.updatedAt} 
                           change={mes.createdAt !== mes.updatedAt} 
-                          mine={mes.author === "60deb4b6e4ecc906340671a6"}
+                          mine={mes.author === window.localStorage.getItem("userId")}
                           id={mes._id}/>
                     </div>
                 );
@@ -65,7 +66,7 @@ export default class MessageList extends React.Component {
                         <MessageBox body={mes.content}  
                           date={mes.updatedAt} 
                           change={mes.createdAt !== mes.updatedAt} 
-                          mine={mes.author === "60deb4b6e4ecc906340671a6"}
+                          mine={mes.author === window.localStorage.getItem("userId")}
                           id={mes._id}/>
                     </div>
                 );
