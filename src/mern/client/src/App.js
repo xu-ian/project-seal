@@ -35,8 +35,9 @@ import setAuthToken from "./authUtils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./components/actions/authActions";
 
 
-import Courses from "./components/Courses"
-import CoursePage from "./components/CoursePage"
+import Courses from "./components/Courses";
+import MyCourses from "./components/MyCourses";
+import CoursePage from "./components/CoursePage";
 
 // We use Route in order to define the different routes of our application
 
@@ -94,6 +95,9 @@ export default function App(){
           <Switch>
             <Route path="/courses">
               <Courses />
+            </Route>
+            <Route path="/mycourses">
+              <MyCourses />
             </Route>
             <Route path="/coursepage">
               <CoursePage />

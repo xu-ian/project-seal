@@ -90,6 +90,10 @@ const companyRoutes = require("./routes/company");
 const searchRouter = require('./routes/search');  
 app.use('/search', searchRouter);
 
+// SEAL-63 & 64
+var enrollRouter = require('./routes/enroll');
+app.use('/enroll', enrollRouter);
+
 
 // SEAL-12: Setting storage for file uploads
 
