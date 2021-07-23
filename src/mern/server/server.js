@@ -102,6 +102,10 @@ var deliverableRoutes = require('./routes/deliverables');
 const offerRouter = require('./routes/offers/index');  
 app.use('/offers', offerRouter);
 
+
+const courseRouter = require('./routes/courses/index');
+app.use('/', courseRouter);
+
 app.listen(port, () => {
   // perform a database connection when server starts
   dbo.connectToServer(function (err) {

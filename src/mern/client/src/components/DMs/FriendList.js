@@ -24,7 +24,7 @@ export default class FriendList extends React.Component{
   componentDidMount(){
     //Calls axios to get a list of all contacts for this user
     axios.get("http://localhost:5000/messages/getContacts/" 
-       +/*window.localStorage.getItem("userId")||*/"60deb4b6e4ecc906340671a6").then(res => {
+       +(window.localStorage.getItem("userId")|| "60deb4b6e4ecc906340671a6")).then(res => {
       this.setState({rendered:true});
       this.formatContacts(res.data);
     });
@@ -33,7 +33,7 @@ export default class FriendList extends React.Component{
   formatContacts(data){
     let contactArray = [];
     for(let i = 0; i < data.length; i++){
-      if(data[i].relation[0] === "60deb4b6e4ecc906340671a6"/*window.localStorage.getItem("userId")||*/) {
+      if(data[i].relation[0] === (window.localStorage.getItem("userId")||"60deb4b6e4ecc906340671a6")) {
         axios.get("http://localhost:5000/messages/username/"+data[i].relation[1])
           .then(res => {
             contactArray.push({name:res.data, id:data[i].relation[1]});

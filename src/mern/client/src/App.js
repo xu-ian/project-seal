@@ -148,14 +148,15 @@ export default function App(){
               <Route path = "/friendlist/">
               <FriendList/>
             </Route>
-            <Route path = "/submit">
+            {/* <Route path = "/submit">
               <Submit/>
-            </Route>
+            </Route> */}
 
             <Route path="/offers/1"> 
               <OfferViewer />
             </Route>
 
+            <Route path = "/submit/:id" component={Submit}/>
           </Switch>
           </div>
         </Router>  
