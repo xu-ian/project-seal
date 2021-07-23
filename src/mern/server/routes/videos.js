@@ -40,15 +40,19 @@ const videoUpload = multer({
     fileFilter: videoFilter
 });
 
+// GET: All videos
 videoRoutes.route('/').get((req, res) => {
     Video.find()
-         .then(videos => {
+        .then(videos => {
             res.json(videos);
-         })
-         .catch(err => {
+        })
+        .catch(err => {
             res.status(400).json({ msg: err.msg });
-         });
+        });
 });
+
+// GET: One video based on video name
+// Note: TBC
 
 // POST: Upload a single .mp4 video
 videoRoutes.route('/upload/single').post(videoUpload.single('video'), (req, res) => {
@@ -73,13 +77,16 @@ videoRoutes.route('/upload/single').post(videoUpload.single('video'), (req, res)
 // Note: Need to fix same videos having the same names
 videoRoutes.route('/upload/multiple').post(videoUpload.array('videos'), (req, res) => {
     var newVideo;
+    var i = 0;
     req.files.forEach(file => {
         newVideo = new Video({
-            name: req.body.name,
-            course: req.body.course,
-            lesson: req.body.lesson,
+            name: req.body.name[i],
+            course: req.body.course[i],
+            lesson: req.body.lesson[i],
             path: file.path
         });
+
+        i++;
 
         Video.create(newVideo, err => {
             if (err) {
@@ -92,5 +99,24 @@ videoRoutes.route('/upload/multiple').post(videoUpload.array('videos'), (req, re
     res.json({ msg: 'Videos have been successfully uploaded.' });
 });
 
+// DELETE: Delete a video based on its ID
+videoRoutes.route('/delete/:id').delete((req, res) => {
+    
+
+    /*fs.unlink(fileLocation, err => {
+        if (err) {
+            res.status(400).json({ msg: err.msg });
+            return;
+        }
+    });
+
+    Video.deleteOne({ name: fileName })
+        .then(() => {
+            res.json({ msg: "File has been successfully deleted." });
+        })
+        .catch(err => {
+            res.status(400).json({ msg: err.msg });
+        });*/
+});
 
 module.exports = videoRoutes;
