@@ -15,6 +15,9 @@ const DeliverableSchema = new mongoose.Schema({
 	},
 	attachments: {
 		type: Array,
+	},
+	mandatory: {
+		type: Number,
 	}
 });
 
