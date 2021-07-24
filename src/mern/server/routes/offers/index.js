@@ -11,13 +11,16 @@ const getOffers = (req, res, next) => {
 
   // }
   // offersModel.find(query).then(payload => {
-  offersModel.find({}).then(payload => {
-      const offers = payload
-    res.json({
-      status: 200,
-      offers: offers
+  offersModel.find({})
+    .populate('userID')
+    .then(payload => {
+      const offers = payload;
+      res.status(200).json(offers);
     })
-  })
+    .catch(err => {
+      res.status(400).json({ msg: err.msg });
+    });
+
 }
 
 const createOffer = (req, res, next) => {

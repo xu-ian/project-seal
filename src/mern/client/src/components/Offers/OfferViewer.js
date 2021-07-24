@@ -42,11 +42,14 @@ export default class OfferViewer extends React.Component {
       window.localStorage.setItem('pagenum', 0);
     }
 
-    //Call to database to retrieve all posts.
+    //Call to database to retrieve all offers.
     axios.get("http://localhost:5000/offers/getOffers").then(res => {
-      this.setState({offers:res.data.offers});
+      this.setState({offers:res.data});
       this.setState({loaded:true});
-    });
+    })
+    .catch(err => {this.setState({loaded:"Load Failed"})});
+
+    console.log(this.state.offers);
   }
 
   /**
@@ -120,30 +123,40 @@ export default class OfferViewer extends React.Component {
     let offersList = [];
     for(let i = 0; i < window.localStorage.getItem("epp"); i++){
 
-      // console.log(this.state.pg*window.localStorage.getItem("epp")+1);
-      // console.log(this.state.offers.length);
-      // console.log(this.state.offers);
-      console.log(this.state.offers[1]);
+      let index = this.state.pg*window.localStorage.getItem("epp");
 
-      if(this.state.offers.length >= this.state.pg*window.localStorage.getItem("epp") + i +1 &&
+      // console.log(window.localStorage.getItem("epp"));
+      // console.log("length:" + this.state.offers.length);
+      // console.log("i:" + i);
+      // console.log(this.state.offers);
+      // console.log(this.state.offers[1].userID._id);
+      // console.log(this.state.offers[i].userID.username);
+      // console.log(index + i +1);
+
+
+      if(this.state.offers.length >= index + i +1 &&
          this.state.offers.length !== 0) {
+
+          // console.log(this.state.offers[i+this.state.pg*
+          //   window.localStorage.getItem("epp")].userID);
 
           offersList.push(
             <Link style={{ textDecoration: 'none', color:'Black' }} 
                   to={{pathname:"offer"}} 
                   onClick={() => {
-                    this.setState({offernum:this.state.pg*window.localStorage.getItem("epp")+i}); 
+                    this.setState({offernum:index+i}); 
                     window.localStorage.setItem("offerid", this.state.offers[
-                      this.state.pg*window.localStorage.getItem("epp")+i]._id)}}>
+                      index+i]._id)}}>
 
               <div class="post">
-                <Offer  userID = {this.state.offers[i+this.state.pg*
-                                  window.localStorage.getItem("epp")].userID} 
-                        messageText= {this.state.offers[i+this.state.pg*
-                                  window.localStorage.getItem("epp")].messageText} 
-                        // tags={this.state.offers[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
-                        id={this.state.offers[i+this.state.pg*window.localStorage.getItem("epp")]._id}
-                        deletable="false"/>
+                <Offer  
+                  offer = {this.state.offers[i+index]}
+                  // userID = {this.state.offers[i+index].userID._id}
+                  // username =  {this.state.offers[i+index].userID.username}
+                  // messageText= {this.state.offers[i+index].messageText} 
+                  // tags={this.state.offers[i+index].tags} 
+                  // id={this.state.offers[i+index]._id}
+                  deletable="false"/>
               </div>
             </Link>);
       }
