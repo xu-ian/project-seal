@@ -52,6 +52,9 @@ import {Link, Switch,
       this.setState({offers:res.data});
       this.setState({loaded:true});
       }).catch(err => {this.setState({loaded:"Load Failed"})});
+
+    console.log("pagenum:" + window.localStorage.getItem('pagenum'));
+    console.log("offerpg:" + window.localStorage.getItem('offerpg'));
   }
 
   /**
