@@ -1,70 +1,118 @@
 import React from 'react';
 import axios from 'axios';
-// import '../Posts/PostWrite.css';
+import {Paper, Typography, Button} from '@material-ui/core';
+
 
 class OfferWrite extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        author: window.localStorage.getItem("name"),
-        title : 'dummy_title',
-        content: 'Content'
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            author: this.props.id,
+            title : 'dummy_title',
+            content: '',
+            tags:[],
+            availableTags:[{tag:["E-commerce","lightgray"]}, {tag:["Networking","lightgray"]},
+            {tag:["Administrative Offer","lightgray"]}, {tag:["News","lightgray"]}, 
+            {tag:["Events","lightgray"]}, {tag:["General","lightgray"]}],
+        };
 
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTags = this.handleTags.bind(this);
+        this.renderAvailableTags = this.renderAvailableTags.bind(this);
+    }
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleTags = this.handleTags.bind(this);
+    /**
+     * Adds or removes tags from the array of tags based on input.
+     * @param {*} event The input from the checkbox.
+     */
+    handleTags = (event) => {
+        let intval = event.currentTarget.value[0];
+        let strval = event.currentTarget.value.slice(1);
+        let newArray = [];
+        let inArray = false;
+        let availableTags = this.state.availableTags;
+        availableTags[intval].tag[1] = "lightgrey";
+        for(let i = 0; i < this.state.tags.length; i++){
+            if(this.state.tags[i] === strval){
+                inArray = true;
+            }
+            else{
+                newArray.push(this.state.tags[i]);
+            }
+        }
+        if(!inArray){
+            newArray.push(strval);
+            availableTags[intval].tag[1] = "blue";
+        }
+        this.setState({tags:newArray});
+    }
 
+    /**
+     * Changes the contents of the textarea based on what was written.
+     * @param {*} event The input from textarea.
+     */
+    handleChange(event) {
+        this.setState({content: event.target.value});
+    }
 
-  }
-
-  /**
-   * Changes the contents of the textarea based on what was written.
-   * @param {*} event The input from textarea.
-   */
-  handleChange(event) {
-    this.setState({content: event.target.value});
-  }
-
-  /**
-     * Sends a request to the server to add a post to the database.
+    /**
+     * Sends a request to the server to add a offer to the database.
      * @param {*} event Input from the form submission.
      */
-  handleSubmit(event) {
-    axios.post("http://localhost:5000/offers/add/", this.state).then(
-        res => {
+    handleSubmit(event) {
+        if(this.state.content === ""){
+            alert("Write something before offering!");
+            return;
         }
-    ).catch();
-    event.preventDefault();
-    window.location.reload();
-  }
+        axios.post("http://localhost:5000/offers/add/" 
+                   + window.localStorage.getItem("userId").toString(), this.state).then(
+            res => {
+            }
+        ).catch();
+        event.preventDefault();
+        window.location.reload();
+    }
 
-  /**
-     * Returns the html for a PostWrite class.
-     * @returns The html code for a PostWrite interface.
+    renderAvailableTags(){
+        let tagsList = [];
+        for(let i = 0; i < this.state.availableTags.length; i++){
+            tagsList.push(<Button variant="contained" size="large"
+            value={i+this.state.availableTags[i].tag[0]} onClick={this.handleTags}
+            style={{"background-color":this.state.availableTags[i].tag[1]}} >
+              {this.state.availableTags[i].tag[0]}
+          </Button>);
+        }
+        return tagsList;
+    }
+
+    /**
+     * Returns the html for a OfferWrite class.
+     * @returns The html code for a OfferWrite interface.
      */
-  render (){
-    return (
-        <form onSubmit={this.handleSubmit} >
-            <label>
-                {/* Textarea to write offer in */}
-                <textarea placeholder = "Make an offer or discount" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            {/* Tags to select. */}
-            {/* <label class="switch">
-                <input type="checkbox" value="tag1" onChange={this.handleTags}/>
-                <span class="slider"><div class = 'center' >Tag1</div></span>
-            </label>
-            <label class="switch">
-                <input type="checkbox" value="tag2" onChange={this.handleTags}/>
-                <span class="slider"><div class = 'center'>Tag2</div></span>
-            </label> */}
-            <input class="addButton" type="submit" value="Create Offer or Discount" />
-        </form>
-    );
-  }
-
+    render (){
+        if(window.localStorage.getItem("userId")) {
+        return (
+            <form onSubmit={this.handleSubmit} >
+                <label>
+                    {/* Textarea to write offer in */}
+                    <textarea placeholder = "Write a offer or discount" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                {/* {this.renderAvailableTags()} */}
+                <input class="addButton" style={{"font-size":"18px"}} type="submit" value="Create Offer or Discount" />
+            </form>
+        );
+        }
+        else{
+            return(
+                <Paper>
+                    <Typography style={{margin:"25px", "text-align":"center","font-size":"150%"}}>
+                        Please sign in to add offers
+                    </Typography>
+                </Paper>
+            );
+        }
+    }
 }
 
 export default OfferWrite;
