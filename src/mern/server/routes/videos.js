@@ -23,7 +23,9 @@ const videoStorage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname);
+        let newName = file.originalname.replace(/\s+/g, '');
+        console.log(newName);
+        cb(null, Date.now() + "-" + newName);
     }
 });
 
@@ -57,10 +59,11 @@ videoRoutes.route('/').get((req, res) => {
 // POST: Upload a single .mp4 video
 videoRoutes.route('/upload/single').post(videoUpload.single('video'), (req, res) => {
     const newVideo = {
-        name: req.body.name,
+        title: req.body.title,
         course: req.body.course,
         lesson: req.body.lesson,
-        path: req.file.path
+        path: req.file.path,
+        fileName: req.file.filename
     }
 
     Video.create(newVideo, err => {
@@ -80,10 +83,11 @@ videoRoutes.route('/upload/multiple').post(videoUpload.array('videos'), (req, re
     var i = 0;
     req.files.forEach(file => {
         newVideo = new Video({
-            name: req.body.name[i],
+            title: req.body.title[i],
             course: req.body.course[i],
             lesson: req.body.lesson[i],
-            path: file.path
+            path: file.path,
+            fileName: file.filename
         });
 
         i++;
@@ -100,23 +104,24 @@ videoRoutes.route('/upload/multiple').post(videoUpload.array('videos'), (req, re
 });
 
 // DELETE: Delete a video based on its ID
-videoRoutes.route('/delete/:id').delete((req, res) => {
-    
+videoRoutes.route('/delete/:filename').delete((req, res) => {
+    const vid = Video.findOne({ fileName: req.params.filename });
+    const fileLocation = path.join(__dirname, "..", "uploads", "videos", req.params.filename);
 
-    /*fs.unlink(fileLocation, err => {
+    fs.unlink(fileLocation, err => {
         if (err) {
             res.status(400).json({ msg: err.msg });
-            return;
+            throw err;
         }
     });
 
-    Video.deleteOne({ name: fileName })
+    Video.deleteOne(vid)
         .then(() => {
-            res.json({ msg: "File has been successfully deleted." });
+            res.json({ msg: 'Video has been successfully deleted.' });
         })
         .catch(err => {
             res.status(400).json({ msg: err.msg });
-        });*/
+        });
 });
 
 module.exports = videoRoutes;
