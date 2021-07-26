@@ -35,8 +35,11 @@ class OfferCommentWrite extends React.Component {
         axios.post("http://localhost:5000/offers/"+this.state.offer_id.toString()+"/offercomments/add/" + window.localStorage.getItem("userId").toString(),
                    this.state).then(
             res => {
+                console.log("Comment added.");
             }
-        ).catch(err =>{});
+        ).catch(err =>{
+            console.log("error:" + err);
+        });
         event.preventDefault();
         window.location.reload();
     }
