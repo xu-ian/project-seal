@@ -53,8 +53,16 @@ videoRoutes.route('/').get((req, res) => {
         });
 });
 
-// GET: One video based on video name
-// Note: TBC
+// GET: One video based on ID
+videoRoutes.route('/:id').get((req, res) => {
+    Video.findById(req.params.id)
+        .then(video => {
+            res.json(video);
+        })
+        .catch(err => {
+            res.status(400).json({ msg: err.msg });
+        });
+});
 
 // POST: Upload a single .mp4 video
 videoRoutes.route('/upload/single').post(videoUpload.single('video'), (req, res) => {
@@ -77,7 +85,6 @@ videoRoutes.route('/upload/single').post(videoUpload.single('video'), (req, res)
 });
 
 // POST: Upload multiple .mp4 videos
-// Note: Need to fix same videos having the same names
 videoRoutes.route('/upload/multiple').post(videoUpload.array('videos'), (req, res) => {
     var newVideo;
     var i = 0;
@@ -122,6 +129,24 @@ videoRoutes.route('/delete/:filename').delete((req, res) => {
         .catch(err => {
             res.status(400).json({ msg: err.msg });
         });
+});
+
+// PATCH: Update a video's title
+videoRoutes.route('/update/:id').patch((req, res) => {
+    Video.findByIdAndUpdate(req.params.id, {
+            $set: {
+                title: req.body.title
+            }
+        }, {
+            new: true, 
+            useFindAndModify: false
+        })
+        .then(() => {
+            res.json({ msg: 'Video title has been updated.' });
+        })
+        .catch(err => {
+            res.status(400).json({ msg: err.msg });
+        })
 });
 
 module.exports = videoRoutes;
