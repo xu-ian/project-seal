@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Typography, Container, Paper, Accordion, AccordionSummary, 
 AccordionDetails } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
 import AssignTest from './../ToggleForm';
@@ -35,6 +36,8 @@ class CoursePage extends Component {
         this.showLessonContents = this.showLessonContents.bind(this);
         this.addAFolder = this.addAFolder.bind(this);
         this.addLFolder = this.addLFolder.bind(this);
+        this.removeAFolder = this.removeAFolder.bind(this);
+        this.removeLFolder = this.removeLFolder.bind(this);
     }
 
     componentDidMount() {
@@ -58,29 +61,32 @@ class CoursePage extends Component {
                   <Button>
                       <AddIcon/>
                   </Button>
+                  <Button onClick={() =>{this.removeAFolder(this.state.course.assignments[i]._id)}}>
+                    <DeleteIcon/>
+                  </Button>
                 </AccordionSummary>
                 <AccordionDetails>
+                    {this.showAssignmentContents(i)}
                 </AccordionDetails>
               </Accordion>);
         }
-        /*for(let i = 0; i < this.state.course.assignments.length; i++){
-            assignmentPages.push(<Link style={{ textDecoration: 'none', color:'Black' }} 
-              to={"/submit/" + this.state.course.assignments[i]._id}>
-                <Paper>
-                    <Typography variant = "h4">
-                        {(1+i) + ". " + this.state.course.assignments[i].name}
-                    </Typography>
-                </Paper>
-            </Link>);
-        }*/
         return assignmentPages;
     }
 
     showAssignmentContents(j){
-        for(let i = 0; i < this.state.course.assignments.assignments.length; i++){
-
-        };
-    }
+        let assignmentPages = [];
+        for(let i = 0; i < this.state.course.assignments[j].assignments.length; i++){
+            assignmentPages.push(<Link style={{ textDecoration: 'none', color:'Black' }} 
+              to={"/submit/" + this.state.course.assignments[j].assignments[i]._id}>
+                <Paper>
+                    <Typography variant = "h4">
+                        {(1+i) + ". " + this.state.course.assignments[j].assignments[i].name}
+                    </Typography>
+                </Paper>
+            </Link>);
+        }
+        return assignmentPages;
+    };
 
     showLessons(){
         let lessonPages = [];
@@ -95,24 +101,30 @@ class CoursePage extends Component {
                   <Button>
                       <AddIcon/>
                   </Button>
+                  <Button onClick={() =>{this.removeLFolder(this.state.course.lessons[i]._id)}}>
+                    <DeleteIcon/>
+                  </Button>
                 </AccordionSummary>
                 <AccordionDetails>
+                    {this.showLessonContents(i)}
                 </AccordionDetails>
               </Accordion>);
         }
-        /*for(let i = 0; i < this.state.course.lessons.length; i++){
-            lessonPages.push(<Link to={"/coursepage?name="
-            +this.state.course.lessons[i]._id}>
-                <Paper>
-                    {this.state.course.lessons[i].title}
-                </Paper>
-            </Link>)
-        }*/
+        /**/
         return lessonPages;
     }
 
-    showLessonContents(){
-
+    showLessonContents(j){
+        let lessonPages = [];
+        for(let i = 0; i < this.state.course.lessons[j].lessons.length; i++){
+            lessonPages.push(<Link to={"/coursepage?name="
+            +this.state.course.lessons[j].lessons[i]._id}>
+                <Paper>
+                    {this.state.course.lessons[j].lessons[i].title}
+                </Paper>
+            </Link>)
+        }
+        return lessonPages;
     }
 
     addAFolder(){
@@ -140,10 +152,24 @@ class CoursePage extends Component {
                 }
             }
             axios.post("http://localhost:5000/course/addlfolder/"+this.state.courseName+"/"
-              +name).then(() =>{window.location.reload();});
+              +name).then(() => {window.location.reload();});
         }
     }
+
+    removeAFolder(fid){
+        axios.post("http://localhost:5000/course/removeafolder/"+this.state.courseName+"/"
+        +fid).then().catch(err =>{
+            new Notification(err);
+        });
+        window.location.reload();
+    }
  
+    removeLFolder(fid){
+        axios.post("http://localhost:5000/course/removelfolder/"+this.state.courseName+"/"
+        +fid).then().catch(err => {new Notification("Failure")});
+        window.location.reload();
+    }
+
     render() {
         if(this.state.ready){
         return (
