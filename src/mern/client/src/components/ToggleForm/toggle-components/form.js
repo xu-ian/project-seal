@@ -8,11 +8,12 @@ const Form= ({AssignDeliverable}) =>{
 	const [mandatory, setMandatory] = useState(false)
 	const onSubmit = (e) => {
 		e.preventDefault()
-		AssignDeliverable({name, duedate, description, attachments})
+		AssignDeliverable({name, duedate, description, attachments, mandatory})
 		setName('')
 		setDate('')
 		setDesc('')
 		setAttachments([])
+		setMandatory(false)
 	}
   return (
 		//Front-end for Form which assigns deliverables (SEAL-8 Component)

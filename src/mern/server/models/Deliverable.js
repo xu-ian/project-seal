@@ -17,7 +17,7 @@ const DeliverableSchema = new mongoose.Schema({
 		type: Array,
 	},
 	mandatory: {
-		type: Number,
+		type: Boolean,
 	}
 });
 

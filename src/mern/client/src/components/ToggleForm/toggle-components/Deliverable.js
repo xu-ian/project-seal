@@ -1,10 +1,10 @@
 const Deliverable = ({ content }) => {
-	if(content.mandatory === 1){
+	if(content.mandatory === true){
 		return (
 			<div className='stream-item'>
-				<h3>Mandatory!</h3>
 				<h3>{content.name}</h3>
 				<p>Due Date: {content.duedate}</p>
+				<h6>Mandatory!</h6>
 				<p>{content.description}</p>
 				<br/>
 			</div>

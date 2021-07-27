@@ -18,6 +18,7 @@ contentRoutes.route("/add").post((req, res) => {
 		duedate: req.body.duedate,
 		description: req.body.description,
 		attachments: req.body.attachments,
+		mandatory: req.body.mandatory,
 	});
 	console.log(newContent)
 	console.log(req.body)
