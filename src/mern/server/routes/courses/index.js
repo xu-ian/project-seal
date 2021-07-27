@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Course = require('./../../models/Courses.js');
-const Lesson = require('./../../models/Lesson.js');
+
 const Deliverable = require('./../../models/Deliverable.js');
 const { ObjectId } = require('bson');
 const { ObjectID } = require('bson');
