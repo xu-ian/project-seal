@@ -5,8 +5,6 @@ import { withRouter } from "react-router";
 import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import BusinessIcon from '@material-ui/icons/Business';
-import './company-profile-style.css'
-
 
 /* This class update an existing company profile through id */
 class EditCompanyProfile extends Component {
@@ -24,6 +22,7 @@ class EditCompanyProfile extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
+      company_id: "",
       company_title: "",
       tagline: "", 
       description: "", 
@@ -42,6 +41,7 @@ class EditCompanyProfile extends Component {
         const currentCompany = companyLists.find(person => person._id === this.props.match.params.id);
 
         this.setState({
+          company_id: this.props.match.params.id,
           company_title: currentCompany.company_title,
           tagline: currentCompany.tagline,
           description: currentCompany.description,
@@ -103,6 +103,7 @@ class EditCompanyProfile extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const newEditedCompanyProfile = {
+      company_id: this.state.company_id,
       company_title: this.state.company_title,
       tagline: this.state.tagline, 
       description: this.state.description, 

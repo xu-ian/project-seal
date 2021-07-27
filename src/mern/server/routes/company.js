@@ -2,6 +2,7 @@ const express = require("express");
 const companyRoutes = express.Router();
 //Connect to the database
 const dbo = require("../db/conn");
+var ObjectID = require('mongodb').ObjectID;
 
 
 // const { ObjectID } = require('bson');
@@ -58,7 +59,11 @@ companyRoutes.route("/create").post(function (req, res) {
 // Update Company Profile by id.
 companyRoutes.route("/update/:id").post(function (req, res) {
   let db_connect = dbo.getDb("employees");
-  let myquery = { id: req.body.id };
+  let myquery = { _id: ObjectID(req.body.company_id) };
+    // console.log("the update id is: " + req.body.company_id);
+    // Kame Yu department stores	
+
+
   let newvalues = {
     $set: {
       company_title: req.body.company_title,

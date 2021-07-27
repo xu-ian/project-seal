@@ -9,6 +9,7 @@ import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
 import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 
 
+import ManageProfile from "./components/ManageProfile";
 import ProfilePage from "./components/ProfilePage";
 import UserProfileList from "./components/UserProfile/UserProfile";
 import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
@@ -122,16 +123,11 @@ export default function App(){
             <Route exact path="/assigntest">
 						  <AssignTest />
 					  </Route>
-            <Route path="/list"> 
-              <CompanyProfileList />
-            </Route>
-            <Route path="/create">
-              <CreateCompanyProfile />
-            </Route>
 
+              <Route path = "/profile/manage/:id" component={ManageProfile} /> 
               <Route path = "/profile/create" component={ProfilePage} /> 
               <Route path = "/profile/search" component={SearchProfile} />
-              <Route path="/user-profile/list" component={UserProfileList} />
+              {/* <Route path="/user-profile/list" component={UserProfileList} /> */}
               <Route path="/user-profile/create" component={CreateUserProfile} />
               <Route path = "/user-profile/edit/:id" component={EditUserProfile} /> 
               <Route path= "/user-profile/view/:id" component={MyUserProfile} />
@@ -141,7 +137,6 @@ export default function App(){
               <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
               <Route path="/friend/view/:id" component={FriendRequest} />
-
 
               <Route path = "/friendlist/">
               <FriendList/>

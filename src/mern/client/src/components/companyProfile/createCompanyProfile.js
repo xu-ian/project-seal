@@ -6,7 +6,6 @@ import BusinessIcon from '@material-ui/icons/Business';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 import FileBase from 'react-file-base64';
-import './company-profile-style.css';
 
 
 export default class CreateCompanyProfile extends Component{
