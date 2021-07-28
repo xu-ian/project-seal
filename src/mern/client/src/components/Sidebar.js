@@ -12,11 +12,15 @@ class Sidebar extends React.Component {
         let searchbar;
         let username;
         let viewuserprofile;
+        let uploadvideo, listvideo;
         let currentUserID= localStorage.getItem('userId');
         if (this.props.auth.isAuthenticated){
             userprofile = <a href="/user-profile/list">User Profiles</a>;
             searchbar = <a href="/profile/search">Search</a>;
             viewuserprofile = <a href={"/user-profile/view/" + currentUserID}> My User Profile </a>; 
+            uploadvideo = <a href="/videos/upload"> Upload Video </a>; 
+            listvideo = <a href="/videos/list"> List Video </a>; 
+
         }
         return (
             <div class="sidebar">
@@ -32,6 +36,7 @@ class Sidebar extends React.Component {
                 {searchbar}
                 {userprofile}
                 {viewuserprofile}
+                {listvideo}
             </div>
         );
     }

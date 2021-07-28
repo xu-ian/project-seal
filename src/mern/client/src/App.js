@@ -38,6 +38,10 @@ import { setCurrentUser, logoutUser } from "./components/actions/authActions";
 import Courses from "./components/Courses"
 import CoursePage from "./components/CoursePage"
 
+
+import UploadVideo from "./components/UploadVideo";
+import ListVideo from "./components/ListVideo";
+
 // We use Route in order to define the different routes of our application
 
 
@@ -141,6 +145,9 @@ export default function App(){
               <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
               <Route path="/friend/view/:id" component={FriendRequest} />
+
+              <Route path="/videos/upload" component={UploadVideo} />
+              <Route path="/videos/list" component={ListVideo} />
 
 
               <Route path = "/friendlist/">
