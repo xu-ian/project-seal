@@ -4,6 +4,7 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const Video = require('../models/Video');
+const { ObjectId } = require('mongodb');
 const videoRoutes = express.Router();
 const dirLocation = path.join(__dirname, '..', 'uploads', 'videos');
 
@@ -68,7 +69,8 @@ videoRoutes.route('/:id').get((req, res) => {
 videoRoutes.route('/upload/single').post(videoUpload.single('video'), (req, res) => {
     const newVideo = {
         title: req.body.title,
-        course: req.body.course,
+        description: req.body.description,
+        course: ObjectId(req.body.course._id),
         lesson: req.body.lesson,
         path: req.file.path,
         fileName: req.file.filename
@@ -91,7 +93,8 @@ videoRoutes.route('/upload/multiple').post(videoUpload.array('videos'), (req, re
     req.files.forEach(file => {
         newVideo = new Video({
             title: req.body.title[i],
-            course: req.body.course[i],
+            description: req.body.description[i],
+            course: ObjectId(req.body.course[i]._id),
             lesson: req.body.lesson[i],
             path: file.path,
             fileName: file.filename
@@ -133,16 +136,19 @@ videoRoutes.route('/delete/:filename').delete((req, res) => {
 
 // PATCH: Update a video's title
 videoRoutes.route('/update/:id').patch((req, res) => {
+    const updatedVideo = {};
+
+    if (req.body.title) updatedVideo.title = req.body.title;
+    if (req.body.description) updatedVideo.description = req.body.description;
+
     Video.findByIdAndUpdate(req.params.id, {
-            $set: {
-                title: req.body.title
-            }
+            $set: updatedVideo
         }, {
             new: true, 
             useFindAndModify: false
         })
         .then(() => {
-            res.json({ msg: 'Video title has been updated.' });
+            res.json({ msg: 'Video information has been updated.' });
         })
         .catch(err => {
             res.status(400).json({ msg: err.msg });

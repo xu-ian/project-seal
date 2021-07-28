@@ -5,6 +5,10 @@ const VideoSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     fileName: {
         type: String,
         required: true
@@ -14,10 +18,13 @@ const VideoSchema = mongoose.Schema({
         default: Date.now
     },
     course: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'courses',
         required: true
     },
     lesson: {
+        // NOTE: Needs to refer to Lesson schema but it does not exist yet
+        //       String will be temp placeholder
         type: String,
         required: true
     },
