@@ -58,18 +58,14 @@ export default class UploadVideo extends Component{
     }
 
     
-    //
+    //This handles storing video info
     onDrop(files){
         let file = files[0];
+        // let formData = new FormData();
+        // formData.append("file", files[0]);
 
         this.setState({ videoUpload: file, });
-
-        // console.log(files[0]);
-
-
-        // console.log(this.state.videoUpload);
-        
-
+    
 
     }
 
@@ -80,7 +76,16 @@ export default class UploadVideo extends Component{
     handleSubmit(e) {
         e.preventDefault();
 
-
+        const fileinfo ={
+            path: this.state.videoUpload.path,
+            name: this.state.videoUpload.name,
+            size: this.state.videoUpload.size,
+            type: this.state.videoUpload.type,
+            lastModified: this.state.videoUpload.lastModified,
+            lastModifiedDate: this.state.videoUpload.lastModifiedDate,
+            webkitRelativePath: this.state.videoUpload.webkitRelativePath
+        }
+        
 
         const newUploadVideo = {
             // user_id: this.state.user_id,
@@ -88,9 +93,13 @@ export default class UploadVideo extends Component{
             course: this.state.course,
             description: this.state.description,
             lesson: this.state.lesson,
-            videoUpload: this.state.videoUpload,
+            file: fileinfo,
         };
-        console.log(this.state.videoUpload);
+
+        
+        // console.log(newUploadVideo);
+        // console.log(this.state.videoUpload);
+
 
         // This will send a post request to update the data in the database.
         axios
@@ -101,6 +110,18 @@ export default class UploadVideo extends Component{
         .then((res) => console.log(res.data))
         .catch(function (error) {
         });
+
+
+        this.setState = { 
+            title: "",
+            course: "",
+            description: "",
+            lesson: "",
+            videoUpload: "",
+        };
+
+        window.location.href = "/videos/list";
+
         
     }
 

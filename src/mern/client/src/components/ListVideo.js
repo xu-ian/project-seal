@@ -55,8 +55,8 @@ export default class ListVideo extends Component{
         .catch(function (error) { });
         
         
-        // alert("video deleted");
-        // window.location.reload();
+        alert("video deleted");
+        window.location.reload();
 
     }
 
