@@ -27,7 +27,7 @@ import Authenticated from "./components/Authentication/Authenticated";
 import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
-import Calendar from './components/Calendar'
+import Calendar from './components/Calendar';
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -99,9 +99,7 @@ export default function App(){
             <Route path="/mycourses">
               <MyCourses />
             </Route>
-            <Route path="/coursepage">
-              <CoursePage />
-            </Route>
+            <Route path="/coursepage/:id" component={CoursePage}/>
             <Route path="/posts/">
               <PostViewer />
             </Route>

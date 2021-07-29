@@ -17,20 +17,20 @@ const getCourseObjectIfExists = (payload, courseName) => payload.filter(course =
 class CoursePage extends Component {
     constructor(props){
         super(props);
-        const pageURL = String(window.location.href)
-        const URLObject = qs.parse(pageURL);
-        const values = Object.values(URLObject);
-        const defaultName = values[0];
+        
         this.state = {
             course:{lessons:[], 
                 assignments:[], 
                 name:"placeholder", 
                 desc:"placeholder"},
-            courseName: defaultName,
+            courseName: this.props.match.params.id,
             desc: "",
-            ready:false
+            fid:"",
+            ready:false,
+            visible:"hidden"
         };
         this.validCourse = false;
+        this.swapVisibility = this.swapVisibility.bind(this);
         this.showAssignments = this.showAssignments.bind(this);
         this.showAssignmentContents = this.showAssignmentContents.bind(this);
         this.showLessons = this.showLessons.bind(this);
@@ -49,6 +49,16 @@ class CoursePage extends Component {
         });
     }
 
+    swapVisibility(specificFid){
+        this.setState({fid:specificFid});
+        if(this.state.visible === "visible"){
+            this.setState({visible:"hidden"});
+        }
+        else{
+            this.setState({visible:"visible"});
+        }
+    }
+
     showAssignments(){
         let assignmentPages = [];
         for(let i = 0; i < this.state.course.assignments.length; i++){
@@ -59,7 +69,7 @@ class CoursePage extends Component {
                   <Typography>
                     {this.state.course.assignments[i].name}
                   </Typography>
-                  <Button>
+                  <Button onClick={() => {this.swapVisibility(this.state.course.assignments[i]._id)}}>
                       <AddIcon/>
                   </Button>
                   <Button onClick={() =>{this.removeAFolder(this.state.course.assignments[i]._id)}}>
@@ -100,7 +110,7 @@ class CoursePage extends Component {
                     {this.state.course.lessons[i].name}
                   </Typography>
                   <Button>
-                      <AddIcon/>
+                    <AddIcon/>
                   </Button>
                   <Button onClick={() =>{this.removeLFolder(this.state.course.lessons[i]._id)}}>
                     <DeleteIcon/>
@@ -204,9 +214,10 @@ class CoursePage extends Component {
                     <hr/>
                 </Typography>
                 {this.showLessons()}
-                <Paper style={{position:"absolute", width:"50%", height:"50%", top:"25%", left:"25%", "background-color":"lightblue"}}>
-                    <AddAssignment cid = {this.state.coursename} visible={true}/>
-                    <Button>Back</Button>
+                <Paper style={{position:"absolute", width:"50%", height:"50%", top:"25%", 
+                  left:"25%", "background-color":"lightblue", visibility:this.state.visible}}>
+                    <AddAssignment cid={this.state.courseName} fid={this.state.fid}/>
+                    <Button onClick={() =>{this.swapVisibility(this.state.fid)}}>Back</Button>
                 </Paper>
                 
             </div>
