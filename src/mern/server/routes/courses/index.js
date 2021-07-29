@@ -20,7 +20,12 @@ courseRouter.route("/course/courses").get((req, res) => {
     Course.find().populate('lessons').populate('assignments')
     .then(courses => {
         console.log(courses);
-        res.json(courses);
+        if(Array.isArray(courses)){
+            res.json(courses);
+        }
+        else{
+            res.json([courses]);
+        }
     }).catch(err => {
         console.log(err);
         res.status(400).json({ msg: err.msg });
