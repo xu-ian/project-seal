@@ -74,6 +74,7 @@ function Calendar(){
 	function changeDate(e){
 		//Checks for clicks that are on dates (i.e. not edges and no dragging)
 		let temp_date = e.target.firstChild.data;
+		console.log(localStorage.getItem('userId'));
 		if(temp_date != null){
 			//Checks if dates are in other months
 			let temp_type = e.target.className;
