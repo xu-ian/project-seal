@@ -106,12 +106,13 @@ export default class ManageProfile extends Component {
                                             </Grid>
                                         </Grid>
                                     ))
-                                    : <Grid style={{marginLeft:"50%"}}> 
+                                    : <Grid> </Grid>
+                                }
+                                <Grid style={{marginLeft:"50%"}}> 
                                         <ListItemAvatar> 
                                             <AddCircleIcon style={{ fontSize: 50 }} color="primary" onClick={() => {window.location.href='/company-profile/create/'}}/> 
                                         </ListItemAvatar>
-                                    </Grid>
-                                }
+                                </Grid>
 
                             </Grid>
                         </AccordionDetails>
