@@ -3,6 +3,7 @@ import qs from 'qs';
 import { Link } from "react-router-dom";
 import { Button, Typography, Container, Paper } from '@material-ui/core';
 import axios from 'axios';
+import AddAssignment from './AddAssignment.js';
 import AssignTest from './../ToggleForm';
 
 const getCoursesData = fetch('http://127.0.0.1:5000/courses').then(res => res.json())
@@ -93,6 +94,11 @@ class CoursePage extends Component {
                     Lessons<hr/>
                 </Typography>
                 {this.showLessons()}
+                <Paper style={{position:"absolute", width:"50%", height:"50%", top:"25%", left:"25%", "background-color":"lightblue"}}>
+                    <AddAssignment cid = {this.state.coursename} visible={true}/>
+                    <Button>Back</Button>
+                </Paper>
+                
             </div>
         );}
         else{
