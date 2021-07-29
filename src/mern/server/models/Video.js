@@ -29,8 +29,8 @@ const VideoSchema = mongoose.Schema({
         required: true
     },
     path: {
-        type: String,
-        required: true
+        type: String
+        //required: true
     }
 }, {
     timestamps: true
