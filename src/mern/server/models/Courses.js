@@ -5,8 +5,8 @@ var CourseSchema = new Schema(
     {
         name: {type:String, required:true},
         desc: {type:String, required:true},
-        lessons:[{type:mongoose.Schema.Types.ObjectId}],
-        assignments:[{type:mongoose.Schema.Types.ObjectId, ref:'Content'}]
+        lessons:[{type:mongoose.Schema.Types.ObjectId, ref:'lessfolder'}],
+        assignments:[{type:mongoose.Schema.Types.ObjectId, ref:'assfolder'}]
     }
 )
 
