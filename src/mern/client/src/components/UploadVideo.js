@@ -16,8 +16,7 @@ export default class UploadVideo extends Component{
         this.onChangeCourse = this.onChangeCourse.bind(this);
         this.onChangeLesson = this.onChangeLesson.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
-
+        this.onDrop = this.onDrop.bind(this);
 
 
 
@@ -26,6 +25,7 @@ export default class UploadVideo extends Component{
             course: "",
             description: "",
             lesson: "",
+            videoUpload: "",
 
         };
     }
@@ -38,9 +38,9 @@ export default class UploadVideo extends Component{
     }
 
 
-
+    //Initialize
     componentDidMount(){
-
+        this.getCourses();
     }
 
     //This seciton handles the form changes
@@ -58,6 +58,20 @@ export default class UploadVideo extends Component{
     }
 
     
+    //
+    onDrop(files){
+        let file = files[0];
+
+        this.setState({ videoUpload: file, });
+
+        // console.log(files[0]);
+
+
+        // console.log(this.state.videoUpload);
+        
+
+
+    }
 
 
 
@@ -66,21 +80,23 @@ export default class UploadVideo extends Component{
     handleSubmit(e) {
         e.preventDefault();
 
-        const newEditedUserProfile = {
+
+
+        const newUploadVideo = {
             // user_id: this.state.user_id,
             title: this.state.title,
             course: this.state.course,
             description: this.state.description,
             lesson: this.state.lesson,
-
+            videoUpload: this.state.videoUpload,
         };
-        console.log(newEditedUserProfile);
+        console.log(this.state.videoUpload);
 
         // This will send a post request to update the data in the database.
         axios
         .post(
             "http://localhost:5000/videos/upload/single/",
-            newEditedUserProfile
+            newUploadVideo
         )
         .then((res) => console.log(res.data))
         .catch(function (error) {
@@ -153,7 +169,13 @@ export default class UploadVideo extends Component{
                         </Grid>
                         
                         <Grid container id="video-wrapper" style={{marginTop: "50px"}}>
-                            <Dropzone required item onDrop={acceptedFiles => console.log(acceptedFiles)} >
+                            <Dropzone required item 
+                                multiple={false}
+                                maxSize={800000000}
+                                onDrop={(acceptedFiles) => {this.onDrop(acceptedFiles); }}
+                                // onDrop={acceptedFiles => console.log(acceptedFiles)}  
+                                >
+                                
                                 {({getRootProps, getInputProps}) => (
                                     <section>
                                         <div {...getRootProps()}>

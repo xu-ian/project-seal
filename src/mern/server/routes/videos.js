@@ -90,6 +90,7 @@ videoRoutes.route('/:id').get((req, res) => {
 
 // POST: Upload a single .mp4 video
 videoRoutes.route('/upload/single').post(videoUpload.single('video'), (req, res) => {
+    console.log(JSON.stringify(req.body));
     const newVideo = {
         title: req.body.title,
         description: req.body.description,
