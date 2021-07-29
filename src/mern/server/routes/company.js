@@ -3,7 +3,7 @@ const companyRoutes = express.Router();
 //Connect to the database
 const dbo = require("../db/conn");
 var ObjectID = require('mongodb').ObjectID;
-
+const User = require('../models/user');
 
 // const { ObjectID } = require('bson');
 // const { json } = require('express');
@@ -41,6 +41,10 @@ companyRoutes.route("/view/:id").get(function (req, res) {
 // Create Company Profile.
 companyRoutes.route("/create").post(function (req, res) {
     let db_connect = dbo.getDb("employees");
+    //gotta check for company names
+    if (!req.body.company_title){
+      res.status(400).json({ msg: "no name given"});
+    }
     let myobj = {
       company_title: req.body.company_title,
       tagline: req.body.tagline,
@@ -53,6 +57,16 @@ companyRoutes.route("/create").post(function (req, res) {
     db_connect.collection("companys").insertOne(myobj, function (err, res) {
       if (err) throw err;
     });
+    console.log(req.body.user_id);
+    console.log(myobj._id);
+    User.updateOne({_id: req.body.user_id}, {
+      $addToSet: 
+        {companies: myobj._id,}
+    }).catch(err => {
+      console.log("can't find user!")
+      res.status(400).json({ msg: err.msg });
+    });
+    res.status(200).json({ msg: "its good"});
 });
 
 

@@ -20,6 +20,7 @@ var UserSchema = new Schema(
     //backgroundImage: req.body.backgroundImage,
     //friendsmodel: [ [friends: ], [friendrequestsent: ], [friendrequestreceived: ] ]
     friends:{type: Schema.Types.ObjectId, ref: 'friends'},
+    companies: [{type: String}]
   }
 );
 
