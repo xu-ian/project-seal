@@ -39,8 +39,9 @@ import Courses from "./components/Courses"
 import CoursePage from "./components/CoursePage"
 
 
-import UploadVideo from "./components/UploadVideo";
-import ListVideo from "./components/ListVideo";
+import UploadVideo from "./components/Video/UploadVideo";
+import ListVideo from "./components/Video/ListVideo";
+import EditVideo from "./components/Video/EditVideo";
 
 // We use Route in order to define the different routes of our application
 
@@ -148,6 +149,8 @@ export default function App(){
 
               <Route path="/videos/upload" component={UploadVideo} />
               <Route path="/videos/list" component={ListVideo} />
+              <Route path="/videos/edit" component={EditVideo} />
+              
 
 
               <Route path = "/friendlist/">

@@ -5,6 +5,7 @@ import { Avatar, Typography, Container, Grid, TableRow, TableCell, List, ListIte
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/styles';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 
@@ -78,8 +79,8 @@ export default class ListVideo extends Component{
 
                     <Table style={{marginTop: "30px"}}> 
                         <TableHead> 
-                            <TableCell >  </TableCell>
                             <TableCell > <Typography variant="h6"> Title </Typography> </TableCell>
+                            <TableCell > <Typography variant="h6">  </Typography> </TableCell>
                             <TableCell > <Typography variant="h6"> Course </Typography> </TableCell>
                             <TableCell > <Typography variant="h6"> Lesson </Typography> </TableCell>
                             <TableCell > <Typography variant="h6">  </Typography> </TableCell>
@@ -110,8 +111,12 @@ export default class ListVideo extends Component{
                                         <TableCell> 
                                             <Typography variant="body1"> {video.lesson} </Typography>
                                         </TableCell>
-                                        <TableCell className="delete"> 
+                                        
+                                        <TableCell className="delete-buttom"> 
                                             <DeleteIcon onClick={() => {this.handleDeleteVideo(video.fileName); }}/>
+                                        </TableCell>
+                                        <TableCell className="edit-buttom"> 
+                                            <EditIcon onClick={() => {window.location.href='/videos/edit/' + video._id}}/>
                                         </TableCell>
                                         
                                     </StyledTableRow>
