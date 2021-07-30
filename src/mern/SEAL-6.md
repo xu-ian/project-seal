@@ -31,6 +31,6 @@
 
 ### videos.js(/server/src/routes)
 
-- 
+- Handles requests for retrieving videos, uploading videos, and deleting videos from the database.
 
 
