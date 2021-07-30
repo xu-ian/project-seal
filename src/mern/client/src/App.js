@@ -17,7 +17,6 @@ import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
 import FriendRequest from "./components/FriendRequest";
-// import RoleSelection from "./components/roleSelection"
 
 
 import Registration from "./components/Authentication/registration";
@@ -30,14 +29,18 @@ import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
 import Calendar from './components/Calendar'
 
+// offer
+import OfferViewer from "./components/Offers/OfferViewer";
+
 // for redux
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./authUtils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./components/actions/authActions";
 
 
-import Courses from "./components/Courses"
-import CoursePage from "./components/CoursePage"
+import Courses from "./components/Courses";
+import MyCourses from "./components/MyCourses";
+import CoursePage from "./components/CoursePage";
 
 // We use Route in order to define the different routes of our application
 
@@ -96,6 +99,9 @@ export default function App(){
             <Route path="/courses">
               <Courses />
             </Route>
+            <Route path="/mycourses">
+              <MyCourses />
+            </Route>
             <Route path="/coursepage">
               <CoursePage />
             </Route>
@@ -141,6 +147,14 @@ export default function App(){
               <Route path = "/friendlist/">
               <FriendList/>
             </Route>
+            {/* <Route path = "/submit">
+              <Submit/>
+            </Route> */}
+
+            <Route path="/offers/1"> 
+              <OfferViewer />
+            </Route>
+
             <Route path = "/submit/:id" component={Submit}/>
           </Switch>
           </div>

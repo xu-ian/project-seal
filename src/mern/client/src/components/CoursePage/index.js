@@ -70,7 +70,7 @@ class CoursePage extends Component {
         if(this.state.ready){
         return (
             <div>
-                <Link to="/courses"><Button variant="contained">Back</Button></Link>
+                <Link to="/mycourses"><Button variant="contained">Back</Button></Link>
                 <div>
                     <Typography variant = "h2">
                         {this.state.course.name}

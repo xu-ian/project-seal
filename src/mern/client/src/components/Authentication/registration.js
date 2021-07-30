@@ -23,6 +23,7 @@ class Registration extends Component {
       startupfounder: false,
       investor: false,
       instructor: false,
+      serviceprovider: false,
       errors: {},
     };
   }
@@ -55,12 +56,14 @@ class Registration extends Component {
       password: this.state.password,
       role: {startupfounder: this.state.startupfounder, 
         investor: this.state.investor,
-        instructor: this.state.instructor
+        instructor: this.state.instructor,
+        serviceprovider: this.state.serviceprovider
       }
     };
 
     // check if user select at least one role
-    if (newUser.role.startupfounder || newUser.role.investor || newUser.role.instructor) {
+    if (newUser.role.startupfounder || newUser.role.investor || newUser.role.instructor
+        || newUser.role.serviceprovider) {
       this.props.registerUser(newUser, this.props.history);
     } else {
       alert("Please select at least one role");
@@ -125,6 +128,13 @@ class Registration extends Component {
                   onClick={() => 
                     this.setState( {instructor: document.getElementById("instructor").checked} )}/>
               I am an Instructor 
+            </label>
+            <label>
+              {/* set roles.serviceprovider to true if the box is checked */}
+              <input type="checkbox" id="serviceprovider"
+                  onClick={() => 
+                    this.setState( {serviceprovider: document.getElementById("serviceprovider").checked} )}/>
+              I am a Service Provider 
             </label>
           </div>             
 
