@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Typography, Paper } from '@material-ui/core';
 
-export default class PostPopup extends React.Component{
+export default class OfferPopup extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -23,7 +23,6 @@ export default class PostPopup extends React.Component{
         this.handleEnter2 = this.handleEnter2.bind(this);
         this.handleExit2 = this.handleExit2.bind(this);
         this.checkVisibility = this.checkVisibility.bind(this);
-        this.renderLink = this.renderLink.bind(this);
     }
 
     componentDidMount(){
@@ -65,34 +64,6 @@ export default class PostPopup extends React.Component{
         return "hidden";
     }
 
-    renderLink(){
-        if(this.state.aid === ""){
-            return(<div class="User">
-            {/* Author of post */}
-            <Typography aria-owns={"popover"}
-             variant="h3" aria-haspopup="true"
-             style={{"font-size":"200%", margin:"10px"}}
-             onMouseEnter={this.handleEnter}
-             onMouseLeave={this.handleExit}>
-                {this.state.author}
-            </Typography>
-            </div>);
-        }
-        return(<a style={{color:"black", "text-decoration":"none"}}
-          href={"/user-profile/view/"+this.state.aid}>
-        <div class="User">
-        {/* Author of post */}
-        <Typography aria-owns={"popover"}
-         variant="h3" aria-haspopup="true"
-         style={{"font-size":"200%", margin:"10px"}}
-         onMouseEnter={this.handleEnter}
-         onMouseLeave={this.handleExit}>
-            {this.state.author}
-        </Typography>
-        </div>
-    </a>);
-    }
-
     render(){
         return(
             <div>
@@ -106,7 +77,18 @@ export default class PostPopup extends React.Component{
                 <Typography>Other Links: {this.state.links}</Typography>
                 <Typography>Contact Code: {this.state.aid}</Typography>
             </Paper>
-        {this.renderLink()}
+        <a style={{color:"black", "text-decoration":"none"}}href={"/user-profile/view/"+this.state.aid}>
+            <div class="User">
+            {/* Author of offer */}
+            <Typography aria-owns={"popover"}
+             variant="h3" aria-haspopup="true"
+             style={{"font-size":"200%", margin:"10px"}}
+             onMouseEnter={this.handleEnter}
+             onMouseLeave={this.handleExit}>
+                {this.state.author}
+            </Typography>
+            </div>
+        </a>
         </div>);
     }
 }

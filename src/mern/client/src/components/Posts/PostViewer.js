@@ -127,24 +127,39 @@ import {Link, Switch,
     for(let i = 0; i < window.localStorage.getItem("epp"); i++){
       if(this.state.posts.length >= this.state.pg*window.localStorage.getItem("epp") + i +1 &&
          this.state.posts.length !== 0){
-        postsList.push(<Link style={{ textDecoration: 'none', color:'Black' }} 
-                        to={{pathname:"post"}} onClick={() => {
-          this.setState({postnum:this.state.pg*window.localStorage.getItem("epp")+i}); 
-          window.localStorage.setItem("id", this.state.posts[
-            this.state.pg*window.localStorage.getItem("epp")+i]._id)}}>
-          <div class="post">
-            <Post post = {this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]}
-              author = {this.state.posts[i+this.state.pg*
+          if(this.state.posts[i+this.state.pg*
+             window.localStorage.getItem("epp")].author){
+              postsList.push(<
+              Link style={{ textDecoration: 'none', color:'Black' }} 
+               to={{pathname:"post"}} onClick={() => {
+               this.setState({postnum:this.state.pg*window.localStorage.getItem("epp")+i}); 
+               window.localStorage.setItem("id", this.state.posts[
+               this.state.pg*window.localStorage.getItem("epp")+i]._id)}}>
+                <div class="post">
+                  <Post post = {this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]}
+                   author = {this.state.posts[i+this.state.pg*
                             window.localStorage.getItem("epp")].author.username}
-              aid = {this.state.posts[i+this.state.pg*
+                   aid = {this.state.posts[i+this.state.pg*
                             window.localStorage.getItem("epp")].author._id}  
-              content={this.state.posts[i+this.state.pg*
+                   content={this.state.posts[i+this.state.pg*
                        window.localStorage.getItem("epp")].content} 
-              tags={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
-              id={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]._id}
-              deletable={false}/>
-          </div>
-        </Link>);
+                   tags={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
+                   id={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]._id}
+                   deletable={false}/>
+                </div>
+              </Link>);
+        }
+        else{
+          postsList.push(
+            <div class="post">
+              <Post post = {this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]}
+               author ="Unknown Author" aid = "" deletable={false}
+               content={this.state.posts[i+this.state.pg*
+               window.localStorage.getItem("epp")].content} 
+               tags={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")].tags} 
+               id={this.state.posts[i+this.state.pg*window.localStorage.getItem("epp")]._id}/>
+            </div>);
+        }
       }
     }
     return postsList;
