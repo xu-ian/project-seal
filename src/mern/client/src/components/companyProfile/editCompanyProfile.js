@@ -6,6 +6,8 @@ import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline } f
 import FileBase from 'react-file-base64';
 import BusinessIcon from '@material-ui/icons/Business';
 
+let currentUserID= localStorage.getItem('userId');
+
 /* This class update an existing company profile through id */
 class EditCompanyProfile extends Component {
   // This is the constructor that stores the data.
@@ -124,7 +126,7 @@ class EditCompanyProfile extends Component {
       .catch(function (error) {
       });
 
-    this.props.history.push("/company-profile/list");
+    this.props.history.push("/profile/manage/"+ currentUserID);
   }
 
   // This following section will display the update-form that takes the input from the user to update the data.
