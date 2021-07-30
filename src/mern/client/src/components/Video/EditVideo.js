@@ -65,7 +65,7 @@ export default class EditVideo extends Component{
         
 
         const EditVideo = {
-            // user_id: this.state.user_id,
+            video_id: this.props.match.params.id,
             title: this.state.title,
             description: this.state.description,
         };
@@ -75,14 +75,14 @@ export default class EditVideo extends Component{
         // This will send a post request to update the data in the database.
         axios
         .post(
-            // "http://localhost:5000/videos/upload/single/",
+            "http://localhost:5000/videos/update/" + this.props.match.params.id,
             EditVideo
         )
         .then((res) => console.log(res.data))
         .catch(function (error) {});
 
 
-        window.location.href = "/videos/list";
+        // window.location.href = "/videos/list";
     }
     
 

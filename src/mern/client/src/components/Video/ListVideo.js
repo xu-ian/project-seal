@@ -115,9 +115,9 @@ export default class ListVideo extends Component{
                                         <TableCell className="delete-buttom"> 
                                             <DeleteIcon onClick={() => {this.handleDeleteVideo(video.fileName); }}/>
                                         </TableCell>
-                                        <TableCell className="edit-buttom"> 
+                                        {/* <TableCell className="edit-buttom"> 
                                             <EditIcon onClick={() => {window.location.href='/videos/edit/' + video._id}}/>
-                                        </TableCell>
+                                        </TableCell> */}
                                         
                                     </StyledTableRow>
                                 ))
