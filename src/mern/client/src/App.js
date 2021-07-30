@@ -28,6 +28,7 @@ import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
 import Calendar from './components/Calendar'
+import Feedback from "./components/ToggleForm/toggle-components/feedback";
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -142,6 +143,7 @@ export default function App(){
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
               <Route path="/friend/view/:id" component={FriendRequest} />
 
+              <Route exact path="/assigntest/:id/feedback" component={Feedback} />
 
               <Route path = "/friendlist/">
               <FriendList/>
