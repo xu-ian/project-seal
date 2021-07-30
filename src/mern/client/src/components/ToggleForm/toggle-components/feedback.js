@@ -11,7 +11,8 @@ export default class Feedback extends React.Component {
       deliverable: this.props.match.params.id,
       instructor: "",
       comment: "",
-      loaded: false
+      loaded: false,
+      isInstructor: false
     };
 
   }
@@ -33,16 +34,21 @@ export default class Feedback extends React.Component {
           console.log(error);
         });
 
-    // get current user role...
-
+    // get current user role
+    var roles = localStorage.getItem('userrole');
+    this.setState( {isInstructor: roles.includes("instructor")} );
   }
 
   render () {
-    // if(this.state.loaded === false){
-    //   return <p>Loading...</p>
-    // }
+    if(this.state.isInstructor === false){
+      return (
+        <div className='stream-item'>
+          <p>Instructor: {this.state.instructor}</p>
+          <p>comment: {this.state.comment}</p>
+        </div>
+      )
+    }
     return (
-      // <h1>something..</h1>
       <div className='stream-item'>
         <FeedbackWrite deliverable={this.state.deliverable} />
         <p>Instructor: {this.state.instructor}</p>
