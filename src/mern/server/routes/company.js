@@ -4,6 +4,7 @@ const companyRoutes = express.Router();
 const dbo = require("../db/conn");
 var ObjectID = require('mongodb').ObjectID;
 const User = require('../models/user');
+const Company = require('../models/Company');
 
 // const { ObjectID } = require('bson');
 // const { json } = require('express');
@@ -38,7 +39,7 @@ companyRoutes.route("/view/:id").get(function (req, res) {
 });
 
 
-// Create Company Profile.
+// Create Company Profile.,
 companyRoutes.route("/create").post(function (req, res) {
     let db_connect = dbo.getDb("employees");
     //gotta check for company names
@@ -97,6 +98,28 @@ companyRoutes.route("/update/:id").post(function (req, res) {
     });
 });
 
+
+// Delete Company Profile by id.
+companyRoutes.route("/delete/:id").post(function (req, res) {
+
+    // console.log("the update id is: " + req.body.company_id);
+    // Kame Yu department stores	
+  Company.deleteOne({_id: req.params.id})
+  .catch(err => {
+    console.log("can't find company!")
+    res.status(400).json({ msg: err.msg });
+  });
+
+  User.updateOne({_id: req.body.user_id}, {
+    $pull:{
+      companies: req.params.id
+    }
+  }).catch(err => {
+    console.log("can't find user!")
+    res.status(400).json({ msg: err.msg });
+  });
+  res.status(200).json({ msg: "its good"});
+});
 
 module.exports = companyRoutes;
 
