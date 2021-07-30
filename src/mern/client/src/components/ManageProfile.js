@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import BusinessIcon from '@material-ui/icons/Business';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 let static_currentUserID= localStorage.getItem('userId');
@@ -19,6 +20,7 @@ export default class ManageProfile extends Component {
     
         this.getUserCompanies = this.getUserCompanies.bind(this);
         this.getComapanyInfo = this.getComapanyInfo.bind(this);
+        this.handleDeleteCompany = this.handleDeleteCompany.bind(this);
 
         
         this.state = {
@@ -37,7 +39,7 @@ export default class ManageProfile extends Component {
             
             //inserting it into the company lists. 
             var insertData = createData( currentCompany.logo, currentCompany.company_title, currentCompany._id );
-            console.log("data is: " + JSON.stringify(insertData));
+            // console.log("data is: " + JSON.stringify(insertData));
 
             this.setState({companyLists: this.state.companyLists.concat([insertData]) })
 
@@ -64,6 +66,26 @@ export default class ManageProfile extends Component {
     //Initialization
     componentDidMount(){
         this.getUserCompanies();
+    }
+
+    //Handle Delete Comapny
+    handleDeleteCompany(company_id){
+        
+        const companyDelete = {_id: company_id};
+        
+        // This will send a post request to delete the data in the database.
+        axios
+        .post(
+            "http://localhost:5000/company-profile/delete/" + company_id,
+            companyDelete
+        )
+
+        .then((res) => console.log(res.data))
+        .catch(function (error) { });
+        
+        
+        alert("company deleted!");
+        window.location.reload();
     }
 
 
@@ -100,9 +122,10 @@ export default class ManageProfile extends Component {
                                         <Grid item xs={12} style={{marginLeft: "2rem"}}>
                                             <Grid container > 
                                                 <Grid item style={{marginRight: "2rem"}} onClick={() => {window.location.href='/company-profile/view/' + company._id} } > <Avatar > {company.name} </Avatar></Grid>
-                                                <Grid item > <Typography variant="h5" onClick={() => {window.location.href='/company-profile/view/' + company._id} } > {company.name}  </Typography> </Grid>
-                                                <Grid itm  xs={6} onClick={() => {window.location.href='/company-profile/view/' + company._id} }> </Grid>
+                                                <Grid item style={{width:"80%"}} > <Typography variant="h5" onClick={() => {window.location.href='/company-profile/view/' + company._id} } > {company.name}  </Typography> </Grid>
+                                                <Grid item onClick={() => {window.location.href='/company-profile/view/' + company._id} }> </Grid>
                                                 <Grid item > <Button variant="outlined" color="primary" onClick={() => {window.location.href='/company-profile/edit/' + company._id} }> Edit </Button> </Grid>
+                                                <Grid item> <DeleteIcon style={{ fontSize: 30 , marginLeft: "2rem"}} onClick={() => {this.handleDeleteCompany(company._id); }} />  </Grid>
                                             </Grid>
                                         </Grid>
                                     ))
