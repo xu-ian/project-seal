@@ -43,7 +43,7 @@ class Courses extends Component {
         courses.push(
           
             <Paper maxWidth="sm" style={{backgroundColor:'#cfe8fc', margin: "25px"}}>
-              <Link to={"/coursepage?name="+this.state.courses[i]._id} style={{position:"relative"}}>
+              <Link to={"/coursepage/"+this.state.courses[i]._id} style={{position:"relative"}}>
                 <Typography component="div" style={{ backgroundColor: '#cfe8fc', width:"100%"}}>
                   <div style={{padding: "25px"}}>
                     <h2>{this.state.courses[i].name}</h2>

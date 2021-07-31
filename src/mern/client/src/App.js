@@ -110,9 +110,7 @@ export default function App(){
             <Route path="/mycourses">
               <MyCourses />
             </Route>
-            <Route path="/coursepage">
-              <CoursePage />
-            </Route>
+            <Route path="/coursepage/:id" component={CoursePage}/>
             <Route path="/zoomMeeting" render={(props) => <ZoomMeeting {...props} />} />
             <Route path="/zoomMeetingTest">
               <ZoomMeeting meetingNumber="9322120078" meetingName="testName" />

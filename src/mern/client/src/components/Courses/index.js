@@ -99,6 +99,8 @@ class Courses extends Component {
     }
 
     render() {
+        if(window.localStorage.getItem('userrole') && 
+          window.localStorage.getItem('userrole').includes('instructor')){
         return (
             <div>
                 <h1>Unregistered Courses</h1>
@@ -107,7 +109,17 @@ class Courses extends Component {
                 </div>
                 <AddCourse/>
             </div>
-        );
+        );}
+        else{
+            return(
+                <div>
+                    <h1>Unregistered Courses</h1>
+                    <div>
+                        {this.dynamicDisplay()}
+                    </div>
+                </div>  
+            );
+        }
     }
 }
 export default Courses;
