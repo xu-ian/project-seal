@@ -2,7 +2,9 @@ const express = require("express");
 const companyRoutes = express.Router();
 //Connect to the database
 const dbo = require("../db/conn");
-
+var ObjectID = require('mongodb').ObjectID;
+const User = require('../models/user');
+const Company = require('../models/Company');
 
 // const { ObjectID } = require('bson');
 // const { json } = require('express');
@@ -37,9 +39,13 @@ companyRoutes.route("/view/:id").get(function (req, res) {
 });
 
 
-// Create Company Profile.
+// Create Company Profile.,
 companyRoutes.route("/create").post(function (req, res) {
     let db_connect = dbo.getDb("employees");
+    //gotta check for company names
+    if (!req.body.company_title){
+      res.status(400).json({ msg: "no name given"});
+    }
     let myobj = {
       company_title: req.body.company_title,
       tagline: req.body.tagline,
@@ -52,13 +58,27 @@ companyRoutes.route("/create").post(function (req, res) {
     db_connect.collection("companys").insertOne(myobj, function (err, res) {
       if (err) throw err;
     });
+    console.log(req.body.user_id);
+    console.log(myobj._id);
+    User.updateOne({_id: req.body.user_id}, {
+      $addToSet: 
+        {companies: myobj._id,}
+    }).catch(err => {
+      console.log("can't find user!")
+      res.status(400).json({ msg: err.msg });
+    });
+    res.status(200).json({ msg: "its good"});
 });
 
 
 // Update Company Profile by id.
 companyRoutes.route("/update/:id").post(function (req, res) {
   let db_connect = dbo.getDb("employees");
-  let myquery = { id: req.body.id };
+  let myquery = { _id: ObjectID(req.body.company_id) };
+    // console.log("the update id is: " + req.body.company_id);
+    // Kame Yu department stores	
+
+
   let newvalues = {
     $set: {
       company_title: req.body.company_title,
@@ -78,6 +98,28 @@ companyRoutes.route("/update/:id").post(function (req, res) {
     });
 });
 
+
+// Delete Company Profile by id.
+companyRoutes.route("/delete/:id").post(function (req, res) {
+
+    // console.log("the update id is: " + req.body.company_id);
+    // Kame Yu department stores	
+  Company.deleteOne({_id: req.params.id})
+  .catch(err => {
+    console.log("can't find company!")
+    res.status(400).json({ msg: err.msg });
+  });
+
+  User.updateOne({_id: req.body.user_id}, {
+    $pull:{
+      companies: req.params.id
+    }
+  }).catch(err => {
+    console.log("can't find user!")
+    res.status(400).json({ msg: err.msg });
+  });
+  res.status(200).json({ msg: "its good"});
+});
 
 module.exports = companyRoutes;
 

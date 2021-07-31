@@ -6,8 +6,8 @@ import BusinessIcon from '@material-ui/icons/Business';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 import FileBase from 'react-file-base64';
-import './company-profile-style.css';
 
+let currentUserID= localStorage.getItem('userId');
 
 export default class CreateCompanyProfile extends Component{
   //Constructor that stores the data
@@ -78,6 +78,7 @@ export default class CreateCompanyProfile extends Component{
 
     // When post request is sent to the create url, axios will add a new record(newcompany) to the database.
     const newcompany = {
+      user_id: currentUserID,
       company_title: this.state.company_title,
       tagline: this.state.tagline, 
       description: this.state.description, 
@@ -85,6 +86,7 @@ export default class CreateCompanyProfile extends Component{
       logo: this.state.logo,           //image to be uploaded 
       links: this.state.links,
       members: this.state.members,
+      
     };
 
     //this sends the data to the database, using post method.
@@ -103,7 +105,7 @@ export default class CreateCompanyProfile extends Component{
       links: '',          
       members: ''
     });
-    window.location.href = "/company-profile/list";
+    window.location.href = "/profile/manage/currentUserID";
   }
 
   //render on the page
@@ -123,41 +125,45 @@ export default class CreateCompanyProfile extends Component{
               </Typography>
             </div>
 
-            <form id="company-form" className="form" style={{marginTop:"20px"}} onSubmit={this.handleSubmit}>
-              <TextField required fullWidth 
+            <form id="company-form" onSubmit={this.handleSubmit} style={{marginTop:"20px"}}>
+              <TextField fullWidth
                 label="Company Title" 
                 className="company-form-group"
                 style={{marginBottom:"20px"}}
+                defaultValue = {this.state.company_title}
                 value={this.state.company_title}
                 onChange={this.onChangeCompanyTitle}
               >
               </TextField>
-              <TextField required fullWidth 
+              <TextField fullWidth 
                 label="Tagline" 
                 placeholder="A brief line that describes the company" 
                 className="company-form-group"
                 style={{marginBottom:"20px"}}
+                defaultValue = {this.state.tagline}
                 value={this.state.tagline}
                 onChange={this.onChangeTagline}
               >
               </TextField>
-              <TextField required fullWidth 
+              <TextField fullWidth 
                 label="Description" 
                 id="company-form-description" 
                 className="company-form-group" 
                 variant="outlined" 
                 multiline
+                defaultValue = {this.state.description}
                 InputLabelProps={{shrink: true,}}
                 value={this.state.description}
                 onChange={this.onChangeDescription}
-              >
+                >
               </TextField>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}> 
-                  <TextField required fullWidth 
+                  <TextField fullWidth 
                     label="Email Address" 
                     margin= "normal" 
                     className="company-form-group"
+                    defaultValue = {this.state.emailAddress}
                     value={this.state.emailAddress}
                     onChange={this.onChangeEmailAddress}
                   >
@@ -170,6 +176,7 @@ export default class CreateCompanyProfile extends Component{
                     helperText="Company Website or social media" 
                     className="company-form-group"
                     multiline
+                    defaultValue = {this.state.links}
                     value={this.state.links}
                     onChange={this.onChangeLinks}
                   >
@@ -177,15 +184,14 @@ export default class CreateCompanyProfile extends Component{
                 </Grid>
               </Grid>
               <TextField fullWidth 
-                label="Members" 
+                label="Search members" 
                 className="company-form-group"
-                multiline
                 style={{marginBottom:"20px"}}
+                defaultValue = {this.state.memebers}
                 value={this.state.members}
                 onChange={this.onChangeMembers}
               >
               </TextField>
-              <br /> <br />
               <div className="company-form-group" style={{marginBottom:"20px"}}>
                 <body1>Browse File to upload Logo: </body1>
                 <FileBase
@@ -196,8 +202,7 @@ export default class CreateCompanyProfile extends Component{
                   ({ base64 }) => setPostData({ ...postData, selectedFile: base64 }) }*/
                   onDone={this.onDoneLogo} />
               </div>
-              <br />
-              <Button variant="contained" color="primary" type="submit" align="center" classname="submit">Create Company Profile</Button>
+              <Button variant="contained" color="primary" type="submit" align="center" classname="">Create Company Profile</Button>
             </form>
           </Container>
         </Container>
