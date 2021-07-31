@@ -17,6 +17,8 @@ import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
 import FriendRequest from "./components/FriendRequest";
+import ZoomMeeting from "./components/zoomMeeting";
+// import RoleSelection from "./components/roleSelection"
 
 
 import Registration from "./components/Authentication/registration";
@@ -28,6 +30,7 @@ import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
 import Calendar from './components/Calendar'
+import Feedback from "./components/ToggleForm/toggle-components/feedback";
 
 // offer
 import OfferViewer from "./components/Offers/OfferViewer";
@@ -41,6 +44,11 @@ import { setCurrentUser, logoutUser } from "./components/actions/authActions";
 import Courses from "./components/Courses";
 import MyCourses from "./components/MyCourses";
 import CoursePage from "./components/CoursePage";
+
+
+import UploadVideo from "./components/Video/UploadVideo";
+import ListVideo from "./components/Video/ListVideo";
+import EditVideo from "./components/Video/EditVideo";
 
 // We use Route in order to define the different routes of our application
 
@@ -105,6 +113,10 @@ export default function App(){
             <Route path="/coursepage">
               <CoursePage />
             </Route>
+            <Route path="/zoomMeeting" render={(props) => <ZoomMeeting {...props} />} />
+            <Route path="/zoomMeetingTest">
+              <ZoomMeeting meetingNumber="9322120078" meetingName="testName" />
+            </Route>
             <Route path="/posts/">
               <PostViewer />
             </Route>
@@ -143,6 +155,12 @@ export default function App(){
               <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
               <Route path="/friend/view/:id" component={FriendRequest} />
+
+              <Route path="/videos/upload" component={UploadVideo} />
+              <Route path="/videos/list" component={ListVideo} />
+              <Route path="/videos/edit" component={EditVideo} />
+
+              <Route exact path="/assigntest/:id/feedback" component={Feedback} />
 
               <Route path = "/friendlist/">
               <FriendList/>
