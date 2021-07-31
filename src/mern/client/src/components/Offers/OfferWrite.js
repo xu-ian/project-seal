@@ -91,7 +91,7 @@ class OfferWrite extends React.Component {
      * @returns The html code for a OfferWrite interface.
      */
     render (){
-        if(window.localStorage.getItem("userId")) {
+        if(window.localStorage.getItem("userrole").includes("serviceprovider")) {
         return (
             <form onSubmit={this.handleSubmit} >
                 <label>
@@ -107,7 +107,7 @@ class OfferWrite extends React.Component {
             return(
                 <Paper>
                     <Typography style={{margin:"25px", "text-align":"center","font-size":"150%"}}>
-                        Please sign in to add offers
+                        Only service provider can add offers
                     </Typography>
                 </Paper>
             );

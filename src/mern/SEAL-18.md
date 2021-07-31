@@ -1,6 +1,7 @@
 # SEAL-18
 
-Some of the functions are not completed in this feature
+- Allow service providers to write offers & discounts
+- Allow user to view all the offers and comment to an offer
 
 ## Packages Installed:
 
@@ -18,7 +19,18 @@ Some of the functions are not completed in this feature
 
 ### Offer.js(client/src/components/Offers)
 
-- Not complete
 - path:"/offers/offer"
-- Displays one the specific offer
+- Displays the specific offer
+
+## Back End:
+
+### offers.js (server/routes)
+
+- route: "/offers"
+- Handle offer endpoints
+
+### offercomments.js (server/routes)
+
+- Handle offer comment endpoints
+
 

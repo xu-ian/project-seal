@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // This will require to npm install axios
 import axios from 'axios';  //this communicates with backend
-import { Paper, Avatar, Typography, Container, Grid, Button } from '@material-ui/core';
+import { Paper, Avatar, Typography, Container, Grid, Button, CssBaseline } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -290,6 +290,11 @@ export default class MyUserProfile extends Component{
             backgroundPosition: 'center',
             height: "400px",
         }
+        const DefultContainer ={
+            backgroundColor: 'white',
+            border: '0px',
+            margin: '0px',
+        }
 
         //re-render once
         if(this.loadIn) {
@@ -298,8 +303,9 @@ export default class MyUserProfile extends Component{
         }
 
         return(
-            <div className="container">
-                <div className="banner-wrapper">
+            <div style={DefultContainer}>
+                <CssBaseline />
+                <div>
                     <div style={imageContainer} > </div>
                 </div>
                 {/* Profile Content */}
