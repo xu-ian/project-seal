@@ -28,6 +28,7 @@ import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
 import Calendar from './components/Calendar'
+import Feedback from "./components/ToggleForm/toggle-components/feedback";
 
 // offer
 import OfferViewer from "./components/Offers/OfferViewer";
@@ -152,8 +153,8 @@ export default function App(){
               <Route path="/videos/upload" component={UploadVideo} />
               <Route path="/videos/list" component={ListVideo} />
               <Route path="/videos/edit" component={EditVideo} />
-              
 
+              <Route exact path="/assigntest/:id/feedback" component={Feedback} />
 
               <Route path = "/friendlist/">
               <FriendList/>
