@@ -45,6 +45,7 @@ router.post("/register", [
             belongingCompany: "",
             position: "",
             friends: friendlist,
+            companies: [],
         }
     )
     var pw = req.body.password;
