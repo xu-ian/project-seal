@@ -17,6 +17,8 @@ import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
 import FriendRequest from "./components/FriendRequest";
+import ZoomMeeting from "./components/zoomMeeting";
+// import RoleSelection from "./components/roleSelection"
 
 
 import Registration from "./components/Authentication/registration";
@@ -105,6 +107,10 @@ export default function App(){
             </Route>
             <Route path="/coursepage">
               <CoursePage />
+            </Route>
+            <Route path="/zoomMeeting" render={(props) => <ZoomMeeting {...props} />} />
+            <Route path="/zoomMeetingTest">
+              <ZoomMeeting meetingNumber="9322120078" meetingName="testName" />
             </Route>
             <Route path="/posts/">
               <PostViewer />
