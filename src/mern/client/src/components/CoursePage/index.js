@@ -31,6 +31,8 @@ class CoursePage extends Component {
         };
         this.validCourse = false;
         this.swapVisibility = this.swapVisibility.bind(this);
+        this.onlyInstructor = this.onlyInstructor.bind(this);
+        this.restrictAddFolder = this.restrictAddFolder.bind(this);
         this.showAssignments = this.showAssignments.bind(this);
         this.showAssignmentContents = this.showAssignmentContents.bind(this);
         this.showLessons = this.showLessons.bind(this);
@@ -59,6 +61,48 @@ class CoursePage extends Component {
         }
     }
 
+    onlyInstructor(i, x){
+        if(window.localStorage.getItem('userrole').includes('instructor')){
+            if(x == "A"){
+                return(
+                <div>
+                    <Button onClick={() => {this.swapVisibility(this.state.course.assignments[i]._id)}}>
+                      <AddIcon/>
+                    </Button>
+                    <Button onClick={() =>{this.removeAFolder(this.state.course.assignments[i]._id)}}>
+                      <DeleteIcon/>
+                    </Button>
+                </div>);
+            }
+            else{
+                return(<div>
+                    <Button>
+                        <AddIcon/>
+                    </Button>
+                    <Button onClick={() =>{this.removeLFolder(this.state.course.lessons[i]._id)}}>
+                        <DeleteIcon/>
+                    </Button>
+                    </div>)
+            }
+        }
+    }
+
+    restrictAddFolder(x){
+        if(window.localStorage.getItem('userrole') && 
+          window.localStorage.getItem('userrole').includes('instructor')){
+        if(x == "A"){
+            return(<Button style={{float:"right"}} onClick={this.addAFolder}>
+            <AddIcon/>
+        </Button>);
+        }
+        else{
+            return(<Button style={{float:"right"}} onClick={this.addLFolder}>
+            <AddIcon/>
+        </Button>)
+        }
+       }
+    }
+
     showAssignments(){
         let assignmentPages = [];
         for(let i = 0; i < this.state.course.assignments.length; i++){
@@ -69,12 +113,7 @@ class CoursePage extends Component {
                   <Typography>
                     {this.state.course.assignments[i].name}
                   </Typography>
-                  <Button onClick={() => {this.swapVisibility(this.state.course.assignments[i]._id)}}>
-                      <AddIcon/>
-                  </Button>
-                  <Button onClick={() =>{this.removeAFolder(this.state.course.assignments[i]._id)}}>
-                    <DeleteIcon/>
-                  </Button>
+                  {this.onlyInstructor(i, "A")}
                 </AccordionSummary>
                 <AccordionDetails>
                     {this.showAssignmentContents(i)}
@@ -109,12 +148,7 @@ class CoursePage extends Component {
                   <Typography>
                     {this.state.course.lessons[i].name}
                   </Typography>
-                  <Button>
-                    <AddIcon/>
-                  </Button>
-                  <Button onClick={() =>{this.removeLFolder(this.state.course.lessons[i]._id)}}>
-                    <DeleteIcon/>
-                  </Button>
+                  {this.onlyInstructor(i, "L")}
                 </AccordionSummary>
                 <AccordionDetails>
                     {this.showLessonContents(i)}
@@ -200,17 +234,13 @@ class CoursePage extends Component {
                 </div>
                 <Typography variant = "h2">
                     Assignments
-                    <Button style={{float:"right"}} onClick={this.addAFolder}>
-                        <AddIcon/>
-                    </Button>
+                    {this.restrictAddFolder("A")}
                     <hr/>
                 </Typography>
                 {this.showAssignments()}
                 <Typography variant = "h2">
                     Lessons
-                    <Button style={{float:"right"}} onClick={this.addLFolder}>
-                        <AddIcon/>
-                    </Button>
+                    {this.restrictAddFolder("L")}
                     <hr/>
                 </Typography>
                 {this.showLessons()}
