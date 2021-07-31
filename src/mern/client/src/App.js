@@ -16,7 +16,6 @@ import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
 import FriendRequest from "./components/FriendRequest";
-// import RoleSelection from "./components/roleSelection"
 
 
 import Registration from "./components/Authentication/registration";
@@ -28,6 +27,9 @@ import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
 import Calendar from './components/Calendar';
+
+// offer
+import OfferViewer from "./components/Offers/OfferViewer";
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -148,6 +150,14 @@ export default function App(){
               <Route path = "/friendlist/">
               <FriendList/>
             </Route>
+            {/* <Route path = "/submit">
+              <Submit/>
+            </Route> */}
+
+            <Route path="/offers/1"> 
+              <OfferViewer />
+            </Route>
+
             <Route path = "/submit/:id" component={Submit}/>
           </Switch>
           </div>

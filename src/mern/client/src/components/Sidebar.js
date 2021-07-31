@@ -34,6 +34,7 @@ class Sidebar extends React.Component {
                 {myCourses}
                 {searchbar}
                 {userprofile}
+                <a href="/offers/1">Offers & discount</a>
                 {viewuserprofile}
             </div>
         );
