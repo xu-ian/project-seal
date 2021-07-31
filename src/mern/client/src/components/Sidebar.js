@@ -11,13 +11,13 @@ class Sidebar extends React.Component {
         let userprofile;
         let searchbar;
         let username;
-        let viewuserprofile;
+        let manageprofile;
         let myCourses;
         let currentUserID= localStorage.getItem('userId');
         if (this.props.auth.isAuthenticated){
             userprofile = <a href="/user-profile/list">User Profiles</a>;
             searchbar = <a href="/profile/search">Search</a>;
-            viewuserprofile = <a href={"/user-profile/view/" + currentUserID}> My User Profile </a>; 
+            manageprofile = <a href={"/profile/manage/" + currentUserID}> Manage Profile </a>; 
             myCourses = <a href="/mycourses">My Courses</a>;
         }
         return (
@@ -33,9 +33,9 @@ class Sidebar extends React.Component {
                 <a href="/courses">Unregistered Courses</a>
                 {myCourses}
                 {searchbar}
-                {userprofile}
+                {/* {userprofile} */}
+                {manageprofile}
                 <a href="/offers/1">Offers & discount</a>
-                {viewuserprofile}
             </div>
         );
     }
