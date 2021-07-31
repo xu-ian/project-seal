@@ -14,6 +14,7 @@ class Sidebar extends React.Component {
         let viewuserprofile;
         let uploadvideo, listvideo;
 
+        let manageprofile;
         let myCourses;
         let currentUserID= localStorage.getItem('userId');
         if (this.props.auth.isAuthenticated){
@@ -22,6 +23,7 @@ class Sidebar extends React.Component {
             viewuserprofile = <a href={"/user-profile/view/" + currentUserID}> My User Profile </a>; 
             uploadvideo = <a href="/videos/upload"> Upload Video </a>; 
             listvideo = <a href="/videos/list"> List Video </a>; 
+            manageprofile = <a href={"/profile/manage/" + currentUserID}> Manage Profile </a>; 
             myCourses = <a href="/mycourses">My Courses</a>;
         }
         return (
@@ -37,7 +39,8 @@ class Sidebar extends React.Component {
                 <a href="/courses">Unregistered Courses</a>
                 {myCourses}
                 {searchbar}
-                {userprofile}
+                {/* {userprofile} */}
+                {manageprofile}
                 <a href="/offers/1">Offers & discount</a>
                 {viewuserprofile}
                 {listvideo}
