@@ -11,12 +11,18 @@ class Sidebar extends React.Component {
         let userprofile;
         let searchbar;
         let username;
+        let viewuserprofile;
+        let uploadvideo, listvideo;
+
         let manageprofile;
         let myCourses;
         let currentUserID= localStorage.getItem('userId');
         if (this.props.auth.isAuthenticated){
             userprofile = <a href="/user-profile/list">User Profiles</a>;
             searchbar = <a href="/profile/search">Search</a>;
+            viewuserprofile = <a href={"/user-profile/view/" + currentUserID}> My User Profile </a>; 
+            uploadvideo = <a href="/videos/upload"> Upload Video </a>; 
+            listvideo = <a href="/videos/list"> List Video </a>; 
             manageprofile = <a href={"/profile/manage/" + currentUserID}> Manage Profile </a>; 
             myCourses = <a href="/mycourses">My Courses</a>;
         }
@@ -38,6 +44,8 @@ class Sidebar extends React.Component {
                 {/* {userprofile} */}
                 {manageprofile}
                 <a href="/offers/1">Offers & discount</a>
+                {viewuserprofile}
+                {listvideo}
             </div>
         );
     }

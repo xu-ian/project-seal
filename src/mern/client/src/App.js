@@ -45,6 +45,11 @@ import Courses from "./components/Courses";
 import MyCourses from "./components/MyCourses";
 import CoursePage from "./components/CoursePage";
 
+
+import UploadVideo from "./components/Video/UploadVideo";
+import ListVideo from "./components/Video/ListVideo";
+import EditVideo from "./components/Video/EditVideo";
+
 // We use Route in order to define the different routes of our application
 
 
@@ -150,6 +155,10 @@ export default function App(){
               <Route path= "/company-profile/view/:id" component={MyCompanyProfile} />
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
               <Route path="/friend/view/:id" component={FriendRequest} />
+
+              <Route path="/videos/upload" component={UploadVideo} />
+              <Route path="/videos/list" component={ListVideo} />
+              <Route path="/videos/edit" component={EditVideo} />
 
               <Route exact path="/assigntest/:id/feedback" component={Feedback} />
 
