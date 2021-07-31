@@ -2,10 +2,11 @@ import React,  {Component}  from "react";
 // This will require to npm install axios
 import axios from "axios";
 import { withRouter } from "react-router";
-import { Container ,TextField, Button, Grid, Typography, Avatar, CssBaseline, Select, MenuItem, InputLabel } from '@material-ui/core';
+import { Container ,TextField, Button, Grid, Typography, CssBaseline, Select, MenuItem, InputLabel } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+
 
 /* This class update/create an existing user profile through id */
 class EditUserProfile extends Component {
@@ -40,15 +41,17 @@ class EditUserProfile extends Component {
       backgroundImage: "",    //image to be uploaded
     };
   }
+
   // This will get the record based on the id from the database.
   componentDidMount() {
+    let currentUserID= localStorage.getItem('userId');
     axios.get("http://localhost:5000/user-profile/?_id:" + this.props.match.params.id)
       .then((response) => {
         const userLists = response.data;
-        const currentUser = userLists.find(person => person._id === this.props.match.params.id);
+        const currentUser = userLists.find(person => person._id === currentUserID);
 
         this.setState({
-          user_id: currentUser.user_id,
+          user_id: currentUserID,
           username: currentUser.username,
           userbio: currentUser.userbio,
           gender: currentUser.gender,
@@ -65,6 +68,8 @@ class EditUserProfile extends Component {
         // console.log("the id is: " + this.props.match.params.id);
         console.log("the desired is: " + JSON.stringify(currentUser));
         // console.log("company title: ", this.state.company_title);
+        console.log("current is id: " + currentUserID);
+
       })
       .catch(function (error) {
         console.log(error);
@@ -120,6 +125,7 @@ class EditUserProfile extends Component {
 
   // This function will handle the submission.
   handleSubmit(e) {
+    let currentUserID= localStorage.getItem('userId');
     e.preventDefault();
     const newEditedUserProfile = {
       user_id: this.state.user_id,
@@ -144,18 +150,20 @@ class EditUserProfile extends Component {
       .then((res) => console.log(res.data))
       .catch(function (error) {
       });
-
+    
+    console.log("update id: " + currentUserID);
+    alert("User Profile Updated!");
     window.location.href = "/user-profile/list";
   }
 
 
 
-  //render on the page: "/company-profile/edit:"
+  //render on the page: "/user-profile/edit/:id"
   render() {
     return (
       <div className="" style={{backgroundColor: "white"} , {marginTop:"30px"}}> 
         <div> 
-          <KeyboardBackspaceIcon style={{ fontSize: 50 }} onClick={() =>  window.location.href='/profile/create'}  />
+          <KeyboardBackspaceIcon style={{ fontSize: 50 }} onClick={() => window.history.go(-1)}  />
         </div>
         <Container component="main" maxWidth="lg"> 
           <CssBaseline />
@@ -174,6 +182,7 @@ class EditUserProfile extends Component {
                     className="user-form-group"
                     style={{marginBottom:"20px"}}
                     required
+                    disabled
                     defaultValue = {this.state.username}
                     value={this.state.username}
                     onChange={this.onChangeUsername}

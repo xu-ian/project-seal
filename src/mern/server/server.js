@@ -14,6 +14,7 @@ const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const messageRouter = require('./routes/conversations');
 const conversationRouter = require('./routes/messages');
+const friendsRouter = require('./routes/friends');
 
 const app = express();
 
@@ -37,9 +38,11 @@ app.use(express.json());
 
 app.use('/posts', postsRouter);
 
-// Importing routes for course - content stream
+// Importing routes for content and events
 const contentRouter = require('./routes/content')
 app.use('/content', contentRouter);
+const eventRouter = require('./routes/events')
+app.use('/events', eventRouter);
 
 var uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
@@ -67,6 +70,7 @@ const commentsRoutes = require("./routes/comments");
 
 app.get('/', (req, res)=> res.send('Hello World!'));
 app.use('/users', usersRouter);
+app.use('/friends', friendsRouter);
 
 // Importing routes for posts
 const companyRouter = require('./routes/company');  
@@ -86,6 +90,14 @@ const companyRoutes = require("./routes/company");
 const searchRouter = require('./routes/search');  
 app.use('/search', searchRouter);
 
+// SEAL-11
+const feedbackRouter = require('./routes/feedback');  
+app.use('/feedback', feedbackRouter);
+
+// SEAL-63 & 64
+var enrollRouter = require('./routes/enroll');
+app.use('/enroll', enrollRouter);
+
 
 // SEAL-12: Setting storage for file uploads
 
@@ -94,6 +106,22 @@ app.use('/deliverables', deliverableRouter);
 
 var deliverableRoutes = require('./routes/deliverables');
 
+// SEAL-18
+const offerRouter = require('./routes/offers');  
+app.use('/offers', offerRouter);
+const offercommentsRouter = require('./routes/offercomments');
+app.use('/', offercommentsRouter);
+
+
+const courseRouter = require('./routes/courses/index');
+app.use('/', courseRouter);
+
+// SEAL-6: Setting storage for video uploads
+
+var videoRouter = require('./routes/videos');
+app.use('/videos', videoRouter);
+
+var videoRoutes = require('./routes/videos');
 
 app.listen(port, () => {
   // perform a database connection when server starts

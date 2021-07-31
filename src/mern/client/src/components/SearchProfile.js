@@ -1,14 +1,13 @@
 import React, {Component } from "react";
 import { Container, Paper, RadioGroup, Radio, FormLabel, 
     FormControlLabel, FormControl, Grid, Typography, 
-    Avatar, CssBaseline, List, ListItemText, ListItemAvatar, 
-    Divider, Table, TableContainer, TableBody, TableCell, TableHead, 
-    TablePagination, TableRow, TableFooter, Button } from '@material-ui/core';
+    Avatar, CssBaseline, List, ListItemText, Table, TableContainer, TableBody, 
+    TableCell, TableRow, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from "@material-ui/core/IconButton";
 import axios from 'axios';
-import { makeStyles, withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 
 /* Initial state ––
  *  Info required: Name, Avatar(Logo Image), Tagline
@@ -22,7 +21,7 @@ import { makeStyles, withStyles } from '@material-ui/styles';
 */
 
 // to be deleted upon finish of backend
-function createData(avatar, name, bio) { return { avatar, name, bio }; }
+function createData(avatar, name, bio, _id) { return { avatar, name, bio, _id }; }
 
 
 //styling
@@ -113,7 +112,8 @@ export default class SearchProfile extends Component {
                     // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
 
                     for(let key in this.state.rawLists){
-                        var insertData = createData( this.state.rawLists[key].logo, this.state.rawLists[key].company_title, this.state.rawLists[key].tagline );
+                        var insertData = createData( this.state.rawLists[key].logo, 
+                            this.state.rawLists[key].company_title, this.state.rawLists[key].tagline, this.state.rawLists[key]._id );
                         this.state.rows.push(insertData);
                     }
                     console.log("rows are: " + JSON.stringify(this.state.rows));
@@ -130,7 +130,8 @@ export default class SearchProfile extends Component {
                     // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
 
                     for(let key in this.state.rawLists){
-                        var insertData = createData( this.state.rawLists[key].profileImage, this.state.rawLists[key].username, this.state.rawLists[key].userbio );
+                        var insertData = createData( this.state.rawLists[key].profileImage, 
+                            this.state.rawLists[key].username, this.state.rawLists[key].userbio, this.state.rawLists[key]._id );
                         this.state.rows.push(insertData);
                     }
                     console.log("rows are: " + JSON.stringify(this.state.rows));
@@ -173,7 +174,8 @@ export default class SearchProfile extends Component {
                     // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
 
                     for(let key in this.state.rawLists){
-                        var insertData = createData( this.state.rawLists[key].logo, this.state.rawLists[key].company_title, this.state.rawLists[key].tagline );
+                        var insertData = createData( this.state.rawLists[key].logo, 
+                            this.state.rawLists[key].company_title, this.state.rawLists[key].tagline, this.state.rawLists[key]._id );
                         this.state.rows.push(insertData);
                     }
                     console.log("searching rows are: " + JSON.stringify(this.state.rows));
@@ -189,7 +191,8 @@ export default class SearchProfile extends Component {
                     // console.log("Initialization is fetching: " + JSON.stringify(this.state.rawLists));
 
                     for(let key in this.state.rawLists){
-                        var insertData = createData( this.state.rawLists[key].profileImage, this.state.rawLists[key].username, this.state.rawLists[key].userbio );
+                        var insertData = createData( this.state.rawLists[key].profileImage,
+                             this.state.rawLists[key].username, this.state.rawLists[key].userbio, this.state.rawLists[key]._id );
                         this.state.rows.push(insertData);
                     }
                     console.log("rows are: " + JSON.stringify(this.state.rows));
@@ -201,8 +204,6 @@ export default class SearchProfile extends Component {
         this.componentDidMount();
         this.render();
     }
-
-
     
 
     //path: /profile/search
@@ -243,7 +244,13 @@ export default class SearchProfile extends Component {
                                     ? this.state.rows.slice(this.page * this.rowsPerPage, this.page * this.rowsPerPage + this.rowsPerPage)
                                     : this.state.rows
                                 ).map((row) => (
-                                    <StyledTableRow key={row.avatar}>
+                                    <StyledTableRow key={row.avatar} 
+                                        onClick={() =>{ 
+                                        if(this.filter === "users") {window.location.href='/user-profile/view/' + row._id}
+                                        else if(this.filter ==="companys") {window.location.href='/company-profile/view/' + row._id} }} >
+
+
+                                        
                                         <TableCell className="avatar" style={{width:"10%"}}>
                                             <Avatar> {row.name} </Avatar>
                                         </TableCell>
