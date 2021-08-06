@@ -9,6 +9,7 @@ import EditCompanyProfile from "./components/companyProfile/editCompanyProfile";
 import MyCompanyProfile from "./components/companyProfile/myCompanyProfile";
 
 
+import ManageProfile from "./components/ManageProfile";
 import ProfilePage from "./components/ProfilePage";
 import UserProfileList from "./components/UserProfile/UserProfile";
 import CreateUserProfile from "./components/UserProfile/CreateUserProfile";
@@ -16,6 +17,7 @@ import EditUserProfile from "./components/UserProfile/EditUserProfile";
 import MyUserProfile from "./components/UserProfile/MyUserProfile";
 import SearchProfile from "./components/SearchProfile";
 import FriendRequest from "./components/FriendRequest";
+import ZoomMeeting from "./components/zoomMeeting";
 // import RoleSelection from "./components/roleSelection"
 
 
@@ -28,6 +30,10 @@ import AssignTest from "./components/ToggleForm";
 import VideoPlayer from "./components/VideoPlayer";
 import Submit from './components/Submit';
 import Calendar from './components/Calendar'
+import Feedback from "./components/ToggleForm/toggle-components/feedback";
+
+// offer
+import OfferViewer from "./components/Offers/OfferViewer";
 
 // for redux
 import jwt_decode from "jwt-decode";
@@ -35,8 +41,14 @@ import setAuthToken from "./authUtils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./components/actions/authActions";
 
 
-import Courses from "./components/Courses"
-import CoursePage from "./components/CoursePage"
+import Courses from "./components/Courses";
+import MyCourses from "./components/MyCourses";
+import CoursePage from "./components/CoursePage";
+
+
+import UploadVideo from "./components/Video/UploadVideo";
+import ListVideo from "./components/Video/ListVideo";
+import EditVideo from "./components/Video/EditVideo";
 
 // We use Route in order to define the different routes of our application
 
@@ -95,8 +107,13 @@ export default function App(){
             <Route path="/courses">
               <Courses />
             </Route>
-            <Route path="/coursepage">
-              <CoursePage />
+            <Route path="/mycourses">
+              <MyCourses />
+            </Route>
+            <Route path="/coursepage/:id" component={CoursePage}/>
+            <Route path="/zoomMeeting" render={(props) => <ZoomMeeting {...props} />} />
+            <Route path="/zoomMeetingTest">
+              <ZoomMeeting meetingNumber="9322120078" meetingName="testName" />
             </Route>
             <Route path="/posts/">
               <PostViewer />
@@ -122,16 +139,11 @@ export default function App(){
             <Route exact path="/assigntest">
 						  <AssignTest />
 					  </Route>
-            <Route path="/list"> 
-              <CompanyProfileList />
-            </Route>
-            <Route path="/create">
-              <CreateCompanyProfile />
-            </Route>
 
+              <Route path = "/profile/manage/:id" component={ManageProfile} /> 
               <Route path = "/profile/create" component={ProfilePage} /> 
               <Route path = "/profile/search" component={SearchProfile} />
-              <Route path="/user-profile/list" component={UserProfileList} />
+              {/* <Route path="/user-profile/list" component={UserProfileList} /> */}
               <Route path="/user-profile/create" component={CreateUserProfile} />
               <Route path = "/user-profile/edit/:id" component={EditUserProfile} /> 
               <Route path= "/user-profile/view/:id" component={MyUserProfile} />
@@ -142,14 +154,24 @@ export default function App(){
               <Route path="/company-profile/edit/:id" component={EditCompanyProfile} />
               <Route path="/friend/view/:id" component={FriendRequest} />
 
+              <Route path="/videos/upload" component={UploadVideo} />
+              <Route path="/videos/list" component={ListVideo} />
+              <Route path="/videos/edit" component={EditVideo} />
+
+              <Route exact path="/assigntest/:id/feedback" component={Feedback} />
 
               <Route path = "/friendlist/">
               <FriendList/>
             </Route>
-            <Route path = "/submit">
+            {/* <Route path = "/submit">
               <Submit/>
+            </Route> */}
+
+            <Route path="/offers/1"> 
+              <OfferViewer />
             </Route>
 
+            <Route path = "/submit/:id" component={Submit}/>
           </Switch>
           </div>
         </Router>  

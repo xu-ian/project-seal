@@ -40,9 +40,9 @@ export const loginUser = userData => dispatch => {
       // Decode token to get user data
       const decoded = jwt_decode(token);
       // Set current user
-      dispatch(setCurrentUser(decoded));
       window.localStorage.setItem("username", decoded.name);
       window.localStorage.setItem("userId", decoded.id);
+      window.localStorage.setItem("userrole", decoded.role);
       alert("Login success!");
     })
     .catch(err => {

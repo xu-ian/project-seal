@@ -90,6 +90,14 @@ const companyRoutes = require("./routes/company");
 const searchRouter = require('./routes/search');  
 app.use('/search', searchRouter);
 
+// SEAL-11
+const feedbackRouter = require('./routes/feedback');  
+app.use('/feedback', feedbackRouter);
+
+// SEAL-63 & 64
+var enrollRouter = require('./routes/enroll');
+app.use('/enroll', enrollRouter);
+
 
 // SEAL-12: Setting storage for file uploads
 
@@ -98,6 +106,22 @@ app.use('/deliverables', deliverableRouter);
 
 var deliverableRoutes = require('./routes/deliverables');
 
+// SEAL-18
+const offerRouter = require('./routes/offers');  
+app.use('/offers', offerRouter);
+const offercommentsRouter = require('./routes/offercomments');
+app.use('/', offercommentsRouter);
+
+
+const courseRouter = require('./routes/courses/index');
+app.use('/', courseRouter);
+
+// SEAL-6: Setting storage for video uploads
+
+var videoRouter = require('./routes/videos');
+app.use('/videos', videoRouter);
+
+var videoRoutes = require('./routes/videos');
 
 app.listen(port, () => {
   // perform a database connection when server starts

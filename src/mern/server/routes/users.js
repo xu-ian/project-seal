@@ -45,6 +45,7 @@ router.post("/register", [
             belongingCompany: "",
             position: "",
             friends: friendlist,
+            companies: [],
         }
     )
     var pw = req.body.password;
@@ -67,6 +68,10 @@ router.post("/register", [
     }
     if(req.body.role.instructor){
       user.role.push("instructor");
+    }
+    // added service provider
+    if(req.body.role.serviceprovider){
+      user.role.push("serviceprovider");
     }
 
     user.date_joined = new Date();
