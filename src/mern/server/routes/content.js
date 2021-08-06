@@ -32,6 +32,7 @@ contentRoutes.route("/add/:id/:fid").post((req, res) => {
 		duedate: req.body.duedate,
 		description: req.body.description,
 		attachments: req.body.attachments,
+		mandatory: req.body.mandatory,
 	});
 	newContent.save()
 		.then(content => {
