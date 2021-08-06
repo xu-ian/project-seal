@@ -5,15 +5,13 @@ const Form= ({AssignDeliverable}) =>{
 	const [duedate, setDate] = useState('')
 	const [description, setDesc] = useState('')
 	const [attachments, setAttachments] = useState([])
-	const [mandatory, setMandatory] = useState(false)
 	const onSubmit = (e) => {
 		e.preventDefault()
-		AssignDeliverable({name, duedate, description, attachments, mandatory})
+		AssignDeliverable({name, duedate, description, attachments})
 		setName('')
 		setDate('')
 		setDesc('')
 		setAttachments([])
-		setMandatory(false)
 	}
   return (
 		//Front-end for Form which assigns deliverables (SEAL-8 Component)
@@ -37,10 +35,6 @@ const Form= ({AssignDeliverable}) =>{
 				<div className="form-control">
 					<label className="header">Select All Attachments</label>
 					<input type="file" id="attachments" className="tbtn-input" value={attachments} onChange={(e) => setAttachments(e.target.value)} multiple/>
-				</div>
-				<div className="form-control">
-					<label className="header">Mandatory:</label>
-					<input type="checkbox" className="tbtn-input" onChange={(e) => setMandatory(e.target.checked)}/>
 				</div>
 				<input type="submit" id="assign" value="Assign Deliverable" className="btn"/>
 			</form>
