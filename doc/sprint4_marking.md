@@ -233,10 +233,19 @@ Tracking on Jira Total Mark: 24 / 24
     - 8 marks = features presented work flawlessly
     - 1 mark removed for each error or missing records on Jira
 
-  Your Mark: __ / 10
+  Your Mark: 10 / 10
+
+Comment: 
+
+UI improvement needed (Home/Sign in)
+
+Logout button needed (Using signin with logout function is a weird logic).
+
+Deliverable feedback is better be in a table instead of directly listing out.
+
 
 ---
 
 ## Total Mark
 
-73 / 89
+83 / 89
