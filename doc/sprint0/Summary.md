@@ -14,13 +14,13 @@ Full profile located in [Personas.pdf](Personas.pdf)
 
 Nadia Khari is a 40 year old female manager. She has over 15 years of experience in her profession and is experienced in many fields of work. She looks to invest in promising local startup companies or startup companies found online. She finds that it is difficult to find good information on startup companies looking for investors and is looking for a platform built for investors who are looking for startups to fund.
 
-Full profile located in [Personas.pdf](/Personas.pdf)
+Full profile located in [Personas.pdf](Personas.pdf)
 
 ## Teacher
 
 Hamlet Amadi is a retired 58 year old company startup founder. He has experienced establishing his own startup company and keeping the company running under his command. As of a few years ago he has saved enough for retirement and has left the company. Now he looks for some way to keep himself busy. His son has recommended that he should be a teacher for the young entrepreneurs, teaching the skills that he has learned during his time as a startup founder. He is looking for a platform to teach and connect with aspiring entrepreneurs.
 
-Full profile located in [Personas.pdf](/Personas.pdf)
+Full profile located in [Personas.pdf](Personas.pdf)
 
 
 

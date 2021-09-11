@@ -2,9 +2,6 @@
 ## Table of contents
 * [About The Project](#About-The-Project)
 * [Installation](#Installation)
-  * [Basic Environment Setup](###Basic-Environment-Setup)
-  * [Connet to Mongo DB Atlas](###Connet-to-Mongo-DB-Atlas)
-  * [How to Run](###How-to-Run)
 * [Contribution](#Contribution)
 * [Reference Links](#Reference-Links)
 
@@ -37,7 +34,7 @@ click for [Windows](https://nodejs.org/en/download/) or [Mac](https://nodejs.org
 5. Click on "Cluster" tab and click on "connect"  
 6. Choose "Connect your application" as the connection method. A URL like the following should appear:
 <img src="images/db2.png" width="500"> 
-* Remember to replace the <\password> with your own password. Note that "<>" should be replaced as well.
+* Remember to replace the < password> with your own password. Note that "<>" should be replaced as well.
 
 ### How to Run
 Make sure you have access to Mongo DB Atlas database first before completing the following step. \
@@ -58,8 +55,8 @@ npm install -g nodemon
 ```
 nodemon server
 ```
-It should look like this if suceed: 
-<img src="images/server1.png" width="500"> 
+It should look like this if suceed: \
+<img src="images/server1.png" width="400"> 
 * If your code failed with: 
   ```
   [nodemon] app crashed - waiting for file changes before starting...
@@ -111,5 +108,5 @@ git branch -d local_branch_name
 ```
 
 ## Reference Links
-https://www.mongodb.com/languages/mern-stack-tutorial
+https://www.mongodb.com/languages/mern-stack-tutorial \
 https://create-react-app.dev/docs/getting-started

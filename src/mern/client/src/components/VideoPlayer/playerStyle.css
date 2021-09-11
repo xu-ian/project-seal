@@ -1,0 +1,44 @@
+*{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+.video-container{
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#player{
+	position: static;
+  width:75%;
+	padding: 0 2.5em 0 2em;
+}
+
+#video-header{
+	color:white;
+	background: #222;
+	font-size: 0.8em;
+  padding: 8px;
+}
+#title{
+	margin:0.8em 0 0 2em;
+}
+
+#description{
+	position: relative;
+	padding:0.8em 0 0 2em;
+	font-size: 90%;
+	width:71%;
+}
+
+#video-main{
+	float:left;
+}
+#video-sidebar{
+	margin-top: 1em;
+  float:right;
+	width:25%;
+}
+body{
+	background:rgb(255, 255, 255);
+	padding:0;
+}

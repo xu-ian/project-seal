@@ -1,0 +1,10 @@
+/* Hides scrollbar for chrome browsers*/
+.MessageList::-webkit-scrollbar{
+    display:none;
+}
+
+/* Hides scrollbar for edge and firefox browsers */
+.MessageList{
+    -ms-overflow-style:none;
+    scrollbar-width: none;
+}
